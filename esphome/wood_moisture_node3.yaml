@@ -1,0 +1,686 @@
+################################################################################
+# wood_moisture_node3.yaml
+# ESP32-S3 — Node 3: 10/4 Stock
+# Black Walnut Air-Drying Stack Monitor
+#
+# Hardware:
+#   - ESP32-S3 DevKit
+#   - 2x CD74HC4067 16-channel analog multiplexer breakout
+#     MUX A: channels 0-15  — 10/4 Slabs 1-3 (2S+2D each = 12 channels used)
+#     MUX B: channels 0-15  — 10/4 Slabs 4-5 (2S+2D each =  8 channels used)
+#
+# Wiring identical to Node 1.
+# GPIO8 → MUX A INH, GPIO9 → MUX B INH
+#
+# Probe depths for 10/4 stock (actual ~2.5"):
+#   Shallow: 5/8"  (1/4 depth)
+#   Deep:    1-1/4" (1/2 depth)
+#
+# Probe placement:
+#   Center width of each slab
+#   Pair A at 1/3 slab length, Pair B at 2/3 slab length
+#
+# NOTE: 10/4 is highest case-hardening risk. Monitor shell-to-core
+# differential (Shallow vs Deep readings) closely. If differential
+# exceeds 5% MC, tighten wrap immediately.
+################################################################################
+
+esphome:
+  name: wood-moisture-node3
+  friendly_name: "Stack Moisture Node 3 - 10/4"
+  on_boot:
+    priority: 600
+    then:
+      - output.turn_off: excite_pin
+      - output.turn_on: mux_a_en   # HIGH = disabled (inverted)
+      - output.turn_on: mux_b_en   # HIGH = disabled (inverted)
+
+substitutions:
+  cal_a: "31.62"          # Black walnut log-linear curve coefficient A
+  cal_b: "2.985"          # Black walnut log-linear curve coefficient B
+  ref_resistor: "1000000.0"
+  vcc: "3.3"
+  temp_baseline_c: "21.1"
+  scan_interval: "5min"
+  node_name: "node3"
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+logger:
+  level: INFO
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+  ap:
+    ssid: "wood-moisture-node3"
+    password: !secret ap_fallback_password
+
+statsd:
+  host: !secret statsd_host
+  port: 8125
+  prefix: "woodstack.node3"
+
+# ── Outputs ───────────────────────────────────────────────────────────────────
+output:
+  - platform: gpio
+    id: mux_s0
+    pin: GPIO4
+
+  - platform: gpio
+    id: mux_s1
+    pin: GPIO5
+
+  - platform: gpio
+    id: mux_s2
+    pin: GPIO6
+
+  - platform: gpio
+    id: mux_s3
+    pin: GPIO7
+
+  # MUX A INH — inverted: turn_off drives LOW → MUX A enabled
+  - platform: gpio
+    id: mux_a_en
+    pin: GPIO8
+    inverted: true
+
+  # MUX B INH — inverted: turn_off drives LOW → MUX B enabled
+  - platform: gpio
+    id: mux_b_en
+    pin: GPIO9
+    inverted: true
+
+  - platform: gpio
+    id: excite_pin
+    pin: GPIO2
+
+# ── Shared lambda include ─────────────────────────────────────────────────────
+# The resistance→MC% conversion is identical across all channels.
+# Each channel lambda selects the correct MUX (A or B), sets S0-S3,
+# takes the AC-excitation reading pair, then converts.
+
+sensor:
+  - platform: adc
+    pin: GPIO1
+    id: raw_adc
+    name: "Raw ADC Node1"
+    internal: true
+    attenuation: 11db
+    update_interval: never
+
+  - platform: homeassistant
+    id: stack_temp_c
+    entity_id: sensor.stack_temperature_c
+    internal: true
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # MUX A — 5/4 STOCK (upper shelves, channels 0-15)
+  # Channel naming: [shelf unit 1-3][shelf level T=top/U=upper][1/3 or 2/3 pos][S=shallow/D=deep]
+  # ════════════════════════════════════════════════════════════════════════════
+
+  # ── Unit 1, Top Shelf, 5/4 ──────────────────────────────────────────────
+  - platform: template
+    name: "10/4 Slab1 Pos 1/3-Shallow"
+    id: m_a00
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab1 Pos 1/3-Deep"
+    id: m_a01
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab1 Pos 2/3-Shallow"
+    id: m_a02
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_on(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab1 Pos 2/3-Deep"
+    id: m_a03
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_on(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  # ── Unit 2, Top Shelf, 5/4 ──────────────────────────────────────────────
+  - platform: template
+    name: "10/4 Slab2 Pos 1/3-Shallow"
+    id: m_a04
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_on(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab2 Pos 1/3-Deep"
+    id: m_a05
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_off(); id(mux_s2).turn_on(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab2 Pos 2/3-Shallow"
+    id: m_a06
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_on(); id(mux_s2).turn_on(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab2 Pos 2/3-Deep"
+    id: m_a07
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_on(); id(mux_s2).turn_on(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  # ── Unit 3, Top Shelf, 5/4 ──────────────────────────────────────────────
+  - platform: template
+    name: "10/4 Slab3 Pos 1/3-Shallow"
+    id: m_a08
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_on();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab3 Pos 1/3-Deep"
+    id: m_a09
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_on();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab3 Pos 2/3-Shallow"
+    id: m_a10
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_on(); id(mux_s2).turn_off(); id(mux_s3).turn_on();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab3 Pos 2/3-Deep"
+    id: m_a11
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_b_en).turn_on(); id(mux_a_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_on(); id(mux_s2).turn_off(); id(mux_s3).turn_on();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  # Channels 12-15 on MUX A are spare — available for additional 5/4 boards
+  # on upper shelves (shelf 2 of any unit). Add sensors here as needed.
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # MUX B — 6/4 STOCK (lower shelves, channels 16-31 → MUX B 0-15)
+  # ════════════════════════════════════════════════════════════════════════════
+
+  # ── Unit 1, Bottom Shelf, 6/4 ───────────────────────────────────────────
+  - platform: template
+    name: "10/4 Slab4 Pos 1/3-Shallow"
+    id: m_b00
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab4 Pos 1/3-Deep"
+    id: m_b01
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab4 Pos 2/3-Shallow"
+    id: m_b02
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_on(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab4 Pos 2/3-Deep"
+    id: m_b03
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_on(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  # ── Unit 2, Bottom Shelf, 6/4 ───────────────────────────────────────────
+  - platform: template
+    name: "10/4 Slab5 Pos 1/3-Shallow"
+    id: m_b04
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_on(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab5 Pos 1/3-Deep"
+    id: m_b05
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_off(); id(mux_s2).turn_on(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab5 Pos 2/3-Shallow"
+    id: m_b06
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_on(); id(mux_s2).turn_on(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab5 Pos 2/3-Deep"
+    id: m_b07
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_on(); id(mux_s2).turn_on(); id(mux_s3).turn_off();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  # ── Unit 3, Bottom Shelf, 6/4 ───────────────────────────────────────────
+  - platform: template
+    name: "10/4 Slab6 Pos 1/3-Shallow"
+    id: m_b08
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_on();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab6 Pos 1/3-Deep"
+    id: m_b09
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_on();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab6 Pos 2/3-Shallow"
+    id: m_b10
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_off(); id(mux_s1).turn_on(); id(mux_s2).turn_off(); id(mux_s3).turn_on();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  - platform: template
+    name: "10/4 Slab6 Pos 2/3-Deep"
+    id: m_b11
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_a_en).turn_on(); id(mux_b_en).turn_off();
+      id(mux_s0).turn_on(); id(mux_s1).turn_on(); id(mux_s2).turn_off(); id(mux_s3).turn_on();
+      delay(10);
+      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
+      float v = (vh + (3.3f - vl)) / 2.0f;
+      if (v >= 3.26f || v <= 0.04f) return NAN;
+      float r = 1000000.0f * v / (3.3f - v);
+      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
+      float mc = 31.62f - 2.985f * log10f(r);
+      float t = id(stack_temp_c).state;
+      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      return mc;
+
+  # MUX B channels 12-15 spare — available for shelf 2 6/4 boards if needed
+
+################################################################################
+# secrets.yaml entries needed (shared across all three nodes):
+#   wifi_ssid, wifi_password, ap_fallback_password
+#   api_encryption_key, ota_password
+#   statsd_host: "192.168.x.x"
+#
+# Update sensor.stack_temperature_c to match your actual HA entity name.
+# After field calibration adjust cal_a and cal_b substitutions to match
+# readings against a commercial moisture meter.
+################################################################################
