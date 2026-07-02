@@ -122,7 +122,7 @@ With 9 thickness groups, clear labeling before insertion is critical:
 | ESP32-S3 GPIO | Function | Destination |
 |---|---|---|
 | GPIO1 | ADC Input | MUX-B SIG + R2 top (pull-down junction) |
-| GPIO2 | Excitation | R1 top (1MΩ to MUX-A SIG) |
+| GPIO9 | Excitation | R1 top (1MΩ to MUX-A SIG) |
 | GPIO4 | MUX S0 | S0 on both MUX-A and MUX-B (parallel) |
 | GPIO5 | MUX S1 | S1 on both MUX-A and MUX-B (parallel) |
 | GPIO6 | MUX S2 | S2 on both MUX-A and MUX-B (parallel) |
