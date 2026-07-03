@@ -28,6 +28,7 @@ GPIO9 3.3V ─ R1(10k) ─ MUX-A(Ron) ─ ProbeA+ ─[ R_wood ]─ ProbeB+ ─ M
 | `wood_afe_sch.asc` | Same circuit as an LTspice schematic — open in the GUI to view/edit. |
 | `wood_afe_singlemux.net` | Old single-MUX topology, showing the leakage error the redesign fixes. |
 | `wood_afe_ac.net` | AC excitation + wood capacitance — shows the ADC settling time the firmware dwell must respect. |
+| `wood_afe_r2sweep.net` | R2 value trade-off study behind the component-selection notes below. Analysis only — defaults unchanged. |
 
 > Opening `wood_afe_sch.asc` and hitting Run makes LTspice write its own netlist
 > next to it (`wood_afe_sch.net`, gitignored). The schematic and the curated
@@ -119,6 +120,61 @@ sampling. The required dwell grows as the wood dries; sizing for the dry case
 (~5 ms at `Cw = 10 nF`, 1.5 MΩ) covers the whole range. `Cw` here is an estimate
 — measure a known-dry channel's settling curve and tune `Cw` to match, then the
 model gives you the dwell for every moisture level.
+
+## Component value selection (`wood_afe_r2sweep.net`)
+
+**The shipping values are `R1 = 10k`, `R2 = 100k`, and they stay that way.**
+They are near-optimal for the full moisture range: `R2 = 100k` is almost exactly
+the geometric mean of the wood-resistance span, `√(8k · 1.5M) ≈ 110k`, which is
+the pull-down that best spreads 8 kΩ–1.5 MΩ across the ADC. Peak sensitivity
+(`V ≈ VCC/2`) lands at `R_wood ≈ R1+R2 ≈ 110k`, i.e. ~13% MC. `R1 = 10k` only
+matters at the wet end, where it sets the ~3.0 V short-detection clamp; it is
+negligible against dry-wood resistances and needs no change.
+
+Where 100k is weakest is the bone-dry end — exactly where you decide "is it
+furniture-ready?" Sweeping the pull-down (`R1` fixed at 10k):
+
+| R_wood (MC) | R2=100k | R2=220k | R2=390k |
+|---|---|---|---|
+| 100 kΩ (13%) | 1.570 | 2.199 | 2.573 |
+| 300 kΩ (9%) | 0.805 | 1.369 | 1.838 |
+| 500 kΩ (8%) | 0.541 | 0.994 | 1.430 |
+| 750 kΩ (7%) | 0.384 | 0.741 | 1.119 |
+| 1.5 MΩ (6%) | **0.205** | **0.420** | 0.677 |
+| 6→13% span | 1.37 V | 1.78 V | 1.90 V |
+
+At `R2 = 100k`, 6% MC reads **0.205 V** — down in the ESP32-S3 ADC's noisy,
+nonlinear low-voltage floor (~0.1–0.15 V), so the driest readings sit where the
+ADC is least trustworthy. `R2 = 220k` lifts that to **0.42 V** and widens the
+6–13% band from 1.37 V to 1.78 V, while 13% still reads 2.2 V (not railed).
+`R2 = 390k` compresses the wet end toward the rail for little extra gain, and
+pushes the ADC source impedance too high.
+
+### Optional dual-range (auto-ranging) for the final drying
+
+Rather than a second dedicated system (duplicated hardware + re-clipping every
+probe when a stack graduates), make R2 **switchable on the same board**:
+
+- Keep `R2 = 100k` as the default broadband range.
+- Add a second pull-down so R2 can become ~220k, selected per channel.
+  Cheapest form: two pull-downs (100k + 220k), each to its own GPIO — drive the
+  chosen one LOW (it acts as ground) and set the other to input / hi-Z. No extra
+  chips, one spare GPIO. (An analog switch such as a 74HC4066 works too.)
+- Firmware: read on the 100k range; when a channel drops to **≤ ~9% MC
+  (V < ~0.8 V)**, re-read that channel on the 220k range and use that value for
+  the dry-end MC. This is the same idea as the PSoC 5LP's PGA auto-ranging, done
+  with one resistor.
+
+Because R2 changes, the solve constant changes with it:
+
+```
+R_wood = (R2 · VCC / V) − R2 − R1      # use R2 = 220k on the dry range
+```
+
+Higher R2 also raises the ADC source impedance, so on the 220k range add a
+~10–47 nF cap on the `sigb` node to feed the ADC sample-and-hold, and allow a
+bit more settling dwell — the same `tau = C_wood·(R_wood ∥ (R1+R2))` trade-off
+that `wood_afe_ac.net` models.
 
 ## Not yet modeled
 
