@@ -24,9 +24,15 @@ GPIO9 3.3V ─ R1(10k) ─ MUX-A(Ron) ─ ProbeA+ ─[ R_wood ]─ ProbeB+ ─ M
 
 | File | Purpose |
 |---|---|
-| `wood_afe.net` | Dual-MUX front end. Sweeps `R_wood` across the documented table. |
-| `wood_afe.asc` | Same circuit as an LTspice schematic — open in the GUI to view/edit. |
+| `wood_afe.net` | Dual-MUX front end. Sweeps `R_wood` across the documented table. Authoritative CLI/headless model. |
+| `wood_afe_sch.asc` | Same circuit as an LTspice schematic — open in the GUI to view/edit. |
 | `wood_afe_singlemux.net` | Old single-MUX topology, showing the leakage error the redesign fixes. |
+
+> Opening `wood_afe_sch.asc` and hitting Run makes LTspice write its own netlist
+> next to it (`wood_afe_sch.net`, gitignored). The schematic and the curated
+> `wood_afe.net` are deliberately named differently so a GUI run never overwrites
+> the hand-maintained netlist. Both describe the identical circuit and give the
+> same result.
 
 ## Running
 
