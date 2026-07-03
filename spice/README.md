@@ -29,6 +29,7 @@ GPIO9 3.3V ─ R1(10k) ─ MUX-A(Ron) ─ ProbeA+ ─[ R_wood ]─ ProbeB+ ─ M
 | `wood_afe_singlemux.net` | Old single-MUX topology, showing the leakage error the redesign fixes. |
 | `wood_afe_ac.net` | AC excitation + wood capacitance — shows the ADC settling time the firmware dwell must respect. |
 | `wood_afe_r2sweep.net` | R2 value trade-off study behind the component-selection notes below. Analysis only — defaults unchanged. |
+| `wood_afe_autorange_sch.asc` | Wiring schematic for the optional switchable-R2 (100k/220k) auto-range front end. |
 
 > Opening `wood_afe_sch.asc` and hitting Run makes LTspice write its own netlist
 > next to it (`wood_afe_sch.net`, gitignored). The schematic and the curated
@@ -175,6 +176,9 @@ Higher R2 also raises the ADC source impedance, so on the 220k range add a
 ~10–47 nF cap on the `sigb` node to feed the ADC sample-and-hold, and allow a
 bit more settling dwell — the same `tau = C_wood·(R_wood ∥ (R1+R2))` trade-off
 that `wood_afe_ac.net` models.
+
+Wiring: `wood_afe_autorange_sch.asc`. ESPHome integration (config additions +
+drop-in channel lambda): [`../esphome/AUTORANGE.md`](../esphome/AUTORANGE.md).
 
 ## Not yet modeled
 
