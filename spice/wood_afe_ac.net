@@ -1,0 +1,30 @@
+* Wood Moisture AFE -- AC excitation + wood capacitance (settling study)
+*
+* The firmware toggles GPIO9 (a unipolar 0<->3.3V square wave) instead of
+* holding DC, to avoid polarizing/electrolyzing the wood-electrode interface.
+* That interface plus the wood bulk present a capacitance C_wood in parallel
+* with R_wood, so V(sigb) does NOT step instantly on each edge -- it charges
+* with tau ~ C_wood * (R_wood || (R1+R2)). The ADC must dwell long enough after
+* an edge before it samples, and the required dwell grows as the wood dries
+* (higher R_wood). This netlist sweeps wet/mid/dry and reports the settled
+* reading vs a too-early sample.
+*
+* Cw is an estimate (double-layer + bulk) -- tune it to your measured settling.
+
+.param R1=10k R2=100k Ron=70
+.param Cw=10n
+.step param Rw list 8k 100k 1500k          ; wet(28%) / mid(13%) / dry(6%)
+
+VEXC exc  0    PULSE(0 3.3 100u 1u 1u 10m 20m)
+R1   exc  na   {R1}
+RonA na   pa   {Ron}
+Rw   pa   pb   {Rw}
+Cw   pa   pb   {Cw}
+RonB pb   sigb {Ron}
+R2   sigb 0    {R2}
+
+.tran 0 20m 0 5u
+.meas TRAN Vsettled FIND V(sigb) AT 9.9m     ; long dwell -> true divider value
+.meas TRAN Vearly   FIND V(sigb) AT 300u     ; 200us after the edge -> sampled too soon
+.meas TRAN dwell_err PARAM Vsettled-Vearly   ; reading error if you sample at 200us
+.end
