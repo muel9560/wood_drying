@@ -1,0 +1,35 @@
+* OLD single-MUX AFE -- the design this project replaced.
+*
+* Excitation and ADC sense share one SIG pin on a single CD74HC4067. The 15
+* unselected channels each leak (~100-500 nA @ 3.3V). Because excite and sense
+* share SIG, that leakage forms a path that BYPASSES R_wood -- a direct
+* measurement error, worst at the high resistances that represent dry wood.
+*
+* Modeled as an aggregate leakage shunt Rlk from the excited node (na) to the
+* sense node (sigb), in parallel with the wood. Rlk=500k approximates 16 channels
+* of off-leakage. Compare V(adc) here against wood_afe.net at the dry end:
+*
+*   R_wood     dual-MUX (true)   single-MUX (Rlk=500k)
+*   100k       1.570 V           1.706 V
+*   300k       0.805 V           1.109 V
+*   500k       0.541 V           0.916 V
+*   750k       0.384 V           0.805 V   <- reads like 9% MC (truly 7%)
+*   1.5M       0.205 V           0.680 V   <- reads like ~9% MC (truly 6%)
+*
+* i.e. several % MC of error in the dry range -- exactly why the dual-MUX
+* redesign separates the excite and sense SIG nodes.
+
+.param R1=10k R2=100k Ron=70 Rlk=500k
+.step param Rw list 100k 300k 500k 750k 1500k
+
+VEXC exc  0    DC 3.3
+R1   exc  na   {R1}
+RonA na   pa   {Ron}
+Rw   pa   pb   {Rw}
+RonB pb   sigb {Ron}
+R2   sigb 0    {R2}
+Rleak na   sigb {Rlk}      ; leakage shunt around the wood (single-MUX only)
+
+.tran 1u 2m
+.meas TRAN Vadc FIND V(sigb) AT 1m
+.end
