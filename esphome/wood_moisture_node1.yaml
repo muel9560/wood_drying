@@ -192,7 +192,7 @@ sensor:
       id(excite_pin).turn_off();
       delay(${read_delay});
       float vl = id(raw_adc).sample();
-      float v = vh;
+      float v = vh - 0.5f*(vbase+vl);
       ESP_LOGD("voltage", "CH-A00 vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vbase, vh, vl, v);
       if (v >= 3.26f || v <= 0.05f) {
         ESP_LOGW("moisture", "CH-A00 open/short circuit - v=%.4f", v);
@@ -235,7 +235,7 @@ sensor:
       id(excite_pin).turn_off();
       delay(${read_delay});
       float vl = id(raw_adc).sample();
-      float v = vh;
+      float v = vh - 0.5f*(vbase+vl);
       ESP_LOGD("voltage", "CH-A01 vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vbase, vh, vl, v);
       if (v >= 3.26f || v <= 0.05f) {
         ESP_LOGW("moisture", "CH-A01 open/short circuit - v=%.4f", v);
@@ -278,9 +278,9 @@ sensor:
       id(excite_pin).turn_off();
       delay(${read_delay});
       float vl = id(raw_adc).sample();
-      float v = vh;
+      float v = vh - 0.5f*(vbase+vl);
       ESP_LOGD("voltage", "CH-A02 vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vbase, vh, vl, v);
-      if (v >= 3.26f || v <= 0.05f) {
+      if (v >= 3.26f || v <= 0.01f) {
         ESP_LOGW("moisture", "CH-A02 open/short circuit - v=%.4f", v);
         return NAN;
       }
