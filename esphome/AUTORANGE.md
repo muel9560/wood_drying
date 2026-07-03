@@ -92,19 +92,25 @@ are the MUX address lines (`mux_s0..s3`) and the log tag.
       id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
       delay(${addr_delay});
 
-      // --- read on the default 100k range ---
+      // --- correlated double sample on the default 100k range ---
+      // A reference (excite OFF) taken before AND after the signal (excite ON)
+      // brackets out the ADC offset, the electrode DC / polarization, and slow
+      // drift: v = signal - mean(reference). See "Correlated double sampling".
+      float vb0, vh, vb1;
       range_lo();
-      id(excite_pin).turn_on();  delay(${read_delay});
-      float v  = id(raw_adc).sample();
-      id(excite_pin).turn_off();
+      id(excite_pin).turn_off(); delay(${read_delay}); vb0 = id(raw_adc).sample();
+      id(excite_pin).turn_on();  delay(${read_delay}); vh  = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(${read_delay}); vb1 = id(raw_adc).sample();
+      float v  = vh - 0.5f * (vb0 + vb1);
       float r2 = ${r2_lo};
 
-      // --- dry? re-read on the 220k range (lifts V off the ADC floor) ---
+      // --- dry? re-read (also CDS) on the 220k range (lifts V off the floor) ---
       if (!isnan(v) && v < ${autorange_v_thresh}) {
         range_hi();
-        id(excite_pin).turn_on();  delay(${read_delay} + ${hi_extra_dwell});
-        v  = id(raw_adc).sample();
-        id(excite_pin).turn_off();
+        id(excite_pin).turn_off(); delay(${read_delay} + ${hi_extra_dwell}); vb0 = id(raw_adc).sample();
+        id(excite_pin).turn_on();  delay(${read_delay} + ${hi_extra_dwell}); vh  = id(raw_adc).sample();
+        id(excite_pin).turn_off(); delay(${read_delay} + ${hi_extra_dwell}); vb1 = id(raw_adc).sample();
+        v  = vh - 0.5f * (vb0 + vb1);
         r2 = ${r2_hi};
         ESP_LOGD("moisture", "CH-A00 autorange -> 220k v=%.4f", v);
       }
@@ -128,6 +134,29 @@ are the MUX address lines (`mux_s0..s3`) and the log tag.
       return mc;
     state_class: measurement
 ```
+
+## Correlated double sampling (CDS)
+
+The read takes a reference sample with excitation **off**, the signal sample with
+excitation **on**, and a second reference **off** — then uses
+`v = vh − ½·(vb0 + vb1)`. Subtracting the reference cancels everything that is
+common to both states: the ESP32-S3 ADC's offset, the DC the electrode/wood
+junction builds up (polarization), and slow thermal or hum drift on the long
+probe runs. Bracketing the signal with a reference *before and after* also
+cancels linear drift across the reading window. This is the same trick CCD/CMOS
+image sensors use to erase reset (kTC) noise. It matters most at the dry end,
+where the real signal is only a couple hundred mV sitting on that pedestal.
+
+Two practical notes:
+
+- CDS trades offset rejection for a little more *random* noise (subtracting two
+  noisy samples). Pair it with ADC averaging — set the `raw_adc` sensor to
+  `samples: 4` (or 8) — to get both a flat baseline and lower noise.
+- The **signal** sample must come after the node has settled (the
+  `tau = C_wood·(R_wood ∥ (R1+R2))` dwell from `spice/wood_afe_ac.net`), but the
+  two **reference** samples must be close enough in time that the pedestal hasn't
+  moved. The `${read_delay}` (and `+ ${hi_extra_dwell}` on the 220k range)
+  covers the settle; keep the whole three-sample burst tight.
 
 ## Why the 0.80 V threshold
 
