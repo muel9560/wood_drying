@@ -242,7 +242,7 @@ sensor:
         return NAN;
       }
       float r = (${r2_value} * 3.3f / v) - ${r1_value} - ${r2_value};
-      ESP_LOGD("moisture", "CH-A00 r=%.0f", r);
+      ESP_LOGD("moisture", "CH-A01 r=%.0f", r);
       if (r <= 0.0f) return 28.0f;          // effectively short
       if (r > 1500000.0f) return 6.0f;      // below measurement range
       if (r < 8000.0f) return 28.0f;        // above fiber saturation
@@ -285,7 +285,7 @@ sensor:
         return NAN;
       }
       float r = (${r2_value} * 3.3f / v) - ${r1_value} - ${r2_value};
-      ESP_LOGD("moisture", "CH-A00 r=%.0f", r);
+      ESP_LOGD("moisture", "CH-A02 r=%.0f", r);
       if (r <= 0.0f) return 28.0f;          // effectively short
       if (r > 1500000.0f) return 6.0f;      // below measurement range
       if (r < 8000.0f) return 28.0f;        // above fiber saturation
