@@ -237,10 +237,13 @@ sensor:
       float r = (${r2_value} * 3.3f / v) - ${r1_value} - ${r2_value};
       ESP_LOGD("moisture", "CH-A00 r=%.0f", r);
       id(m_a00_r).publish_state(r);         // raw pre-clamp resistance — for calibration
-      if (r <= 0.0f) return 28.0f;          // effectively short
-      if (r > 1500000.0f) return 6.0f;      // below measurement range
-      if (r < 8000.0f) return 28.0f;        // above fiber saturation
+      if (r <= 0.0f) return 28.0f;          // effectively short → saturate high
       float mc = ${cal_a} - ${cal_b} * log10f(r);
+      // Clamp MC to the curve's valid band, NOT resistance. The old code did
+      // `r > 1.5MΩ → 6%`, but the curve puts 1.5MΩ at 13.2% MC, so it floored
+      // every reading drier than ~13% to a bogus 6%. (Curve hits 6% at ~383MΩ.)
+      if (mc > 28.0f) mc = 28.0f;           // fiber-saturation ceiling
+      if (mc < 6.0f)  mc = 6.0f;            // dry floor
       if (!isnan(t)) {
         float t_c = (t - 32.0f) * 5.0f / 9.0f;   // sensor07_mer reports °F → convert to °C
         ESP_LOGD("moisture", "CH-A00 temp=%.1fF (%.1fC)", t, t_c);
@@ -301,10 +304,13 @@ sensor:
       float r = (${r2_value} * 3.3f / v) - ${r1_value} - ${r2_value};
       ESP_LOGD("moisture", "CH-A01 r=%.0f", r);
       id(m_a01_r).publish_state(r);         // raw pre-clamp resistance — for calibration
-      if (r <= 0.0f) return 28.0f;          // effectively short
-      if (r > 1500000.0f) return 6.0f;      // below measurement range
-      if (r < 8000.0f) return 28.0f;        // above fiber saturation
+      if (r <= 0.0f) return 28.0f;          // effectively short → saturate high
       float mc = ${cal_a} - ${cal_b} * log10f(r);
+      // Clamp MC to the curve's valid band, NOT resistance. The old code did
+      // `r > 1.5MΩ → 6%`, but the curve puts 1.5MΩ at 13.2% MC, so it floored
+      // every reading drier than ~13% to a bogus 6%. (Curve hits 6% at ~383MΩ.)
+      if (mc > 28.0f) mc = 28.0f;           // fiber-saturation ceiling
+      if (mc < 6.0f)  mc = 6.0f;            // dry floor
       if (!isnan(t)) {
         float t_c = (t - 32.0f) * 5.0f / 9.0f;   // sensor07_mer reports °F → convert to °C
         ESP_LOGD("moisture", "CH-A01 temp=%.1fF (%.1fC)", t, t_c);
