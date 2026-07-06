@@ -36,7 +36,7 @@
 
 esphome:
   name: woodstack01-mer
-  friendly_name: "Stack Moisture Node 1 - 5-4 and 6-4"
+  friendly_name: "Stack Moisture Node 1"
   on_boot:
     priority: 600
     then:
@@ -97,17 +97,23 @@ statsd:
 #      id: wifi_signal_db
 #    - name: sensor.wifi.wifi-signal-percent
 #      id: wifi_signal_percent
-    # ch00 (m_a00) sensor was removed from this file — re-add the sensor block
-    # before re-enabling this metric or ESPHome validation fails on unknown id.
-#    - name: ch00.mc
-#      id: m_a00
+#    - name: ch00.temp
+#      id: m_a00.t
+#    - name: ch00.resistance
+#      id: m_a00.r
+    - name: ch00.mc
+      id: m_a00
+    - name: ch00.resistance
+      id: m_a00_r
+    - name: ch00.temp
+      id: m_a00_t
     - name: ch01.mc
       id: m_a01
     - name: ch01.resistance
       id: m_a01_r
     - name: ch01.temp
       id: m_a01_t
-
+      
 # ── Outputs ───────────────────────────────────────────────────────────────────
 output:
   - platform: gpio
@@ -175,13 +181,75 @@ sensor:
     internal: true
 
   # ════════════════════════════════════════════════════════════════════════════
+  # MUX A — 5/4 STOCK (upper shelves, channels 0-15)
   # Channel naming: [shelf unit 1-3][shelf level T=top/U=upper][1/3 or 2/3 pos][S=shallow/D=deep]
   # ════════════════════════════════════════════════════════════════════════════
 
-  # ── A01 companion sensors ───────────────────────────────────────────────
-  # Populated by the m_a01 lambda via publish_state(); update_interval: never
-  # so they never trigger their own measurement pass. Used to log the raw
-  # (pre-clamp) resistance and the temp against oven-dry weight for calibration.
+  # ── Unit 1, Top Shelf, 5/4 ──────────────────────────────────────────────
+  - platform: template
+    name: "A00: 2in Cal Resistance"
+    id: m_a00_r
+    unit_of_measurement: "Ω"
+    accuracy_decimals: 0
+    icon: "mdi:omega"
+    update_interval: never
+
+  - platform: template
+    name: "A00: 2in Cal Temp"
+    id: m_a00_t
+    unit_of_measurement: "°F"   # sensor07_mer_temperature reports °F (see correction note)
+    accuracy_decimals: 1
+    icon: "mdi:thermometer"
+    update_interval: never
+
+  - platform: template
+    name: "A00: 2in Cal Deep"
+    id: m_a00
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      id(mux_en).turn_on();    // disable MUX briefly (inverted: HIGH = disabled)
+      delay(${bleed_delay});
+      id(mux_en).turn_off();   // ensure MUX stays enabled
+      id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
+      delay(${addr_delay});
+      id(excite_pin).turn_off();
+      delay(${read_delay});
+      float vbase = id(raw_adc).sample();
+      id(excite_pin).turn_on();
+      delay(${read_delay});
+      float vh = id(raw_adc).sample();
+      id(excite_pin).turn_off();
+      delay(${read_delay});
+      float vl = id(raw_adc).sample();
+      float v = vh - 0.5f*(vbase+vl);
+      ESP_LOGD("voltage", "CH-A00 vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vbase, vh, vl, v);
+      // Publish temp used for correction so it lands in statsd alongside R and MC
+      float t = id(stack_temp_c).state;
+      id(m_a00_t).publish_state(t);
+      if (v >= 3.26f || v <= 0.05f) {
+        ESP_LOGW("moisture", "CH-A00 open/short circuit - v=%.4f", v);
+        id(m_a00_r).publish_state(NAN);
+        return NAN;
+      }
+      float r = (${r2_value} * 3.3f / v) - ${r1_value} - ${r2_value};
+      ESP_LOGD("moisture", "CH-A00 r=%.0f", r);
+      id(m_a00_r).publish_state(r);         // raw pre-clamp resistance — for calibration
+      if (r <= 0.0f) return 28.0f;          // effectively short
+      if (r > 1500000.0f) return 6.0f;      // below measurement range
+      if (r < 8000.0f) return 28.0f;        // above fiber saturation
+      float mc = ${cal_a} - ${cal_b} * log10f(r);
+      if (!isnan(t)) {
+        float t_c = (t - 32.0f) * 5.0f / 9.0f;   // sensor07_mer reports °F → convert to °C
+        ESP_LOGD("moisture", "CH-A00 temp=%.1fF (%.1fC)", t, t_c);
+        mc -= ((t_c - ${temp_baseline_c}f) / 5.6f) * 0.5f;
+      } else {
+        ESP_LOGW("moisture", "CH-A00 temp unavailable, skipping correction");
+      }
+      return mc;
+
   - platform: template
     name: "A01: 2in Cal Resistance"
     id: m_a01_r
@@ -225,7 +293,7 @@ sensor:
       // Publish temp used for correction so it lands in statsd alongside R and MC
       float t = id(stack_temp_c).state;
       id(m_a01_t).publish_state(t);
-      if (v >= 3.26f || v <= 0.05f) {
+      if (v >= 3.26f || v <= 0.04f) {
         ESP_LOGW("moisture", "CH-A01 open/short circuit - v=%.4f", v);
         id(m_a01_r).publish_state(NAN);
         return NAN;
@@ -245,4 +313,5 @@ sensor:
         ESP_LOGW("moisture", "CH-A01 temp unavailable, skipping correction");
       }
       return mc;
+
 
