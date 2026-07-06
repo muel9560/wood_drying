@@ -177,8 +177,9 @@ Higher R2 also raises the ADC source impedance, so on the 220k range add a
 bit more settling dwell — the same `tau = C_wood·(R_wood ∥ (R1+R2))` trade-off
 that `wood_afe_ac.net` models.
 
-Wiring: `wood_afe_autorange_sch.asc`. ESPHome integration (config additions +
-drop-in channel lambda): [`../esphome/AUTORANGE.md`](../esphome/AUTORANGE.md).
+Wiring diagram: [`../media/moisture_autorange_wiring.svg`](../media/moisture_autorange_wiring.svg)
+(LTspice source: `wood_afe_autorange_sch.asc`). ESPHome integration (config
+additions + drop-in channel lambda): [`../esphome/AUTORANGE.md`](../esphome/AUTORANGE.md).
 
 ## Not yet modeled
 

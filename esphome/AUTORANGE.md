@@ -8,25 +8,30 @@ the same wood resistance produces a larger, cleaner voltage. See
 numbers and [`../spice/wood_afe_autorange_sch.asc`](../spice/wood_afe_autorange_sch.asc)
 for the wiring.
 
-## Fix the resistance formula first (applies to every channel)
+## Two firmware fixes this assumes (already shipped on the main channels)
 
-The current channel lambdas compute resistance as:
+Both are already applied to `updated_wood_moisture_node1.yaml`; keep them when you
+paste the auto-range lambda below.
 
-```cpp
-float r = (${r1_value} * 3.3f / v) - ${r1_value} - ${r2_value};   // WRONG
-```
+1. **Resistance solve uses R2 in the numerator.** The divider is
+   `V = VCC · R2 / (R1 + R_wood + R2)`, so:
 
-The divider is `V = VCC · R2 / (R1 + R_wood + R2)`, so the solve is:
+   ```cpp
+   float r = (${r2_value} * 3.3f / v) - ${r1_value} - ${r2_value};   // R2, not R1
+   ```
 
-```cpp
-float r = (${r2_value} * 3.3f / v) - ${r1_value} - ${r2_value};   // R2 in the numerator
-```
+   An earlier version had `R1` there, which yields negative resistance and the
+   `r <= 0` guard returns 28% — the sensor read ~28% for everything.
 
-With the old line a real reading (v = 1.57 V at 100 kΩ) yields a negative
-resistance and the `r <= 0` guard returns 28% — the sensor reads ~28% for
-almost everything. Fix this on the main channels regardless of auto-ranging.
+2. **Clamp MC, not resistance.** Compute `mc` from the curve, then clamp it to the
+   valid band `[6, 28]`. An earlier version clamped *resistance*
+   (`r > 1.5 MΩ → 6%`), but the curve puts 1.5 MΩ at 13.2% MC, so it floored every
+   reading drier than ~13% to a bogus 6% — exactly the dry-end range the 220 kΩ
+   path exists to measure.
 
 ## Hardware
+
+![Switchable-R2 auto-range front end](../media/moisture_autorange_wiring.svg)
 
 Two pull-downs from the ADC node (`sigb`, GPIO1), each grounded by its own GPIO
 used as a switched ground — no extra chips:
@@ -124,12 +129,13 @@ are the MUX address lines (`mux_s0..s3`) and the log tag.
 
       // correct solve, using whichever R2 was active:
       float r = (r2 * ${vcc} / v) - ${r1_value} - r2;
-      if (r <= 0.0f)            return 28.0f;   // effectively short
-      if (r > ${r_dry_clamp})   return 6.0f;    // below measurement range
-      if (r < ${r_wet_clamp})   return 28.0f;   // above fiber saturation
+      if (r <= 0.0f) return 28.0f;              // effectively short -> saturate high
       float mc = ${cal_a} - ${cal_b} * log10f(r);
-      float t = id(stack_temp_c).state;
-      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
+      if (mc > 28.0f) mc = 28.0f;               // fiber-saturation ceiling
+      if (mc < 6.0f)  mc = 6.0f;                // dry floor
+      float t = id(stack_temp_c).state;         // sensor07_mer reports °F
+      if (!isnan(t)) { float t_c = (t - 32.0f) * 5.0f / 9.0f;
+                       mc -= ((t_c - ${temp_baseline_c}f) / 5.6f) * 0.5f; }
       else ESP_LOGW("moisture", "CH-A00 temp unavailable, skipping correction");
       return mc;
     state_class: measurement

@@ -258,6 +258,27 @@ Each node needs 1× ESP32-S3 (you have 9) and 1× 2-pack CD74HC4067.*
 
 ---
 
+## Auto-Ranging for the Dry End (Optional)
+
+The stock front end uses a single 100&nbsp;kΩ pull-down (`R2`). It spreads the full
+8&nbsp;kΩ–1.5&nbsp;MΩ wood-resistance span well, but at the bone-dry end — exactly where
+you decide a board is furniture-ready — 6% MC reads only **0.205&nbsp;V**, down in the
+ESP32-S3 ADC's noisy low-voltage floor.
+
+Adding a second, switchable pull-down (**220&nbsp;kΩ**) beside the 100&nbsp;kΩ lifts that
+same reading to **0.42&nbsp;V**, back in the linear zone. No extra chips: each pull-down
+is grounded by its own GPIO used as a switched ground. Firmware reads on the 100&nbsp;kΩ
+range and, when a channel drops below ~0.8&nbsp;V (≤ ~9% MC), re-reads it on the
+220&nbsp;kΩ range with the matching solve constant.
+
+![Switchable-R2 auto-range front end](media/moisture_autorange_wiring.svg)
+
+- Circuit / SPICE trade-off: [`spice/README.md`](spice/README.md) → "Component value selection"
+- ESPHome integration (config + drop-in channel lambda): [`esphome/AUTORANGE.md`](esphome/AUTORANGE.md)
+
+The shipping design stays at 10&nbsp;k/100&nbsp;k; the 220&nbsp;k path is only exercised for
+channels that have already dried past ~9% MC.
+
 ## Files in This Package
 
 | File | Description |
@@ -265,6 +286,7 @@ Each node needs 1× ESP32-S3 (you have 9) and 1× 2-pack CD74HC4067.*
 | `wood_moisture_project.md` | This documentation (updated) |
 | `wood_moisture_design_update.md` | Dual MUX fix, PSoC 5LP comparison, clip solution |
 | `moisture_dual_mux_wiring.png` | Dual MUX wiring diagram |
+| `media/moisture_autorange_wiring.svg` | Switchable-R2 (100k/220k) auto-range front end |
 | `moisture_psoc5lp_design.png` | PSoC 5LP design overview |
 | `moisture_sensor_wiring_3node.png` | Three-node overview |
 | `moisture_sensor_wiring.png` | Single-node breadboard reference |
