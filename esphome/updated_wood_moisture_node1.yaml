@@ -50,7 +50,7 @@ substitutions:
   ref_resistor: "100000.0"
   vcc: "3.3"
   temp_baseline_c: "21.1"
-  scan_interval: "30s"
+  scan_interval: "60s"
   node_name: "node1"
   bleed_delay: "50"
   addr_delay: "10"
@@ -87,16 +87,24 @@ wifi:
     dns2: 172.16.1.61
 
 # Example configuration entry
-#statsd:
-#  host: 172.16.1.108
-#  port: 8125
-#  prefix: "woodstack.esp32.woodstack01-mer"
-#  update_interval: 15s
-#  sensors:
+statsd:
+  host: 172.16.1.108
+  port: 8125
+  prefix: "woodstack.esp32.woodstack01-mer"
+  update_interval: 60s
+  sensors:
 #    - name: sensor.wifi.wifi-signal-db
 #      id: wifi_signal_db
 #    - name: sensor.wifi.wifi-signal-percent
 #      id: wifi_signal_percent
+#    - name: ch00.temp
+#      id: m_a00.t
+#    - name: ch00.resistance
+#      id: m_a00.r
+    - name: ch00.mc
+      id: m_a00
+    - name: ch01.mc
+      id: m_a01
 
 # ── Outputs ───────────────────────────────────────────────────────────────────
 output:
@@ -165,56 +173,11 @@ sensor:
     internal: true
 
   # ════════════════════════════════════════════════════════════════════════════
-  # MUX A — 5/4 STOCK (upper shelves, channels 0-15)
   # Channel naming: [shelf unit 1-3][shelf level T=top/U=upper][1/3 or 2/3 pos][S=shallow/D=deep]
   # ════════════════════════════════════════════════════════════════════════════
 
-  # ── Unit 1, Top Shelf, 5/4 ──────────────────────────────────────────────
   - platform: template
-    name: "2in Calibbration Shallow"
-    id: m_a00
-    unit_of_measurement: "%"
-    accuracy_decimals: 1
-    icon: "mdi:water-percent"
-    update_interval: ${scan_interval}
-    lambda: |-
-      id(mux_en).turn_on();    // disable MUX briefly (inverted: HIGH = disabled)
-      delay(${bleed_delay});
-      id(mux_en).turn_off();   // ensure MUX stays enabled
-      id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
-      delay(${addr_delay});
-      id(excite_pin).turn_off();
-      delay(${read_delay});
-      float vbase = id(raw_adc).sample();
-      id(excite_pin).turn_on();
-      delay(${read_delay});
-      float vh = id(raw_adc).sample();
-      id(excite_pin).turn_off();
-      delay(${read_delay});
-      float vl = id(raw_adc).sample();
-      float v = vh;
-      ESP_LOGD("voltage", "CH-A00 vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vbase, vh, vl, v);
-      if (v >= 3.26f || v <= 0.05f) {
-        ESP_LOGW("moisture", "CH-A00 open/short circuit - v=%.4f", v);
-        return NAN;
-      }
-      float r = (${r1_value} * 3.3f / v) - ${r1_value} - ${r2_value};
-      ESP_LOGD("moisture", "CH-A00 r=%.0f", r);
-      if (r <= 0.0f) return 28.0f;          // effectively short
-      if (r > 1500000.0f) return 6.0f;      // below measurement range
-      if (r < 8000.0f) return 28.0f;        // above fiber saturation
-      float mc = ${cal_a} - ${cal_b} * log10f(r);
-      float t = id(stack_temp_c).state;
-      ESP_LOGD("moisture", "CH-A00 temp=%.1f", t);
-      if (!isnan(t)) {
-        mc -= ((t - 21.1f) / 5.6f) * 0.5f;
-      } else {
-        ESP_LOGW("moisture", "CH-A00 temp unavailable, skipping correction");
-      }
-      return mc;
-
-  - platform: template
-    name: "2in Calibbration Deep"
+    name: "A01: 2in Cal Deep"
     id: m_a01
     unit_of_measurement: "%"
     accuracy_decimals: 1
@@ -235,14 +198,14 @@ sensor:
       id(excite_pin).turn_off();
       delay(${read_delay});
       float vl = id(raw_adc).sample();
-      float v = vh;
+      float v = vh - 0.5f*(vbase+vl);
       ESP_LOGD("voltage", "CH-A01 vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vbase, vh, vl, v);
       if (v >= 3.26f || v <= 0.05f) {
         ESP_LOGW("moisture", "CH-A01 open/short circuit - v=%.4f", v);
         return NAN;
       }
-      float r = (${r1_value} * 3.3f / v) - ${r1_value} - ${r2_value};
-      ESP_LOGD("moisture", "CH-A00 r=%.0f", r);
+      float r = (${r2_value} * 3.3f / v) - ${r1_value} - ${r2_value};
+      ESP_LOGD("moisture", "CH-A01 r=%.0f", r);
       if (r <= 0.0f) return 28.0f;          // effectively short
       if (r > 1500000.0f) return 6.0f;      // below measurement range
       if (r < 8000.0f) return 28.0f;        // above fiber saturation
@@ -256,135 +219,3 @@ sensor:
       }
       return mc;
 
-  - platform: template
-    name: "2019 Reference"
-    id: m_a02
-    unit_of_measurement: "%"
-    accuracy_decimals: 1
-    icon: "mdi:water-percent"
-    update_interval: ${scan_interval}
-    lambda: |-
-      id(mux_en).turn_on();    // disable MUX briefly (inverted: HIGH = disabled)
-      delay(${bleed_delay});
-      id(mux_en).turn_off();   // ensure MUX stays enabled
-      id(mux_s0).turn_off(); id(mux_s1).turn_on(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
-      delay(${addr_delay});
-      id(excite_pin).turn_off();
-      delay(${read_delay});
-      float vbase = id(raw_adc).sample();
-      id(excite_pin).turn_on();
-      delay(${read_delay});
-      float vh = id(raw_adc).sample();
-      id(excite_pin).turn_off();
-      delay(${read_delay});
-      float vl = id(raw_adc).sample();
-      float v = vh;
-      ESP_LOGD("voltage", "CH-A02 vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vbase, vh, vl, v);
-      if (v >= 3.26f || v <= 0.05f) {
-        ESP_LOGW("moisture", "CH-A02 open/short circuit - v=%.4f", v);
-        return NAN;
-      }
-      float r = (${r1_value} * 3.3f / v) - ${r1_value} - ${r2_value};
-      ESP_LOGD("moisture", "CH-A00 r=%.0f", r);
-      if (r <= 0.0f) return 28.0f;          // effectively short
-      if (r > 1500000.0f) return 6.0f;      // below measurement range
-      if (r < 8000.0f) return 28.0f;        // above fiber saturation
-      float mc = ${cal_a} - ${cal_b} * log10f(r);
-      float t = id(stack_temp_c).state;
-      ESP_LOGD("moisture", "CH-A02 temp=%.1f", t);
-      if (!isnan(t)) {
-        mc -= ((t - 21.1f) / 5.6f) * 0.5f;
-      } else {
-        ESP_LOGW("moisture", "CH-A02 temp unavailable, skipping correction");
-      }
-      return mc;
-    state_class: measurement
-
-#  - platform: template
-#    name: "Calibration2 Shallow"
-#    id: m_a03
-#    unit_of_measurement: "%"
-#    accuracy_decimals: 1
-#    icon: "mdi:water-percent"
-#    update_interval: ${scan_interval}
-#    lambda: |-
-#      id(mux_en).turn_off();   // ensure MUX stays enabled
-#      id(mux_s0).turn_on(); id(mux_s1).turn_on(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
-#      delay(10);
-#      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
-#      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
-#      float v = (vh + (3.3f - vl)) / 2.0f;
-#      if (v >= 3.26f || v <= 0.04f) return NAN;
-#      float r = 1000000.0f * v / (3.3f - v);
-#      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
-#      float mc = 31.62f - 2.985f * log10f(r);
-#      float t = id(stack_temp_c).state;
-#      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
-#      return mc;
-
-  # ── Unit 2, Top Shelf, 5/4 ──────────────────────────────────────────────
-#  - platform: template
-#    name: "Calibration2 Deep"
-#    id: m_a04
-#    unit_of_measurement: "%"
-#    accuracy_decimals: 1
-#    icon: "mdi:water-percent"
-#    update_interval: ${scan_interval}
-#    lambda: |-
-#      id(mux_en).turn_off();   // ensure MUX stays enabled
-#      id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_on(); id(mux_s3).turn_off();
-#      delay(10);
-#      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
-#      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
-#      float v = (vh + (3.3f - vl)) / 2.0f;
-#      if (v >= 3.26f || v <= 0.04f) return NAN;
-#      float r = 1000000.0f * v / (3.3f - v);
-#      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
-#      float mc = 31.62f - 2.985f * log10f(r);
-#      float t = id(stack_temp_c).state;
-#      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
-#      return mc;
-
-#  - platform: template
-#    name: "Calibration3 Shallow"
-#    id: m_a05
-#    unit_of_measurement: "%"
-#    accuracy_decimals: 1
-#    icon: "mdi:water-percent"
-#    update_interval: ${scan_interval}
-#    lambda: |-
-#      id(mux_en).turn_off();   // ensure MUX stays enabled
-#      id(mux_s0).turn_on(); id(mux_s1).turn_off(); id(mux_s2).turn_on(); id(mux_s3).turn_off();
-#      delay(10);
-#      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
-#      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
-#      float v = (vh + (3.3f - vl)) / 2.0f;
-#      if (v >= 3.26f || v <= 0.04f) return NAN;
-#      float r = 1000000.0f * v / (3.3f - v);
-#      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
-#      float mc = 31.62f - 2.985f * log10f(r);
-#      float t = id(stack_temp_c).state;
-#      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
-#      return mc;
-
-#  - platform: template
-#    name: "Calibration3 Deep"
-#    id: m_a06
-#    unit_of_measurement: "%"
-#    accuracy_decimals: 1
-#    icon: "mdi:water-percent"
-#    update_interval: ${scan_interval}
-#    lambda: |-
-#      id(mux_en).turn_off();   // ensure MUX stays enabled
-#      id(mux_s0).turn_off(); id(mux_s1).turn_on(); id(mux_s2).turn_on(); id(mux_s3).turn_off();
-#      delay(10);
-#      id(excite_pin).turn_on(); delay(2); float vh = id(raw_adc).sample();
-#      id(excite_pin).turn_off(); delay(2); float vl = id(raw_adc).sample();
-#      float v = (vh + (3.3f - vl)) / 2.0f;
-#      if (v >= 3.26f || v <= 0.04f) return NAN;
-#      float r = 1000000.0f * v / (3.3f - v);
-#      if (r > 1500000.0f) return 6.0f; if (r < 8000.0f) return 28.0f;
-#      float mc = 31.62f - 2.985f * log10f(r);
-#      float t = id(stack_temp_c).state;
-#      if (!isnan(t)) mc -= ((t - 21.1f) / 5.6f) * 0.5f;
-#      return mc;
