@@ -54,7 +54,7 @@ substitutions:
   ref_resistor: "100000.0"
   vcc: "3.3"
   temp_baseline_c: "21.1"
-  scan_interval: "60s"
+  scan_interval: "300s"    # 5 min — drying is slow; gives 16 channels time; gentler on probes
   node_name: "node1"
   bleed_delay: "50"
   addr_delay: "10"
@@ -100,28 +100,20 @@ statsd:
   host: 172.16.1.108
   port: 8125
   prefix: "woodstack.esp32.woodstack01-mer"
-  update_interval: 60s
+  update_interval: 300s   # match the 5-min scan so statsd doesn't resend stale values
   sensors:
-#    - name: sensor.wifi.wifi-signal-db
-#      id: wifi_signal_db
-#    - name: sensor.wifi.wifi-signal-percent
-#      id: wifi_signal_percent
-#    - name: ch00.temp
-#      id: m_a00.t
-#    - name: ch00.resistance
-#      id: m_a00.r
-    - name: ch00.mc
+    # Bench calibration pieces — validating the new schema before the real stack.
+    # woodstack.esp32.<node>.wood.<stack>.<level>.<thickness>.<board>.<spot>.<depth>.<field>
+    # A00/A01 = green test piece, shallow + deep (thickness "cal" until it's stacked).
+    # Per-channel temp is dropped from statsd (redundant with the climate nodes).
+    - name: "wood.bench.b1.cal.green.mid.shallow.mc"
       id: m_a00
-    - name: ch00.resistance
+    - name: "wood.bench.b1.cal.green.mid.shallow.resistance"
       id: m_a00_r
-    - name: ch00.temp
-      id: m_a00_t
-    - name: ch01.mc
+    - name: "wood.bench.b1.cal.green.mid.deep.mc"
       id: m_a01
-    - name: ch01.resistance
+    - name: "wood.bench.b1.cal.green.mid.deep.resistance"
       id: m_a01_r
-    - name: ch01.temp
-      id: m_a01_t
       
 # ── Outputs ───────────────────────────────────────────────────────────────────
 output:
