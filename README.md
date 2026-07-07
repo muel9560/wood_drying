@@ -249,6 +249,9 @@ Each node needs 1× ESP32-S3 (you have 9) and 1× 2-pack CD74HC4067.*
 
 ## InfluxDB / Grafana Dashboard Suggestions
 
+Data pipeline and the StatsD/InfluxDB tag+field schema are documented in
+[`data/README.md`](data/README.md).
+
 - Per-board MC% trend lines by thickness group
 - Shell vs core differential (Shallow − Deep) per probe pair
 - Alert: differential > 5% on any 10/4+ board → tighten wrap
