@@ -41,8 +41,12 @@ esphome:
     priority: 600
     then:
       - output.turn_off: excite_pin
-      - output.turn_off: mux_en    # LOW = MUX ensabled (inverted)
+      - output.turn_off: mux_en    # LOW = MUX enabled (inverted)
       - logger.log: "Boot complete - excite LOW, MUX enabled"
+      - lambda: |-
+          // default to the 100k range at boot
+          pinMode(${pin_r2_hi}, INPUT);
+          pinMode(${pin_r2_lo}, OUTPUT); digitalWrite(${pin_r2_lo}, LOW);
 
 substitutions:
   cal_a: "31.62"          # Black walnut log-linear curve coefficient A
@@ -56,9 +60,13 @@ substitutions:
   addr_delay: "10"
   read_delay: "200"
   r1_value: "10000.0"
-  r2_value: "100000.0"
-  r_dry_clamp: "1500000.0"
-  r_wet_clamp: "8000.0"
+  r2_lo: "100000.0"       # default broadband range
+  r2_hi: "220000.0"       # dry-end range
+  autorange_v_thresh: "0.80"  # on the 100k range, below this is re-read on 220k
+                              # (0.80 V ~ R_wood 300k ~ 9% MC)
+  pin_r2_lo: "43"         # GPIO43 grounding the 100k pull-down
+  pin_r2_hi: "44"         # GPIO44 grounding the 220k pull-down
+  hi_extra_dwell: "200"   # extra ms settle on the 220k range (higher-R -> slower)
   
 esp32:
   board: esp32-s3-devkitc-1
@@ -67,6 +75,7 @@ esp32:
 
 logger:
   level: DEBUG
+  hardware_uart: USB_SERIAL_JTAG
 
 api:
   encryption:
@@ -210,48 +219,67 @@ sensor:
     icon: "mdi:water-percent"
     update_interval: ${scan_interval}
     lambda: |-
+      // --- range-select helpers (raw GPIO switched grounds) ---
+      auto range_lo = []() { pinMode(${pin_r2_hi}, INPUT);
+                             pinMode(${pin_r2_lo}, OUTPUT); digitalWrite(${pin_r2_lo}, LOW); };
+      auto range_hi = []() { pinMode(${pin_r2_lo}, INPUT);
+                             pinMode(${pin_r2_hi}, OUTPUT); digitalWrite(${pin_r2_hi}, LOW); };
+
       id(mux_en).turn_on();    // disable MUX briefly (inverted: HIGH = disabled)
       delay(${bleed_delay});
       id(mux_en).turn_off();   // ensure MUX stays enabled
       id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
       delay(${addr_delay});
-      id(excite_pin).turn_off();
-      delay(${read_delay});
-      float vbase = id(raw_adc).sample();
-      id(excite_pin).turn_on();
-      delay(${read_delay});
-      float vh = id(raw_adc).sample();
-      id(excite_pin).turn_off();
-      delay(${read_delay});
-      float vl = id(raw_adc).sample();
-      float v = vh - 0.5f*(vbase+vl);
-      ESP_LOGD("voltage", "CH-A00 vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vbase, vh, vl, v);
-      // Publish temp used for correction so it lands in statsd alongside R and MC
-      float t = id(stack_temp_c).state;
-      id(m_a00_t).publish_state(t);
-      if (v >= 3.26f || v <= 0.05f) {
-        ESP_LOGW("moisture", "CH-A00 open/short circuit - v=%.4f", v);
+
+      // --- correlated double sample on the default 100k range ---
+      // A reference (excite OFF) taken before AND after the signal (excite ON)
+      // brackets out the ADC offset, the electrode DC / polarization, and slow
+      // drift: v = signal - mean(reference). See "Correlated double sampling".
+      float vb0, vh, vb1;
+      range_lo();
+      id(excite_pin).turn_off(); delay(${read_delay}); vb0 = id(raw_adc).sample();
+      id(excite_pin).turn_on();  delay(${read_delay}); vh  = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(${read_delay}); vb1 = id(raw_adc).sample();
+      float v  = vh - 0.5f * (vb0 + vb1);
+      ESP_LOGD("voltage", "CH-A00 Range Low vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vb0, vh, vb1, v);
+      float r2 = ${r2_lo};
+
+      // --- dry? re-read (also CDS) on the 220k range (lifts V off the floor) ---
+      if (!isnan(v) && v < ${autorange_v_thresh}) {
+        range_hi();
+        id(excite_pin).turn_off(); delay(${read_delay} + ${hi_extra_dwell}); vb0 = id(raw_adc).sample();
+        id(excite_pin).turn_on();  delay(${read_delay} + ${hi_extra_dwell}); vh  = id(raw_adc).sample();
+        id(excite_pin).turn_off(); delay(${read_delay} + ${hi_extra_dwell}); vb1 = id(raw_adc).sample();
+        v  = vh - 0.5f * (vb0 + vb1);
+        ESP_LOGD("voltage", "CH-A00 Range High vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vb0, vh, vb1, v);
+        r2 = ${r2_hi};
+        ESP_LOGD("moisture", "CH-A00 autorange -> 220k v=%.4f", v);
+      }
+      range_lo();  // leave in the default state
+
+      ESP_LOGD("voltage", "CH-A00 v=%.4f r2=%.0f", v, r2);
+      if (v >= 3.26f || v <= 0.03f) {
+        ESP_LOGW("moisture", "CH-A00 open/short v=%.4f", v);
         id(m_a00_r).publish_state(NAN);
+        id(m_a00_t).publish_state(NAN);
         return NAN;
       }
-      float r = (${r2_value} * 3.3f / v) - ${r1_value} - ${r2_value};
+
+      // correct solve, using whichever R2 was active:
+      float r = (r2 * ${vcc} / v) - ${r1_value} - r2;
       ESP_LOGD("moisture", "CH-A00 r=%.0f", r);
-      id(m_a00_r).publish_state(r);         // raw pre-clamp resistance — for calibration
-      if (r <= 0.0f) return 28.0f;          // effectively short → saturate high
+      id(m_a00_r).publish_state(r);             // raw pre-clamp resistance — for calibration
+      if (r <= 0.0f) return 28.0f;              // effectively short -> saturate high
       float mc = ${cal_a} - ${cal_b} * log10f(r);
-      // Clamp MC to the curve's valid band, NOT resistance. The old code did
-      // `r > 1.5MΩ → 6%`, but the curve puts 1.5MΩ at 13.2% MC, so it floored
-      // every reading drier than ~13% to a bogus 6%. (Curve hits 6% at ~383MΩ.)
-      if (mc > 28.0f) mc = 28.0f;           // fiber-saturation ceiling
-      if (mc < 6.0f)  mc = 6.0f;            // dry floor
-      if (!isnan(t)) {
-        float t_c = (t - 32.0f) * 5.0f / 9.0f;   // sensor07_mer reports °F → convert to °C
-        ESP_LOGD("moisture", "CH-A00 temp=%.1fF (%.1fC)", t, t_c);
-        mc -= ((t_c - ${temp_baseline_c}f) / 5.6f) * 0.5f;
-      } else {
-        ESP_LOGW("moisture", "CH-A00 temp unavailable, skipping correction");
-      }
+      if (mc > 28.0f) mc = 28.0f;               // fiber-saturation ceiling
+      if (mc < 6.0f)  mc = 6.0f;                // dry floor
+      float t = id(stack_temp_c).state;         // sensor07_mer reports °F
+      id(m_a00_t).publish_state(t);
+      if (!isnan(t)) { float t_c = (t - 32.0f) * 5.0f / 9.0f;
+                       mc -= ((t_c - ${temp_baseline_c}f) / 5.6f) * 0.5f; }
+      else ESP_LOGW("moisture", "CH-A00 temp unavailable, skipping correction");
       return mc;
+
 
   - platform: template
     name: "A01: 2in Cal Resistance"
@@ -277,47 +305,66 @@ sensor:
     icon: "mdi:water-percent"
     update_interval: ${scan_interval}
     lambda: |-
+      // --- range-select helpers (raw GPIO switched grounds) ---
+      auto range_lo = []() { pinMode(${pin_r2_hi}, INPUT);
+                             pinMode(${pin_r2_lo}, OUTPUT); digitalWrite(${pin_r2_lo}, LOW); };
+      auto range_hi = []() { pinMode(${pin_r2_lo}, INPUT);
+                             pinMode(${pin_r2_hi}, OUTPUT); digitalWrite(${pin_r2_hi}, LOW); };
+
       id(mux_en).turn_on();    // disable MUX briefly (inverted: HIGH = disabled)
       delay(${bleed_delay});
       id(mux_en).turn_off();   // ensure MUX stays enabled
       id(mux_s0).turn_on(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
       delay(${addr_delay});
-      id(excite_pin).turn_off();
-      delay(${read_delay});
-      float vbase = id(raw_adc).sample();
-      id(excite_pin).turn_on();
-      delay(${read_delay});
-      float vh = id(raw_adc).sample();
-      id(excite_pin).turn_off();
-      delay(${read_delay});
-      float vl = id(raw_adc).sample();
-      float v = vh - 0.5f*(vbase+vl);
-      ESP_LOGD("voltage", "CH-A01 vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vbase, vh, vl, v);
-      // Publish temp used for correction so it lands in statsd alongside R and MC
-      float t = id(stack_temp_c).state;
-      id(m_a01_t).publish_state(t);
-      if (v >= 3.26f || v <= 0.04f) {
-        ESP_LOGW("moisture", "CH-A01 open/short circuit - v=%.4f", v);
+
+      // --- correlated double sample on the default 100k range ---
+      // A reference (excite OFF) taken before AND after the signal (excite ON)
+      // brackets out the ADC offset, the electrode DC / polarization, and slow
+      // drift: v = signal - mean(reference). See "Correlated double sampling".
+      float vb0, vh, vb1;
+      range_lo();
+      id(excite_pin).turn_off(); delay(${read_delay}); vb0 = id(raw_adc).sample();
+      id(excite_pin).turn_on();  delay(${read_delay}); vh  = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(${read_delay}); vb1 = id(raw_adc).sample();
+      float v  = vh - 0.5f * (vb0 + vb1);
+      ESP_LOGD("voltage", "CH-A01 Range Low vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vb0, vh, vb1, v);
+      float r2 = ${r2_lo};
+
+      // --- dry? re-read (also CDS) on the 220k range (lifts V off the floor) ---
+      if (!isnan(v) && v < ${autorange_v_thresh}) {
+        range_hi();
+        id(excite_pin).turn_off(); delay(${read_delay} + ${hi_extra_dwell}); vb0 = id(raw_adc).sample();
+        id(excite_pin).turn_on();  delay(${read_delay} + ${hi_extra_dwell}); vh  = id(raw_adc).sample();
+        id(excite_pin).turn_off(); delay(${read_delay} + ${hi_extra_dwell}); vb1 = id(raw_adc).sample();
+        v  = vh - 0.5f * (vb0 + vb1);
+        ESP_LOGD("voltage", "CH-A01 Range High vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vb0, vh, vb1, v);
+        r2 = ${r2_hi};
+        ESP_LOGD("moisture", "CH-A01 autorange -> 220k v=%.4f", v);
+      }
+      range_lo();  // leave in the default state
+
+      ESP_LOGD("voltage", "CH-A01 v=%.4f r2=%.0f", v, r2);
+      if (v >= 3.26f || v <= 0.03f) {
+        ESP_LOGW("moisture", "CH-A01 open/short v=%.4f", v);
         id(m_a01_r).publish_state(NAN);
+        id(m_a01_t).publish_state(NAN);
         return NAN;
       }
-      float r = (${r2_value} * 3.3f / v) - ${r1_value} - ${r2_value};
+
+      // correct solve, using whichever R2 was active:
+      float r = (r2 * ${vcc} / v) - ${r1_value} - r2;
       ESP_LOGD("moisture", "CH-A01 r=%.0f", r);
-      id(m_a01_r).publish_state(r);         // raw pre-clamp resistance — for calibration
-      if (r <= 0.0f) return 28.0f;          // effectively short → saturate high
+      id(m_a01_r).publish_state(r);             // raw pre-clamp resistance — for calibration
+      if (r <= 0.0f) return 28.0f;              // effectively short -> saturate high
       float mc = ${cal_a} - ${cal_b} * log10f(r);
-      // Clamp MC to the curve's valid band, NOT resistance. The old code did
-      // `r > 1.5MΩ → 6%`, but the curve puts 1.5MΩ at 13.2% MC, so it floored
-      // every reading drier than ~13% to a bogus 6%. (Curve hits 6% at ~383MΩ.)
-      if (mc > 28.0f) mc = 28.0f;           // fiber-saturation ceiling
-      if (mc < 6.0f)  mc = 6.0f;            // dry floor
-      if (!isnan(t)) {
-        float t_c = (t - 32.0f) * 5.0f / 9.0f;   // sensor07_mer reports °F → convert to °C
-        ESP_LOGD("moisture", "CH-A01 temp=%.1fF (%.1fC)", t, t_c);
-        mc -= ((t_c - ${temp_baseline_c}f) / 5.6f) * 0.5f;
-      } else {
-        ESP_LOGW("moisture", "CH-A01 temp unavailable, skipping correction");
-      }
+      if (mc > 28.0f) mc = 28.0f;               // fiber-saturation ceiling
+      if (mc < 6.0f)  mc = 6.0f;                // dry floor
+      float t = id(stack_temp_c).state;         // sensor07_mer reports °F
+      id(m_a01_t).publish_state(t);
+      if (!isnan(t)) { float t_c = (t - 32.0f) * 5.0f / 9.0f;
+                       mc -= ((t_c - ${temp_baseline_c}f) / 5.6f) * 0.5f; }
+      else ESP_LOGW("moisture", "CH-A01 temp unavailable, skipping correction");
       return mc;
 
+      
 
