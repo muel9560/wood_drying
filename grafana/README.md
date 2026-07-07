@@ -10,12 +10,30 @@ in [`../data/README.md`](../data/README.md).
 
 ## Import
 
-Dashboards → New → Import → upload the JSON. Grafana will prompt for the
-**InfluxDB datasource** (`DS_INFLUXDB`). After import, pick the **`bucket`**
-variable (top of the dashboard) if the default isn't your wood-data bucket.
+Dashboards → New → Import → upload the JSON. At the top of the dashboard set the
+variables **left to right**: pick your InfluxDB **Data source**, then the
+**Bucket**, then `stack` / `thickness` populate from the data.
 
-Variables: `bucket`, `stack` (multi), `thickness` (multi) — all auto-populate
-from the data.
+The datasource is a real template variable (`${datasource}`) rather than an
+import-time `__inputs` prompt — that's deliberate, because the `__inputs` style
+often leaves *variable* queries pointed at an unresolved datasource on import
+(the "imported dashboard, broken variables" problem). Everything here — panels
+and variable queries — references `${datasource}`.
+
+### If a variable query still returns nothing
+
+1. **Datasource query language must be Flux.** Config → Data sources → your
+   InfluxDB → the "Query language" must be **Flux**, not InfluxQL. Flux queries
+   silently return nothing under InfluxQL. (If you're locked to InfluxQL, tell me
+   and I'll rewrite the queries.)
+2. **Test the bucket query in Influx Data Explorer as a table.** `buckets()` has
+   no `_time`, so the Explorer's graph view shows nothing — use Script Editor →
+   Submit → **Table / Raw Data**:
+   ```
+   buckets() |> filter(fn: (r) => r.name !~ /^_/) |> rename(columns: {name: "_value"}) |> keep(columns: ["_value"])
+   ```
+3. Set the **Bucket** value first — `stack`/`thickness` depend on it via
+   `schema.tagValues(bucket: "${bucket}", …)`.
 
 ## Two things to check
 

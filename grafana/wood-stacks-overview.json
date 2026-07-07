@@ -1,40 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_INFLUXDB",
-      "label": "InfluxDB",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "influxdb",
-      "pluginName": "InfluxDB"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "11.6.0"
-    },
-    {
-      "type": "datasource",
-      "id": "influxdb",
-      "name": "InfluxDB",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -78,7 +42,7 @@
       "description": "Air temperature per stack/level. If your SHTCx nodes report \u00b0F, change the unit to fahrenheit.",
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB}"
+        "uid": "${datasource}"
       },
       "gridPos": {
         "h": 8,
@@ -125,7 +89,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
+            "uid": "${datasource}"
           },
           "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"woodstack\" and r.kind == \"climate\" and r._field == \"temperature\" and r.stack =~ /${stack:regex}/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"_time\", \"_value\", \"stack\", \"level\"])\n  |> group(columns: [\"stack\", \"level\"])",
           "refId": "A"
@@ -139,7 +103,7 @@
       "description": "",
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB}"
+        "uid": "${datasource}"
       },
       "gridPos": {
         "h": 8,
@@ -186,7 +150,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
+            "uid": "${datasource}"
           },
           "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"woodstack\" and r.kind == \"climate\" and r._field == \"humidity\" and r.stack =~ /${stack:regex}/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"_time\", \"_value\", \"stack\", \"level\"])\n  |> group(columns: [\"stack\", \"level\"])",
           "refId": "A"
@@ -200,7 +164,7 @@
       "description": "Equilibrium moisture content the wood is heading toward (Simpson/Hailwood-Horrobin). ASSUMES temperature is \u00b0F \u2014 if your climate nodes report \u00b0C, add T = r.temperature*9.0/5.0 + 32.0 in the query.",
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB}"
+        "uid": "${datasource}"
       },
       "gridPos": {
         "h": 8,
@@ -247,7 +211,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
+            "uid": "${datasource}"
           },
           "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"woodstack\" and r.kind == \"climate\" and (r._field == \"temperature\" or r._field == \"humidity\") and r.stack =~ /${stack:regex}/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> pivot(rowKey: [\"_time\", \"stack\", \"level\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> filter(fn: (r) => exists r.temperature and exists r.humidity)\n  |> map(fn: (r) => {\n      T = r.temperature\n      h = r.humidity / 100.0\n      W = 330.0 + 0.452 * T + 0.00415 * T * T\n      K = 0.791 + 0.000463 * T - 0.000000844 * T * T\n      K1 = 6.34 + 0.000775 * T - 0.00000873 * T * T\n      K2 = 1.09 + 0.0284 * T - 0.0000904 * T * T\n      Kh = K * h\n      emc = 1800.0 / W * (Kh / (1.0 - Kh) + (K1 * Kh + 2.0 * K1 * K2 * K * K * h * h) / (1.0 + K1 * Kh + K1 * K2 * K * K * h * h))\n      return {_time: r._time, stack: r.stack, level: r.level, _value: emc}\n  })\n  |> group(columns: [\"stack\", \"level\"])",
           "refId": "A"
@@ -274,7 +238,7 @@
       "description": "Per-board moisture. Reliable window ~7\u201325% MC; below ~7% the reading floors, very wet wood clamps.",
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB}"
+        "uid": "${datasource}"
       },
       "gridPos": {
         "h": 9,
@@ -321,7 +285,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
+            "uid": "${datasource}"
           },
           "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r._field == \"mc\" and r.thickness =~ /${thickness:regex}/ and r.stack =~ /${stack:regex}/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"_time\", \"_value\", \"thickness\", \"board\", \"spot\", \"depth\"])\n  |> group(columns: [\"thickness\", \"board\", \"spot\", \"depth\"])",
           "refId": "A"
@@ -335,7 +299,7 @@
       "description": "One row per probe. Sparkline = recent MC history, number = latest.",
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB}"
+        "uid": "${datasource}"
       },
       "gridPos": {
         "h": 9,
@@ -410,7 +374,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
+            "uid": "${datasource}"
           },
           "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r._field == \"mc\" and r.thickness =~ /${thickness:regex}/ and r.stack =~ /${stack:regex}/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"_time\", \"_value\", \"thickness\", \"board\", \"spot\", \"depth\"])\n  |> group(columns: [\"thickness\", \"board\", \"spot\", \"depth\"])",
           "refId": "A"
@@ -426,68 +390,89 @@
   "templating": {
     "list": [
       {
+        "name": "datasource",
+        "label": "Data source",
+        "type": "datasource",
+        "query": "influxdb",
         "current": {},
         "hide": 0,
         "includeAll": false,
         "multi": false,
-        "name": "bucket",
         "options": [],
-        "query": {
-          "query": "buckets() |> keep(columns: [\"name\"]) |> rename(columns: {name: \"_value\"}) |> sort()"
-        },
         "refresh": 1,
-        "regex": "",
+        "regex": ""
+      },
+      {
+        "name": "bucket",
+        "label": "Bucket",
         "type": "query",
         "datasource": {
           "type": "influxdb",
-          "uid": "${DS_INFLUXDB}"
+          "uid": "${datasource}"
         },
-        "label": "Bucket"
+        "query": {
+          "query": "buckets()\n  |> filter(fn: (r) => r.name !~ /^_/)\n  |> rename(columns: {name: \"_value\"})\n  |> keep(columns: [\"_value\"])"
+        },
+        "definition": "buckets()\n  |> filter(fn: (r) => r.name !~ /^_/)\n  |> rename(columns: {name: \"_value\"})\n  |> keep(columns: [\"_value\"])",
+        "current": {},
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "options": [],
+        "refresh": 1,
+        "regex": "",
+        "sort": 1
       },
       {
-        "current": {
-          "text": "All",
-          "value": "$__all"
-        },
-        "hide": 0,
-        "includeAll": true,
-        "multi": true,
         "name": "stack",
-        "options": [],
+        "label": "Stack",
+        "type": "query",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${datasource}"
+        },
         "query": {
           "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"stack\", predicate: (r) => r._measurement == \"woodstack\", start: -90d)"
         },
-        "refresh": 1,
-        "regex": "",
-        "type": "query",
-        "datasource": {
-          "type": "influxdb",
-          "uid": "${DS_INFLUXDB}"
-        },
-        "label": "Stack",
-        "allValue": ".*"
-      },
-      {
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"stack\", predicate: (r) => r._measurement == \"woodstack\", start: -90d)",
         "current": {
           "text": "All",
-          "value": "$__all"
+          "value": "$__all",
+          "selected": true
         },
         "hide": 0,
         "includeAll": true,
         "multi": true,
-        "name": "thickness",
         "options": [],
-        "query": {
-          "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"thickness\", predicate: (r) => r._measurement == \"woodstack\", start: -90d)"
-        },
         "refresh": 1,
         "regex": "",
+        "sort": 1,
+        "allValue": ".*"
+      },
+      {
+        "name": "thickness",
+        "label": "Thickness",
         "type": "query",
         "datasource": {
           "type": "influxdb",
-          "uid": "${DS_INFLUXDB}"
+          "uid": "${datasource}"
         },
-        "label": "Thickness",
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"thickness\", predicate: (r) => r._measurement == \"woodstack\", start: -90d)"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"thickness\", predicate: (r) => r._measurement == \"woodstack\", start: -90d)",
+        "current": {
+          "text": "All",
+          "value": "$__all",
+          "selected": true
+        },
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "options": [],
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
         "allValue": ".*"
       }
     ]
