@@ -96,8 +96,14 @@
     <line x1="850" y1="390" x2="870" y2="390"/>
     <line x1="856" y1="396" x2="864" y2="396"/>
   </g>
-  <text x="884" y="345" font-size="10" fill="#6b6b73">Cadc 22n</text>
-  <text x="884" y="357" font-size="9" fill="#9a9aa2">(220k S/H)</text>
+  <text x="884" y="345" font-size="10" fill="#6b6b73">Cadc 10&#8211;47n</text>
+  <text x="884" y="357" font-size="9" fill="#9a9aa2">optional &#183; 220k S/H</text>
+
+  <!-- caution: no hard ground on sigb -->
+  <rect x="372" y="250" width="288" height="48" rx="8" fill="#fdecea" stroke="#e0a49c"/>
+  <line x1="660" y1="286" x2="682" y2="300" stroke="#e0a49c" stroke-width="1.5"/>
+  <text x="386" y="271" font-size="11.5" font-weight="700" fill="#b3261e">sigb carries NO direct ground</text>
+  <text x="386" y="288" font-size="10" fill="#a1403a">reaches ground only through a LOW GPIO (switched) or via Cadc</text>
 
   <!-- ===================== legend / range-select table ===================== -->
   <rect x="40" y="352" width="560" height="204" rx="10" fill="#ffffff" stroke="#e2ddd5"/>
