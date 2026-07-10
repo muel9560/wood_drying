@@ -6,7 +6,27 @@ in [`../data/README.md`](../data/README.md).
 | file | what it shows |
 |---|---|
 | `wood-stacks-overview.json` | Climate (temperature, humidity, EMC) per stack/level, plus board MC over time and a board list with sparkline + latest MC |
+| `board-moisture.json` | **Per-probe focus.** Cascading multi-select (stack → thickness → level → board → spot → depth) to isolate individual probes: MC over time, latest-MC table, raw resistance (log), and shell−core spread |
 | `drying-control.json` | The two guardrails: drying rate (%/week, 1%/week line) and shell−core differential (shallow − deep, 4/5% bands) |
+
+### `board-moisture.json` — drilling into single boards
+
+Built for the "show me *this* board" question. The six probe-identity tags are
+**cascading** multi-selects: narrowing `stack` narrows the `thickness` list,
+which narrows `level`, `board`, `spot`, and `depth` in turn — so you only ever
+see values that actually exist for what's above them. Each defaults to **All**,
+so the dashboard is useful before you narrow anything.
+
+Panels:
+- **Board MC over time** — one line per selected probe, thresholded by wetness.
+- **Latest MC per probe** — a row per probe, sparkline with the latest value inline.
+- **Raw pin-pair resistance (log)** — the honest signal behind MC; watch for the
+  >1 MΩ noise-floor region where MC reads too dry.
+- **Shell−core spread (shallow − deep)** — per board with both depths selected;
+  the same case-hardening guardrail as `drying-control`, but scoped to your picks.
+
+The top-right dropdown links to **Wood Stacks — Overview** carrying the current
+time range and shared variables.
 
 ## Import
 
