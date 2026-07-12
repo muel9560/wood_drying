@@ -1,0 +1,35 @@
+* Wood Moisture Analog Front-End -- corrected dual-MUX resistive divider
+*
+* Signal path (see wood_moisture_project.md):
+*   GPIO9 excite -> R1(10k) -> MUX-A(Ron) -> ProbeA+ -> R_wood -> ProbeB+
+*                -> MUX-B(Ron) -> SIG_B -> R2(100k) -> GND
+*   GPIO1 ADC senses V(sigb).
+*
+*   V_adc = VCC * R2 / (R1 + Ron_A + R_wood + Ron_B + R2)
+*
+* Ron   = CD74HC4067 on-resistance (~70 ohm @ 3.3V), one per MUX, in series.
+* Rleak = aggregate off-channel leakage on the SENSE node. In the dual-MUX
+*         design excite and sense SIG are separate nodes, so leakage is
+*         common-mode and small -- default 1e12 (ideal) reproduces the design
+*         table. See wood_afe_singlemux.net for the pathology it replaced.
+*
+* Runs headless:  LTspice -b wood_afe.net   (macOS/Linux, or via mcltspice)
+* Or open in the LTspice GUI and Run.
+
+.param R1=10k R2=100k Ron=70 Rleak=1e12
+
+* R_wood values track the expected-voltage table in wood_moisture_project.md
+* (1 ohm stands in for the "probes touching" short; LTspice forbids R=0).
+.step param Rw list 1 5k 8k 20k 35k 50k 100k 300k 500k 750k 1500k
+
+VEXC exc  0    DC 3.3
+R1   exc  na   {R1}
+RonA na   pa   {Ron}
+Rw   pa   pb   {Rw}
+RonB pb   sigb {Ron}
+R2   sigb 0    {R2}
+Rlk  sigb 0    {Rleak}
+
+.tran 1u 2m
+.meas TRAN Vadc FIND V(sigb) AT 1m
+.end

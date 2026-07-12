@@ -1,0 +1,2310 @@
+INFO ESPHome 2026.6.4
+INFO Loaded validated config cache for woodstack01-mer.yaml, skipping validation.
+INFO Starting log output from 192.168.72.24 using esphome API
+INFO Successfully resolved woodstack01-mer @ 192.168.72.24 in 0.000s
+WARNING Can't connect to ESPHome API for woodstack01-mer @ 192.168.72.24: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.72.24', port=6053))]: [Errno 113] Connect call failed ('192.168.72.24', 6053) (SocketAPIError)
+INFO Trying to connect to woodstack01-mer @ 192.168.72.24 in the background
+INFO Successfully connected to woodstack01-mer @ 192.168.72.24 in 0.006s
+INFO Successful handshake with woodstack01-mer @ 192.168.72.24 in 0.068s
+[00:04:07.780][I][app:151]: ESPHome version 2026.6.4 compiled on 2026-07-03 00:03:04 -0600
+[00:04:07.780][I][app:158]: ESP32 Chip: ESP32-S3 rev0.2, 2 core(s)
+[00:04:07.781][C][logger:223]: Logger:
+[00:04:07.781][C][logger:223]:   Max Level: DEBUG
+[00:04:07.781][C][logger:223]:   Initial Level: DEBUG
+[00:04:07.781][C][logger:230]:   Log Baud Rate: 115200
+[00:04:07.781][C][logger:230]:   Hardware UART: USB_SERIAL_JTAG
+[00:04:07.781][C][logger:239]:   Task Log Buffer Size: 768 bytes
+[00:04:07.788][C][gpio.output:009]: Binary Output:
+[00:04:07.797][C][gpio.output:152]:   Pin: GPIO4
+[00:04:07.797][C][gpio.output:009]: Binary Output:
+[00:04:07.798][C][gpio.output:152]:   Pin: GPIO5
+[00:04:07.818][C][gpio.output:009]: Binary Output:
+[00:04:07.829][C][gpio.output:152]:   Pin: GPIO6
+[00:04:07.833][C][gpio.output:009]: Binary Output:
+[00:04:07.834][C][gpio.output:152]:   Pin: GPIO7
+[00:04:07.839][C][gpio.output:009]: Binary Output:
+[00:04:07.839][C][gpio.output:152]:   Pin: GPIO8
+[00:04:07.856][C][gpio.output:009]: Binary Output:
+[00:04:07.886][C][gpio.output:152]:   Pin: GPIO9
+[00:04:07.886][C][template.sensor:017]: Template Sensor '2in Calibbration Shallow'
+[00:04:07.886][C][template.sensor:017]:   State Class: ''
+[00:04:07.886][C][template.sensor:017]:   Unit of Measurement: '%'
+[00:04:07.886][C][template.sensor:017]:   Accuracy Decimals: 1
+[00:04:07.886][C][template.sensor:223]:   Icon: 'mdi:water-percent'
+[00:04:07.890][C][template.sensor:434]:   Update Interval: 30.0s
+[00:04:07.890][C][template.sensor:017]: Template Sensor '2in Calibbration Deep'
+[00:04:07.890][C][template.sensor:017]:   State Class: ''
+[00:04:07.890][C][template.sensor:017]:   Unit of Measurement: '%'
+[00:04:07.890][C][template.sensor:017]:   Accuracy Decimals: 1
+[00:04:07.891][C][template.sensor:223]:   Icon: 'mdi:water-percent'
+[00:04:07.891][C][template.sensor:434]:   Update Interval: 30.0s
+[00:04:07.938][C][template.sensor:017]: Template Sensor '2019 Reference'
+[00:04:07.938][C][template.sensor:017]:   State Class: 'measurement'
+[00:04:07.938][C][template.sensor:017]:   Unit of Measurement: '%'
+[00:04:07.938][C][template.sensor:017]:   Accuracy Decimals: 1
+[00:04:07.939][C][template.sensor:223]:   Icon: 'mdi:water-percent'
+[00:04:07.940][C][template.sensor:434]:   Update Interval: 30.0s
+[00:04:07.941][C][adc.esp32:017]: ADC Sensor 'Raw ADC Node1'
+[00:04:07.941][C][adc.esp32:017]:   State Class: 'measurement'
+[00:04:07.941][C][adc.esp32:017]:   Unit of Measurement: 'V'
+[00:04:07.941][C][adc.esp32:017]:   Accuracy Decimals: 2
+[00:04:07.941][C][adc.esp32:232]:   Device Class: 'voltage'
+[00:04:07.942][C][adc.esp32:152]:   Pin: GPIO1
+[00:04:07.942][C][adc.esp32:124]:   Channel:       0
+[00:04:07.942][C][adc.esp32:124]:   Unit:          ADC1
+[00:04:07.942][C][adc.esp32:124]:   Attenuation:   Auto
+[00:04:07.942][C][adc.esp32:124]:   Samples:       1
+[00:04:07.942][C][adc.esp32:124]:   Sampling mode: average
+[00:04:07.942][C][adc.esp32:124]:   Setup Status:
+[00:04:07.942][C][adc.esp32:124]:     Handle Init:  OK
+[00:04:07.942][C][adc.esp32:124]:     Config:       OK
+[00:04:07.942][C][adc.esp32:124]:     Calibration:  OK
+[00:04:07.942][C][adc.esp32:124]:     Overall Init: OK
+[00:04:07.947][C][adc.esp32:432]:   Update Interval: 0.050s
+[00:04:07.980][C][wifi:1531]: WiFi:
+[00:04:07.980][C][wifi:1531]:   Local MAC: E0:72:A1:FC:83:7C
+[00:04:07.980][C][wifi:1531]:   Connected: YES
+[00:04:07.993][C][wifi:1237]:   IP Address: 192.168.72.24
+[00:04:07.993][C][wifi:1248]:   SSID: 'Mueller-IOT'
+[00:04:07.993][C][wifi:1248]:   BSSID: E8:1C:BA:5E:8D:A9
+[00:04:07.993][C][wifi:1248]:   Hostname: 'woodstack01-mer'
+[00:04:07.993][C][wifi:1248]:   Signal strength: -49 dB ▂▄▆█
+[00:04:07.993][C][wifi:1248]:   Channel: 6
+[00:04:07.993][C][wifi:1248]:   Subnet: 255.255.254.0
+[00:04:07.993][C][wifi:1248]:   Gateway: 192.168.72.1
+[00:04:07.993][C][wifi:1248]:   DNS1: 172.16.1.60
+[00:04:07.993][C][wifi:1248]:   DNS2: 172.16.1.61
+[00:04:07.994][C][esphome.ota:097]: Over-The-Air updates:
+[00:04:07.994][C][esphome.ota:097]:   Address: 192.168.72.24:3232
+[00:04:07.994][C][esphome.ota:097]:   Version: 2
+[00:04:08.003][C][safe_mode:058]: Safe Mode:
+[00:04:08.003][C][safe_mode:058]:   Successful after: 60s
+[00:04:08.003][C][safe_mode:058]:   Invoke after: 10 attempts
+[00:04:08.003][C][safe_mode:058]:   Duration: 300s
+[00:04:08.011][C][safe_mode:079]:   Bootloader rollback: supported
+[00:04:08.024][C][api:243]: Server:
+[00:04:08.024][C][api:243]:   Address: 192.168.72.24:6053
+[00:04:08.024][C][api:243]:   Listen backlog: 4
+[00:04:08.024][C][api:243]:   Max connections: 5
+[00:04:08.025][C][api:250]:   Noise encryption: YES
+[00:04:08.042][C][mdns:230]: mDNS:
+[00:04:08.042][C][mdns:230]:   Hostname: woodstack01-mer
+[00:04:08.061][C][homeassistant.sensor:017]: Homeassistant Sensor 'stack_temp_c'
+[00:04:08.061][C][homeassistant.sensor:017]:   State Class: ''
+[00:04:08.061][C][homeassistant.sensor:017]:   Unit of Measurement: ''
+[00:04:08.061][C][homeassistant.sensor:017]:   Accuracy Decimals: 1
+[00:04:08.068][C][homeassistant.sensor:029]:   Entity ID: 'sensor.sensor07_mer_temperature'
+[00:04:33.481][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3171 vl=0.0000 v=1.3171
+[00:04:33.485][D][moisture:245]: CH-A00 r=-84945
+[00:04:33.485][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:04:34.153][D][voltage:196]: CH-A00 vbase=0.0032 vh=0.4884 vl=0.0000 v=0.4884
+[00:04:34.158][D][moisture:202]: CH-A00 r=-42430
+[00:04:34.162][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:04:37.051][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:04:37.057][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:04:37.058][S][sensor]: '2019 Reference' >> nan %
+[00:05:02.332][I][safe_mode:142]: Boot seems successful; resetting boot loop counter
+[00:05:03.480][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3086 vl=0.0000 v=1.3086
+[00:05:03.486][D][moisture:245]: CH-A00 r=-84781
+[00:05:03.486][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:05:04.153][D][voltage:196]: CH-A00 vbase=0.0070 vh=0.4744 vl=0.0000 v=0.4744
+[00:05:04.162][D][moisture:202]: CH-A00 r=-40442
+[00:05:04.162][D][api:228]: Accept 172.16.1.101
+[00:05:04.167][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:05:04.208][D][api.connection:2461]: esphome-device-builder (172.16.1.101): connected
+[00:05:04.263][D][api.connection:2461]: esphome-device-builder (172.16.1.101): disconnected
+[00:05:04.286][W][api.connection:2467]: esphome-device-builder (172.16.1.101): Reading failed CONNECTION_CLOSED errno=128
+[00:05:07.051][D][voltage:282]: CH-A02 vbase=0.0179 vh=0.0090 vl=0.0000 v=0.0090
+[00:05:07.057][W][moisture:284]: CH-A02 open/short circuit - v=0.0090
+[00:05:07.059][S][sensor]: '2019 Reference' >> nan %
+[00:05:07.087][D][preferences:148]: Writing 1 items: 0 cached, 1 written, 0 failed
+[00:05:33.491][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3053 vl=0.0000 v=1.3053
+[00:05:33.492][D][moisture:245]: CH-A00 r=-84718
+[00:05:33.492][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:05:34.150][D][voltage:196]: CH-A00 vbase=0.0060 vh=0.5123 vl=0.0000 v=0.5123
+[00:05:34.155][D][moisture:202]: CH-A00 r=-45581
+[00:05:34.156][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:05:37.051][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0269 vl=0.0219 v=0.0269
+[00:05:37.056][W][moisture:284]: CH-A02 open/short circuit - v=0.0269
+[00:05:37.057][S][sensor]: '2019 Reference' >> nan %
+[00:06:03.478][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.2961 vl=0.0000 v=1.2961
+[00:06:03.483][D][moisture:245]: CH-A00 r=-84538
+[00:06:03.483][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:06:04.154][D][voltage:196]: CH-A00 vbase=0.0003 vh=0.5049 vl=0.0000 v=0.5049
+[00:06:04.163][D][moisture:202]: CH-A00 r=-44644
+[00:06:04.164][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:06:07.052][D][voltage:282]: CH-A02 vbase=0.0100 vh=0.0000 vl=0.0001 v=0.0000
+[00:06:07.058][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:06:07.059][S][sensor]: '2019 Reference' >> nan %
+[00:06:33.478][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3563 vl=0.0000 v=1.3563
+[00:06:33.482][D][moisture:245]: CH-A00 r=-85669
+[00:06:33.483][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:06:34.153][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4485 vl=0.0000 v=0.4485
+[00:06:34.161][D][moisture:202]: CH-A00 r=-36413
+[00:06:34.161][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:06:37.053][D][voltage:282]: CH-A02 vbase=0.0170 vh=0.0030 vl=0.0000 v=0.0030
+[00:06:37.063][W][moisture:284]: CH-A02 open/short circuit - v=0.0030
+[00:06:37.063][S][sensor]: '2019 Reference' >> nan %
+[00:07:03.477][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3569 vl=0.0000 v=1.3569
+[00:07:03.482][D][moisture:245]: CH-A00 r=-85680
+[00:07:03.482][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:07:04.151][D][voltage:196]: CH-A00 vbase=0.0006 vh=0.4953 vl=0.0000 v=0.4953
+[00:07:04.164][D][moisture:202]: CH-A00 r=-43375
+[00:07:04.164][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:07:07.050][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0090 vl=0.0090 v=0.0090
+[00:07:07.057][W][moisture:284]: CH-A02 open/short circuit - v=0.0090
+[00:07:07.060][S][sensor]: '2019 Reference' >> nan %
+[00:07:33.477][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3314 vl=0.0000 v=1.3314
+[00:07:33.481][D][moisture:245]: CH-A00 r=-85214
+[00:07:33.482][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:07:34.152][D][voltage:196]: CH-A00 vbase=0.0050 vh=0.5133 vl=0.0000 v=0.5133
+[00:07:34.160][D][moisture:202]: CH-A00 r=-45712
+[00:07:34.160][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:07:37.049][D][voltage:282]: CH-A02 vbase=0.0130 vh=0.0130 vl=0.0002 v=0.0130
+[00:07:37.055][W][moisture:284]: CH-A02 open/short circuit - v=0.0130
+[00:07:37.057][S][sensor]: '2019 Reference' >> nan %
+[00:08:03.477][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3317 vl=0.0000 v=1.3317
+[00:08:03.481][D][moisture:245]: CH-A00 r=-85219
+[00:08:03.481][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:08:04.149][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4798 vl=0.0000 v=0.4798
+[00:08:04.160][D][moisture:202]: CH-A00 r=-41220
+[00:08:04.160][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:08:07.048][D][voltage:282]: CH-A02 vbase=0.0001 vh=0.0000 vl=0.0000 v=0.0000
+[00:08:07.055][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:08:07.056][S][sensor]: '2019 Reference' >> nan %
+[00:08:33.478][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3670 vl=0.0000 v=1.3670
+[00:08:33.484][D][moisture:245]: CH-A00 r=-85859
+[00:08:33.485][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:08:34.150][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4575 vl=0.0000 v=0.4575
+[00:08:34.164][D][moisture:202]: CH-A00 r=-37873
+[00:08:34.164][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:08:37.048][D][voltage:282]: CH-A02 vbase=0.0238 vh=0.0000 vl=0.0000 v=0.0000
+[00:08:37.055][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:08:37.055][S][sensor]: '2019 Reference' >> nan %
+[00:09:03.476][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3142 vl=0.0000 v=1.3142
+[00:09:03.480][D][moisture:245]: CH-A00 r=-84889
+[00:09:03.480][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:09:04.152][D][voltage:196]: CH-A00 vbase=0.0150 vh=0.5146 vl=0.0000 v=0.5146
+[00:09:04.156][D][moisture:202]: CH-A00 r=-45877
+[00:09:04.157][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:09:04.927][D][wifi:2447]: Roam check skipped, signal good (-47 dBm, attempt 1/3)
+[00:09:07.048][D][voltage:282]: CH-A02 vbase=0.0003 vh=0.0001 vl=0.0040 v=0.0001
+[00:09:07.053][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[00:09:07.056][S][sensor]: '2019 Reference' >> nan %
+[00:09:33.476][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3282 vl=0.0000 v=1.3282
+[00:09:33.479][D][moisture:245]: CH-A00 r=-85155
+[00:09:33.481][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:09:34.152][D][voltage:196]: CH-A00 vbase=0.0469 vh=0.5309 vl=0.0030 v=0.5309
+[00:09:34.157][D][moisture:202]: CH-A00 r=-47836
+[00:09:34.158][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:09:37.050][D][voltage:282]: CH-A02 vbase=0.0179 vh=0.0102 vl=0.0100 v=0.0102
+[00:09:37.053][W][moisture:284]: CH-A02 open/short circuit - v=0.0102
+[00:09:37.053][S][sensor]: '2019 Reference' >> nan %
+[00:10:03.476][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3011 vl=0.0000 v=1.3011
+[00:10:03.479][D][moisture:245]: CH-A00 r=-84636
+[00:10:03.480][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:10:04.157][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5142 vl=0.0000 v=0.5142
+[00:10:04.157][D][moisture:202]: CH-A00 r=-45823
+[00:10:04.157][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:10:07.050][D][voltage:282]: CH-A02 vbase=0.0100 vh=0.0360 vl=0.0000 v=0.0360
+[00:10:07.054][W][moisture:284]: CH-A02 open/short circuit - v=0.0360
+[00:10:07.054][S][sensor]: '2019 Reference' >> nan %
+[00:10:33.483][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3580 vl=0.0000 v=1.3580
+[00:10:33.484][D][moisture:245]: CH-A00 r=-85700
+[00:10:33.484][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:10:34.148][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4896 vl=0.0000 v=0.4896
+[00:10:34.161][D][moisture:202]: CH-A00 r=-42592
+[00:10:34.161][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:10:37.075][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:10:37.076][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:10:37.076][S][sensor]: '2019 Reference' >> nan %
+[00:11:03.477][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3306 vl=0.0000 v=1.3306
+[00:11:03.479][D][moisture:245]: CH-A00 r=-85199
+[00:11:03.479][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:11:04.155][D][voltage:196]: CH-A00 vbase=0.0327 vh=0.5196 vl=0.0000 v=0.5196
+[00:11:04.166][D][moisture:202]: CH-A00 r=-46493
+[00:11:04.166][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:11:07.057][D][voltage:282]: CH-A02 vbase=0.0160 vh=0.0189 vl=0.0268 v=0.0189
+[00:11:07.061][W][moisture:284]: CH-A02 open/short circuit - v=0.0189
+[00:11:07.061][S][sensor]: '2019 Reference' >> nan %
+[00:11:33.477][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3577 vl=0.0000 v=1.3577
+[00:11:33.480][D][moisture:245]: CH-A00 r=-85695
+[00:11:33.480][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:11:34.150][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4655 vl=0.0000 v=0.4655
+[00:11:34.153][D][moisture:202]: CH-A00 r=-39110
+[00:11:34.153][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:11:37.048][D][voltage:282]: CH-A02 vbase=0.0061 vh=0.0000 vl=0.0000 v=0.0000
+[00:11:37.065][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:11:37.067][S][sensor]: '2019 Reference' >> nan %
+[00:12:03.473][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3350 vl=0.0000 v=1.3350
+[00:12:03.481][D][moisture:245]: CH-A00 r=-85280
+[00:12:03.481][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:12:04.147][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5394 vl=0.0000 v=0.5394
+[00:12:04.152][D][moisture:202]: CH-A00 r=-48823
+[00:12:04.153][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:12:07.044][D][voltage:282]: CH-A02 vbase=0.0160 vh=0.0060 vl=0.0227 v=0.0060
+[00:12:07.054][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[00:12:07.055][S][sensor]: '2019 Reference' >> nan %
+[00:12:33.479][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3625 vl=0.0000 v=1.3625
+[00:12:33.479][D][moisture:245]: CH-A00 r=-85780
+[00:12:33.479][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:12:34.148][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4657 vl=0.0000 v=0.4657
+[00:12:34.152][D][moisture:202]: CH-A00 r=-39146
+[00:12:34.152][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:12:37.045][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0000 vl=0.0000 v=0.0000
+[00:12:37.052][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:12:37.052][S][sensor]: '2019 Reference' >> nan %
+[00:13:03.475][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3254 vl=0.0000 v=1.3254
+[00:13:03.481][D][moisture:245]: CH-A00 r=-85102
+[00:13:03.481][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:13:04.145][D][voltage:196]: CH-A00 vbase=0.0406 vh=0.5251 vl=0.0000 v=0.5251
+[00:13:04.155][D][moisture:202]: CH-A00 r=-47150
+[00:13:04.156][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:13:07.044][D][voltage:282]: CH-A02 vbase=0.0051 vh=0.0120 vl=0.0140 v=0.0120
+[00:13:07.051][W][moisture:284]: CH-A02 open/short circuit - v=0.0120
+[00:13:07.052][S][sensor]: '2019 Reference' >> nan %
+[00:13:33.472][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3484 vl=0.0000 v=1.3484
+[00:13:33.478][D][moisture:245]: CH-A00 r=-85526
+[00:13:33.479][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:13:34.146][D][voltage:196]: CH-A00 vbase=0.0249 vh=0.5098 vl=0.0000 v=0.5098
+[00:13:34.151][D][moisture:202]: CH-A00 r=-45270
+[00:13:34.152][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:13:37.048][D][voltage:282]: CH-A02 vbase=0.0149 vh=0.0130 vl=0.0002 v=0.0130
+[00:13:37.050][W][moisture:284]: CH-A02 open/short circuit - v=0.0130
+[00:13:37.050][S][sensor]: '2019 Reference' >> nan %
+[00:14:03.471][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3571 vl=0.0000 v=1.3571
+[00:14:03.477][D][moisture:245]: CH-A00 r=-85683
+[00:14:03.477][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:14:04.147][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4690 vl=0.0000 v=0.4690
+[00:14:04.152][D][moisture:202]: CH-A00 r=-39632
+[00:14:04.152][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:14:05.228][D][wifi:2452]: Roam scan (-49 dBm, attempt 2/3)
+[00:14:07.296][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0000 vl=0.0000 v=0.0000
+[00:14:07.296][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:14:07.297][S][sensor]: '2019 Reference' >> nan %
+[00:14:33.471][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3386 vl=0.0000 v=1.3386
+[00:14:33.476][D][moisture:245]: CH-A00 r=-85347
+[00:14:33.476][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:14:34.145][D][voltage:196]: CH-A00 vbase=0.0030 vh=0.5360 vl=0.0000 v=0.5360
+[00:14:34.152][D][moisture:202]: CH-A00 r=-48432
+[00:14:34.152][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:14:37.042][D][voltage:282]: CH-A02 vbase=0.0110 vh=0.0189 vl=0.0110 v=0.0189
+[00:14:37.049][W][moisture:284]: CH-A02 open/short circuit - v=0.0189
+[00:14:37.049][S][sensor]: '2019 Reference' >> nan %
+[00:15:03.471][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3510 vl=0.0000 v=1.3510
+[00:15:03.475][D][moisture:245]: CH-A00 r=-85573
+[00:15:03.476][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:15:04.144][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4959 vl=0.0000 v=0.4959
+[00:15:04.150][D][moisture:202]: CH-A00 r=-43448
+[00:15:04.150][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:15:07.042][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0070 vl=0.0140 v=0.0070
+[00:15:07.048][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[00:15:07.049][S][sensor]: '2019 Reference' >> nan %
+[00:15:33.470][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3499 vl=0.0000 v=1.3499
+[00:15:33.476][D][moisture:245]: CH-A00 r=-85554
+[00:15:33.477][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:15:34.144][D][voltage:196]: CH-A00 vbase=0.0170 vh=0.5002 vl=0.0121 v=0.5002
+[00:15:34.149][D][moisture:202]: CH-A00 r=-44025
+[00:15:34.150][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:15:37.041][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0120 vl=0.0090 v=0.0120
+[00:15:37.048][W][moisture:284]: CH-A02 open/short circuit - v=0.0120
+[00:15:37.048][S][sensor]: '2019 Reference' >> nan %
+[00:16:03.471][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3314 vl=0.0000 v=1.3314
+[00:16:03.509][D][moisture:245]: CH-A00 r=-85214
+[00:16:03.510][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:16:04.145][D][voltage:196]: CH-A00 vbase=0.0405 vh=0.5201 vl=0.0000 v=0.5201
+[00:16:04.150][D][moisture:202]: CH-A00 r=-46546
+[00:16:04.151][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:16:07.041][D][voltage:282]: CH-A02 vbase=0.0219 vh=0.0060 vl=0.0130 v=0.0060
+[00:16:07.049][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[00:16:07.050][S][sensor]: '2019 Reference' >> nan %
+[00:16:33.469][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3316 vl=0.0000 v=1.3316
+[00:16:33.475][D][moisture:245]: CH-A00 r=-85217
+[00:16:33.475][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:16:34.145][D][voltage:196]: CH-A00 vbase=0.0257 vh=0.5121 vl=0.0000 v=0.5121
+[00:16:34.150][D][moisture:202]: CH-A00 r=-45555
+[00:16:34.151][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:16:37.044][D][voltage:282]: CH-A02 vbase=0.0081 vh=0.0090 vl=0.0040 v=0.0090
+[00:16:37.054][W][moisture:284]: CH-A02 open/short circuit - v=0.0090
+[00:16:37.054][S][sensor]: '2019 Reference' >> nan %
+[00:17:03.469][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3742 vl=0.0000 v=1.3742
+[00:17:03.473][D][moisture:245]: CH-A00 r=-85986
+[00:17:03.474][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:17:04.153][D][voltage:196]: CH-A00 vbase=0.0209 vh=0.4899 vl=0.0000 v=0.4899
+[00:17:04.167][D][moisture:202]: CH-A00 r=-42638
+[00:17:04.168][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:17:07.040][D][voltage:282]: CH-A02 vbase=0.0120 vh=0.0032 vl=0.0031 v=0.0032
+[00:17:07.054][W][moisture:284]: CH-A02 open/short circuit - v=0.0032
+[00:17:07.054][S][sensor]: '2019 Reference' >> nan %
+[00:17:33.469][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3407 vl=0.0000 v=1.3407
+[00:17:33.472][D][moisture:245]: CH-A00 r=-85386
+[00:17:33.473][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:17:34.143][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4994 vl=0.0000 v=0.4994
+[00:17:34.149][D][moisture:202]: CH-A00 r=-43926
+[00:17:34.150][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:17:37.040][D][voltage:282]: CH-A02 vbase=0.0130 vh=0.0050 vl=0.0003 v=0.0050
+[00:17:37.050][W][moisture:284]: CH-A02 open/short circuit - v=0.0050
+[00:17:37.051][S][sensor]: '2019 Reference' >> nan %
+[00:18:03.468][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3702 vl=0.0000 v=1.3702
+[00:18:03.472][D][moisture:245]: CH-A00 r=-85915
+[00:18:03.472][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:18:04.147][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4475 vl=0.0000 v=0.4475
+[00:18:04.158][D][moisture:202]: CH-A00 r=-36250
+[00:18:04.158][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:18:07.039][D][voltage:282]: CH-A02 vbase=0.0001 vh=0.0000 vl=0.0052 v=0.0000
+[00:18:07.045][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:18:07.046][S][sensor]: '2019 Reference' >> nan %
+[00:18:33.467][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3631 vl=0.0000 v=1.3631
+[00:18:33.472][D][moisture:245]: CH-A00 r=-85791
+[00:18:33.472][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:18:34.142][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4683 vl=0.0000 v=0.4683
+[00:18:34.148][D][moisture:202]: CH-A00 r=-39530
+[00:18:34.148][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:18:37.039][D][voltage:282]: CH-A02 vbase=0.0179 vh=0.0050 vl=0.0000 v=0.0050
+[00:18:37.047][W][moisture:284]: CH-A02 open/short circuit - v=0.0050
+[00:18:37.047][S][sensor]: '2019 Reference' >> nan %
+[00:19:03.467][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3603 vl=0.0000 v=1.3603
+[00:19:03.471][D][moisture:245]: CH-A00 r=-85740
+[00:19:03.472][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:19:04.142][D][voltage:196]: CH-A00 vbase=0.0110 vh=0.4967 vl=0.0000 v=0.4967
+[00:19:04.165][D][moisture:202]: CH-A00 r=-43566
+[00:19:04.166][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:19:04.921][D][wifi:2447]: Roam check skipped, signal good (-47 dBm, attempt 3/3)
+[00:19:07.039][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0030 v=0.0000
+[00:19:07.045][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:19:07.045][S][sensor]: '2019 Reference' >> nan %
+[00:19:33.466][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3352 vl=0.0000 v=1.3352
+[00:19:33.471][D][moisture:245]: CH-A00 r=-85284
+[00:19:33.472][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:19:34.141][D][voltage:196]: CH-A00 vbase=0.0178 vh=0.5025 vl=0.0000 v=0.5025
+[00:19:34.150][D][moisture:202]: CH-A00 r=-44330
+[00:19:34.150][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:19:37.038][D][voltage:282]: CH-A02 vbase=0.0169 vh=0.0201 vl=0.0000 v=0.0201
+[00:19:37.046][W][moisture:284]: CH-A02 open/short circuit - v=0.0201
+[00:19:37.047][S][sensor]: '2019 Reference' >> nan %
+[00:20:03.468][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3686 vl=0.0000 v=1.3686
+[00:20:03.471][D][moisture:245]: CH-A00 r=-85888
+[00:20:03.471][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:20:04.143][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4622 vl=0.0000 v=0.4622
+[00:20:04.147][D][moisture:202]: CH-A00 r=-38609
+[00:20:04.147][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:20:07.037][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0060 vl=0.0003 v=0.0060
+[00:20:07.044][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[00:20:07.044][S][sensor]: '2019 Reference' >> nan %
+[00:20:33.465][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3571 vl=0.0000 v=1.3571
+[00:20:33.470][D][moisture:245]: CH-A00 r=-85684
+[00:20:33.470][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:20:34.147][D][voltage:196]: CH-A00 vbase=0.0003 vh=0.5325 vl=0.0000 v=0.5325
+[00:20:34.148][D][moisture:202]: CH-A00 r=-48024
+[00:20:34.148][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:20:37.037][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0040 vl=0.0002 v=0.0040
+[00:20:37.043][W][moisture:284]: CH-A02 open/short circuit - v=0.0040
+[00:20:37.043][S][sensor]: '2019 Reference' >> nan %
+[00:21:03.465][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3481 vl=0.0000 v=1.3481
+[00:21:03.472][D][moisture:245]: CH-A00 r=-85521
+[00:21:03.472][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:21:04.140][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5066 vl=0.0000 v=0.5066
+[00:21:04.150][D][moisture:202]: CH-A00 r=-44865
+[00:21:04.151][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:21:07.040][D][voltage:282]: CH-A02 vbase=0.0112 vh=0.0061 vl=0.0180 v=0.0061
+[00:21:07.044][W][moisture:284]: CH-A02 open/short circuit - v=0.0061
+[00:21:07.044][S][sensor]: '2019 Reference' >> nan %
+[00:21:33.464][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3286 vl=0.0000 v=1.3286
+[00:21:33.469][D][moisture:245]: CH-A00 r=-85162
+[00:21:33.469][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:21:34.142][D][voltage:196]: CH-A00 vbase=0.0450 vh=0.5272 vl=0.0000 v=0.5272
+[00:21:34.151][D][moisture:202]: CH-A00 r=-47403
+[00:21:34.151][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:21:37.036][D][voltage:282]: CH-A02 vbase=0.0179 vh=0.0001 vl=0.0169 v=0.0001
+[00:21:37.043][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[00:21:37.043][S][sensor]: '2019 Reference' >> nan %
+[00:22:03.464][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3661 vl=0.0000 v=1.3661
+[00:22:03.468][D][moisture:245]: CH-A00 r=-85844
+[00:22:03.469][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:22:04.141][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4922 vl=0.0000 v=0.4922
+[00:22:04.146][D][moisture:202]: CH-A00 r=-42959
+[00:22:04.146][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:22:07.039][D][voltage:282]: CH-A02 vbase=0.0210 vh=0.0000 vl=0.0000 v=0.0000
+[00:22:07.044][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:22:07.044][S][sensor]: '2019 Reference' >> nan %
+[00:22:33.464][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3491 vl=0.0000 v=1.3491
+[00:22:33.469][D][moisture:245]: CH-A00 r=-85539
+[00:22:33.469][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:22:34.143][D][voltage:196]: CH-A00 vbase=0.0150 vh=0.4905 vl=0.0000 v=0.4905
+[00:22:34.147][D][moisture:202]: CH-A00 r=-42722
+[00:22:34.147][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:22:37.044][D][voltage:282]: CH-A02 vbase=0.0052 vh=0.0110 vl=0.0144 v=0.0110
+[00:22:37.044][W][moisture:284]: CH-A02 open/short circuit - v=0.0110
+[00:22:37.045][S][sensor]: '2019 Reference' >> nan %
+[00:23:03.463][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3556 vl=0.0000 v=1.3556
+[00:23:03.467][D][moisture:245]: CH-A00 r=-85656
+[00:23:03.467][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:23:04.153][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5293 vl=0.0000 v=0.5293
+[00:23:04.161][D][moisture:202]: CH-A00 r=-47653
+[00:23:04.162][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:23:07.035][D][voltage:282]: CH-A02 vbase=0.0031 vh=0.0060 vl=0.0070 v=0.0060
+[00:23:07.046][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[00:23:07.046][S][sensor]: '2019 Reference' >> nan %
+[00:23:33.466][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3618 vl=0.0000 v=1.3618
+[00:23:33.467][D][moisture:245]: CH-A00 r=-85767
+[00:23:33.468][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:23:34.138][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4476 vl=0.0000 v=0.4476
+[00:23:34.142][D][moisture:202]: CH-A00 r=-36278
+[00:23:34.143][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:23:37.037][D][voltage:282]: CH-A02 vbase=0.0036 vh=0.0060 vl=0.0100 v=0.0060
+[00:23:37.040][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[00:23:37.041][S][sensor]: '2019 Reference' >> nan %
+[00:24:03.471][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3524 vl=0.0000 v=1.3524
+[00:24:03.472][D][moisture:245]: CH-A00 r=-85598
+[00:24:03.472][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:24:04.140][D][voltage:196]: CH-A00 vbase=0.0210 vh=0.5059 vl=0.0000 v=0.5059
+[00:24:04.143][D][moisture:202]: CH-A00 r=-44771
+[00:24:04.143][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:24:07.036][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0139 vl=0.0041 v=0.0139
+[00:24:07.041][W][moisture:284]: CH-A02 open/short circuit - v=0.0139
+[00:24:07.041][S][sensor]: '2019 Reference' >> nan %
+[00:24:33.474][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3580 vl=0.0000 v=1.3580
+[00:24:33.478][D][moisture:245]: CH-A00 r=-85700
+[00:24:33.478][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:24:34.137][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4953 vl=0.0000 v=0.4953
+[00:24:34.144][D][moisture:202]: CH-A00 r=-43375
+[00:24:34.144][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:24:37.047][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:24:37.047][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:24:37.048][S][sensor]: '2019 Reference' >> nan %
+[00:25:03.462][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3510 vl=0.0000 v=1.3510
+[00:25:03.466][D][moisture:245]: CH-A00 r=-85573
+[00:25:03.466][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:25:04.141][D][voltage:196]: CH-A00 vbase=0.0070 vh=0.4932 vl=0.0000 v=0.4932
+[00:25:04.150][D][moisture:202]: CH-A00 r=-43088
+[00:25:04.150][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:25:07.033][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0040 vl=0.0120 v=0.0040
+[00:25:07.043][W][moisture:284]: CH-A02 open/short circuit - v=0.0040
+[00:25:07.043][S][sensor]: '2019 Reference' >> nan %
+[00:25:33.466][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3625 vl=0.0000 v=1.3625
+[00:25:33.467][D][moisture:245]: CH-A00 r=-85780
+[00:25:33.467][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:25:34.137][D][voltage:196]: CH-A00 vbase=0.0040 vh=0.4893 vl=0.0030 v=0.4893
+[00:25:34.143][D][moisture:202]: CH-A00 r=-42554
+[00:25:34.143][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:25:37.032][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0100 v=0.0000
+[00:25:37.039][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:25:37.039][S][sensor]: '2019 Reference' >> nan %
+[00:26:03.460][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3716 vl=0.0000 v=1.3716
+[00:26:03.527][D][moisture:245]: CH-A00 r=-85940
+[00:26:03.528][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:26:04.136][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4673 vl=0.0000 v=0.4673
+[00:26:04.141][D][moisture:202]: CH-A00 r=-39387
+[00:26:04.143][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:26:07.038][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:26:07.038][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:26:07.039][S][sensor]: '2019 Reference' >> nan %
+[00:26:33.468][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3531 vl=0.0000 v=1.3531
+[00:26:33.470][D][moisture:245]: CH-A00 r=-85612
+[00:26:33.470][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:26:34.139][D][voltage:196]: CH-A00 vbase=0.0090 vh=0.5016 vl=0.0040 v=0.5016
+[00:26:34.142][D][moisture:202]: CH-A00 r=-44205
+[00:26:34.142][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:26:37.043][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0060 vl=0.0052 v=0.0060
+[00:26:37.044][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[00:26:37.044][S][sensor]: '2019 Reference' >> nan %
+[00:27:03.459][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3556 vl=0.0000 v=1.3556
+[00:27:03.463][D][moisture:245]: CH-A00 r=-85656
+[00:27:03.464][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:27:04.135][D][voltage:196]: CH-A00 vbase=0.0007 vh=0.4896 vl=0.0062 v=0.4896
+[00:27:04.141][D][moisture:202]: CH-A00 r=-42593
+[00:27:04.141][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:27:07.033][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0120 v=0.0000
+[00:27:07.038][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:27:07.038][S][sensor]: '2019 Reference' >> nan %
+[00:27:33.458][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3562 vl=0.0000 v=1.3562
+[00:27:33.463][D][moisture:245]: CH-A00 r=-85667
+[00:27:33.464][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:27:34.135][D][voltage:196]: CH-A00 vbase=0.0339 vh=0.5142 vl=0.0000 v=0.5142
+[00:27:34.145][D][moisture:202]: CH-A00 r=-45827
+[00:27:34.145][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:27:37.034][D][voltage:282]: CH-A02 vbase=0.0090 vh=0.0130 vl=0.0248 v=0.0130
+[00:27:37.037][W][moisture:284]: CH-A02 open/short circuit - v=0.0130
+[00:27:37.037][S][sensor]: '2019 Reference' >> nan %
+[00:28:03.458][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3453 vl=0.0000 v=1.3453
+[00:28:03.465][D][moisture:245]: CH-A00 r=-85471
+[00:28:03.466][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:28:04.134][D][voltage:196]: CH-A00 vbase=0.0090 vh=0.4799 vl=0.0000 v=0.4799
+[00:28:04.140][D][moisture:202]: CH-A00 r=-41230
+[00:28:04.140][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:28:07.030][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0030 v=0.0000
+[00:28:07.038][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:28:07.039][S][sensor]: '2019 Reference' >> nan %
+[00:28:33.459][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3495 vl=0.0000 v=1.3495
+[00:28:33.463][D][moisture:245]: CH-A00 r=-85547
+[00:28:33.463][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:28:34.134][D][voltage:196]: CH-A00 vbase=0.0180 vh=0.4582 vl=0.0000 v=0.4582
+[00:28:34.140][D][moisture:202]: CH-A00 r=-37972
+[00:28:34.140][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:28:37.032][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0111 vl=0.0004 v=0.0111
+[00:28:37.037][W][moisture:284]: CH-A02 open/short circuit - v=0.0111
+[00:28:37.037][S][sensor]: '2019 Reference' >> nan %
+[00:29:03.462][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3593 vl=0.0000 v=1.3593
+[00:29:03.463][D][moisture:245]: CH-A00 r=-85722
+[00:29:03.464][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:29:04.133][D][voltage:196]: CH-A00 vbase=0.0003 vh=0.5080 vl=0.0000 v=0.5080
+[00:29:04.140][D][moisture:202]: CH-A00 r=-45041
+[00:29:04.140][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:29:07.030][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0180 vl=0.0169 v=0.0180
+[00:29:07.036][W][moisture:284]: CH-A02 open/short circuit - v=0.0180
+[00:29:07.036][S][sensor]: '2019 Reference' >> nan %
+[00:29:33.457][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3471 vl=0.0000 v=1.3471
+[00:29:33.465][D][moisture:245]: CH-A00 r=-85504
+[00:29:33.465][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:29:34.132][D][voltage:196]: CH-A00 vbase=0.0090 vh=0.5020 vl=0.0000 v=0.5020
+[00:29:34.137][D][moisture:202]: CH-A00 r=-44269
+[00:29:34.137][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:29:37.029][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0001 vl=0.0050 v=0.0001
+[00:29:37.035][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[00:29:37.035][S][sensor]: '2019 Reference' >> nan %
+[00:30:03.457][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3396 vl=0.0000 v=1.3396
+[00:30:03.461][D][moisture:245]: CH-A00 r=-85365
+[00:30:03.461][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:30:04.132][D][voltage:196]: CH-A00 vbase=0.0296 vh=0.5066 vl=0.0000 v=0.5066
+[00:30:04.139][D][moisture:202]: CH-A00 r=-44865
+[00:30:04.139][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:30:07.030][D][voltage:282]: CH-A02 vbase=0.0090 vh=0.0100 vl=0.0095 v=0.0100
+[00:30:07.035][W][moisture:284]: CH-A02 open/short circuit - v=0.0100
+[00:30:07.035][S][sensor]: '2019 Reference' >> nan %
+[00:30:33.457][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3445 vl=0.0000 v=1.3445
+[00:30:33.461][D][moisture:245]: CH-A00 r=-85456
+[00:30:33.462][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:30:34.132][D][voltage:196]: CH-A00 vbase=0.0139 vh=0.5088 vl=0.0000 v=0.5088
+[00:30:34.138][D][moisture:202]: CH-A00 r=-45146
+[00:30:34.139][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:30:37.037][D][voltage:282]: CH-A02 vbase=0.0169 vh=0.0070 vl=0.0040 v=0.0070
+[00:30:37.039][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[00:30:37.039][S][sensor]: '2019 Reference' >> nan %
+[00:31:03.458][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3371 vl=0.0000 v=1.3371
+[00:31:03.460][D][moisture:245]: CH-A00 r=-85320
+[00:31:03.461][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:31:04.134][D][voltage:196]: CH-A00 vbase=0.0001 vh=0.5436 vl=0.0000 v=0.5436
+[00:31:04.136][D][moisture:202]: CH-A00 r=-49294
+[00:31:04.137][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:31:07.028][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0053 vl=0.0080 v=0.0053
+[00:31:07.035][W][moisture:284]: CH-A02 open/short circuit - v=0.0053
+[00:31:07.035][S][sensor]: '2019 Reference' >> nan %
+[00:31:33.457][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3468 vl=0.0000 v=1.3468
+[00:31:33.460][D][moisture:245]: CH-A00 r=-85497
+[00:31:33.460][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:31:34.130][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4537 vl=0.0000 v=0.4537
+[00:31:34.138][D][moisture:202]: CH-A00 r=-37260
+[00:31:34.138][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:31:37.027][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0000 vl=0.0200 v=0.0000
+[00:31:37.034][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:31:37.034][S][sensor]: '2019 Reference' >> nan %
+[00:32:03.455][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3276 vl=0.0000 v=1.3276
+[00:32:03.461][D][moisture:245]: CH-A00 r=-85143
+[00:32:03.462][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:32:04.130][D][voltage:196]: CH-A00 vbase=0.0355 vh=0.5246 vl=0.0000 v=0.5246
+[00:32:04.141][D][moisture:202]: CH-A00 r=-47090
+[00:32:04.141][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:32:07.027][D][voltage:282]: CH-A02 vbase=0.0061 vh=0.0040 vl=0.0130 v=0.0040
+[00:32:07.033][W][moisture:284]: CH-A02 open/short circuit - v=0.0040
+[00:32:07.033][S][sensor]: '2019 Reference' >> nan %
+[00:32:33.454][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3642 vl=0.0000 v=1.3642
+[00:32:33.460][D][moisture:245]: CH-A00 r=-85811
+[00:32:33.460][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:32:34.130][D][voltage:196]: CH-A00 vbase=0.0070 vh=0.4550 vl=0.0000 v=0.4550
+[00:32:34.136][D][moisture:202]: CH-A00 r=-37471
+[00:32:34.136][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:32:37.026][D][voltage:282]: CH-A02 vbase=0.0003 vh=0.0070 vl=0.0001 v=0.0070
+[00:32:37.032][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[00:32:37.033][S][sensor]: '2019 Reference' >> nan %
+[00:33:03.454][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3525 vl=0.0000 v=1.3525
+[00:33:03.458][D][moisture:245]: CH-A00 r=-85601
+[00:33:03.458][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:33:04.134][D][voltage:196]: CH-A00 vbase=0.0050 vh=0.4887 vl=0.0000 v=0.4887
+[00:33:04.137][D][moisture:202]: CH-A00 r=-42479
+[00:33:04.137][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:33:07.026][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0208 v=0.0000
+[00:33:07.032][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:33:07.032][S][sensor]: '2019 Reference' >> nan %
+[00:33:33.453][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3482 vl=0.0000 v=1.3482
+[00:33:33.458][D][moisture:245]: CH-A00 r=-85522
+[00:33:33.458][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:33:34.129][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4961 vl=0.0000 v=0.4961
+[00:33:34.155][D][moisture:202]: CH-A00 r=-43483
+[00:33:34.156][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:33:37.025][D][voltage:282]: CH-A02 vbase=0.0090 vh=0.0000 vl=0.0062 v=0.0000
+[00:33:37.033][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:33:37.033][S][sensor]: '2019 Reference' >> nan %
+[00:34:03.453][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3629 vl=0.0000 v=1.3629
+[00:34:03.457][D][moisture:245]: CH-A00 r=-85787
+[00:34:03.458][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:34:04.128][D][voltage:196]: CH-A00 vbase=0.0060 vh=0.4531 vl=0.0000 v=0.4531
+[00:34:04.144][D][moisture:202]: CH-A00 r=-37167
+[00:34:04.144][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:34:07.025][D][voltage:282]: CH-A02 vbase=0.0081 vh=0.0001 vl=0.0198 v=0.0001
+[00:34:07.032][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[00:34:07.032][S][sensor]: '2019 Reference' >> nan %
+[00:34:33.453][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3623 vl=0.0000 v=1.3623
+[00:34:33.458][D][moisture:245]: CH-A00 r=-85777
+[00:34:33.458][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:34:34.127][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4838 vl=0.0000 v=0.4838
+[00:34:34.136][D][moisture:202]: CH-A00 r=-41793
+[00:34:34.137][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:34:37.024][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:34:37.031][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:34:37.031][S][sensor]: '2019 Reference' >> nan %
+[00:35:03.452][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3558 vl=0.0000 v=1.3558
+[00:35:03.457][D][moisture:245]: CH-A00 r=-85660
+[00:35:03.457][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:35:04.140][D][voltage:196]: CH-A00 vbase=0.0051 vh=0.4868 vl=0.0000 v=0.4868
+[00:35:04.142][D][moisture:202]: CH-A00 r=-42207
+[00:35:04.142][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:35:07.027][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0100 v=0.0000
+[00:35:07.031][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:35:07.031][S][sensor]: '2019 Reference' >> nan %
+[00:35:33.452][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3310 vl=0.0000 v=1.3310
+[00:35:33.456][D][moisture:245]: CH-A00 r=-85206
+[00:35:33.456][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:35:34.128][D][voltage:196]: CH-A00 vbase=0.0494 vh=0.5190 vl=0.0000 v=0.5190
+[00:35:34.136][D][moisture:202]: CH-A00 r=-46422
+[00:35:34.136][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:35:37.024][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0070 vl=0.0131 v=0.0070
+[00:35:37.034][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[00:35:37.034][S][sensor]: '2019 Reference' >> nan %
+[00:36:03.455][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3478 vl=0.0000 v=1.3478
+[00:36:03.457][D][moisture:245]: CH-A00 r=-85516
+[00:36:03.458][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:36:04.128][D][voltage:196]: CH-A00 vbase=0.0229 vh=0.5025 vl=0.0000 v=0.5025
+[00:36:04.133][D][moisture:202]: CH-A00 r=-44327
+[00:36:04.133][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:36:07.023][D][voltage:282]: CH-A02 vbase=0.0041 vh=0.0095 vl=0.0139 v=0.0095
+[00:36:07.030][W][moisture:284]: CH-A02 open/short circuit - v=0.0095
+[00:36:07.031][S][sensor]: '2019 Reference' >> nan %
+[00:36:33.470][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3642 vl=0.0000 v=1.3642
+[00:36:33.476][D][moisture:245]: CH-A00 r=-85810
+[00:36:33.476][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:36:34.126][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4962 vl=0.0000 v=0.4962
+[00:36:34.134][D][moisture:202]: CH-A00 r=-43497
+[00:36:34.134][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:36:37.025][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0000 vl=0.0000 v=0.0000
+[00:36:37.029][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:36:37.029][S][sensor]: '2019 Reference' >> nan %
+[00:37:03.451][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3542 vl=0.0000 v=1.3542
+[00:37:03.458][D][moisture:245]: CH-A00 r=-85631
+[00:37:03.458][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:37:04.126][D][voltage:196]: CH-A00 vbase=0.0259 vh=0.5051 vl=0.0000 v=0.5051
+[00:37:04.135][D][moisture:202]: CH-A00 r=-44672
+[00:37:04.135][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:37:07.025][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0070 vl=0.0213 v=0.0070
+[00:37:07.032][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[00:37:07.032][S][sensor]: '2019 Reference' >> nan %
+[00:37:33.450][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3613 vl=0.0000 v=1.3613
+[00:37:33.454][D][moisture:245]: CH-A00 r=-85758
+[00:37:33.454][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:37:34.125][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4378 vl=0.0000 v=0.4378
+[00:37:34.131][D][moisture:202]: CH-A00 r=-34624
+[00:37:34.131][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:37:37.023][D][voltage:282]: CH-A02 vbase=0.0120 vh=0.0000 vl=0.0050 v=0.0000
+[00:37:37.032][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:37:37.032][S][sensor]: '2019 Reference' >> nan %
+[00:38:03.454][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3552 vl=0.0000 v=1.3552
+[00:38:03.455][D][moisture:245]: CH-A00 r=-85650
+[00:38:03.455][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:38:04.126][D][voltage:196]: CH-A00 vbase=0.0167 vh=0.5301 vl=0.0000 v=0.5301
+[00:38:04.133][D][moisture:202]: CH-A00 r=-47751
+[00:38:04.133][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:38:07.021][D][voltage:282]: CH-A02 vbase=0.0008 vh=0.0085 vl=0.0170 v=0.0085
+[00:38:07.033][W][moisture:284]: CH-A02 open/short circuit - v=0.0085
+[00:38:07.033][S][sensor]: '2019 Reference' >> nan %
+[00:38:33.452][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3525 vl=0.0000 v=1.3525
+[00:38:33.456][D][moisture:245]: CH-A00 r=-85601
+[00:38:33.456][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:38:34.125][D][voltage:196]: CH-A00 vbase=0.0100 vh=0.4619 vl=0.0000 v=0.4619
+[00:38:34.130][D][moisture:202]: CH-A00 r=-38557
+[00:38:34.131][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:38:37.021][D][voltage:282]: CH-A02 vbase=0.0180 vh=0.0169 vl=0.0050 v=0.0169
+[00:38:37.031][W][moisture:284]: CH-A02 open/short circuit - v=0.0169
+[00:38:37.031][S][sensor]: '2019 Reference' >> nan %
+[00:39:03.450][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3667 vl=0.0000 v=1.3667
+[00:39:03.459][D][moisture:245]: CH-A00 r=-85854
+[00:39:03.460][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:39:04.127][D][voltage:196]: CH-A00 vbase=0.0070 vh=0.4881 vl=0.0000 v=0.4881
+[00:39:04.129][D][moisture:202]: CH-A00 r=-42396
+[00:39:04.130][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:39:07.020][D][voltage:282]: CH-A02 vbase=0.0040 vh=0.0000 vl=0.0000 v=0.0000
+[00:39:07.026][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:39:07.027][S][sensor]: '2019 Reference' >> nan %
+[00:39:33.448][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3472 vl=0.0000 v=1.3472
+[00:39:33.454][D][moisture:245]: CH-A00 r=-85505
+[00:39:33.455][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:39:34.127][D][voltage:196]: CH-A00 vbase=0.0001 vh=0.5047 vl=0.0000 v=0.5047
+[00:39:34.130][D][moisture:202]: CH-A00 r=-44614
+[00:39:34.131][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:39:37.023][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0200 vl=0.0017 v=0.0200
+[00:39:37.030][W][moisture:284]: CH-A02 open/short circuit - v=0.0200
+[00:39:37.031][S][sensor]: '2019 Reference' >> nan %
+[00:40:03.449][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3680 vl=0.0000 v=1.3680
+[00:40:03.452][D][moisture:245]: CH-A00 r=-85878
+[00:40:03.452][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:40:04.124][D][voltage:196]: CH-A00 vbase=0.0004 vh=0.5021 vl=0.0000 v=0.5021
+[00:40:04.130][D][moisture:202]: CH-A00 r=-44270
+[00:40:04.130][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:40:07.018][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:40:07.027][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:40:07.028][S][sensor]: '2019 Reference' >> nan %
+[00:40:33.447][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3527 vl=0.0000 v=1.3527
+[00:40:33.452][D][moisture:245]: CH-A00 r=-85605
+[00:40:33.453][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:40:34.124][D][voltage:196]: CH-A00 vbase=0.0080 vh=0.5082 vl=0.0000 v=0.5082
+[00:40:34.129][D][moisture:202]: CH-A00 r=-45064
+[00:40:34.130][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:40:37.019][D][voltage:282]: CH-A02 vbase=0.0090 vh=0.0050 vl=0.0004 v=0.0050
+[00:40:37.056][W][moisture:284]: CH-A02 open/short circuit - v=0.0050
+[00:40:37.056][S][sensor]: '2019 Reference' >> nan %
+[00:41:03.449][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3627 vl=0.0000 v=1.3627
+[00:41:03.451][D][moisture:245]: CH-A00 r=-85784
+[00:41:03.451][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:41:04.123][D][voltage:196]: CH-A00 vbase=0.0070 vh=0.5131 vl=0.0000 v=0.5131
+[00:41:04.130][D][moisture:202]: CH-A00 r=-45686
+[00:41:04.130][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:41:07.018][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:41:07.024][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:41:07.025][S][sensor]: '2019 Reference' >> nan %
+[00:41:33.447][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3613 vl=0.0000 v=1.3613
+[00:41:33.454][D][moisture:245]: CH-A00 r=-85759
+[00:41:33.455][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:41:34.123][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4579 vl=0.0000 v=0.4579
+[00:41:34.127][D][moisture:202]: CH-A00 r=-37934
+[00:41:34.127][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:41:37.018][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0000 vl=0.0060 v=0.0000
+[00:41:37.025][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:41:37.025][S][sensor]: '2019 Reference' >> nan %
+[00:42:03.447][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3526 vl=0.0000 v=1.3526
+[00:42:03.453][D][moisture:245]: CH-A00 r=-85603
+[00:42:03.453][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:42:04.123][D][voltage:196]: CH-A00 vbase=0.0324 vh=0.5336 vl=0.0310 v=0.5336
+[00:42:04.129][D][moisture:202]: CH-A00 r=-48152
+[00:42:04.130][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:42:07.017][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0060 v=0.0000
+[00:42:07.023][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:42:07.024][S][sensor]: '2019 Reference' >> nan %
+[00:42:33.446][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3577 vl=0.0000 v=1.3577
+[00:42:33.491][D][moisture:245]: CH-A00 r=-85695
+[00:42:33.491][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:42:34.124][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4587 vl=0.0000 v=0.4587
+[00:42:34.128][D][moisture:202]: CH-A00 r=-38054
+[00:42:34.129][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:42:37.020][D][voltage:282]: CH-A02 vbase=0.0001 vh=0.0140 vl=0.0248 v=0.0140
+[00:42:37.022][W][moisture:284]: CH-A02 open/short circuit - v=0.0140
+[00:42:37.023][S][sensor]: '2019 Reference' >> nan %
+[00:43:03.449][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3632 vl=0.0000 v=1.3632
+[00:43:03.453][D][moisture:245]: CH-A00 r=-85792
+[00:43:03.453][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:43:04.123][D][voltage:196]: CH-A00 vbase=0.0169 vh=0.4882 vl=0.0000 v=0.4882
+[00:43:04.126][D][moisture:202]: CH-A00 r=-42406
+[00:43:04.127][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:43:07.016][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0150 vl=0.0000 v=0.0150
+[00:43:07.026][W][moisture:284]: CH-A02 open/short circuit - v=0.0150
+[00:43:07.026][S][sensor]: '2019 Reference' >> nan %
+[00:43:33.445][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3460 vl=0.0000 v=1.3460
+[00:43:33.448][D][moisture:245]: CH-A00 r=-85483
+[00:43:33.450][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:43:34.124][D][voltage:196]: CH-A00 vbase=0.0239 vh=0.5016 vl=0.0000 v=0.5016
+[00:43:34.127][D][moisture:202]: CH-A00 r=-44207
+[00:43:34.127][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:43:37.016][D][voltage:282]: CH-A02 vbase=0.0110 vh=0.0000 vl=0.0080 v=0.0000
+[00:43:37.023][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:43:37.024][S][sensor]: '2019 Reference' >> nan %
+[00:44:03.449][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3645 vl=0.0000 v=1.3645
+[00:44:03.449][D][moisture:245]: CH-A00 r=-85815
+[00:44:03.449][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:44:04.124][D][voltage:196]: CH-A00 vbase=0.0114 vh=0.4997 vl=0.0000 v=0.4997
+[00:44:04.127][D][moisture:202]: CH-A00 r=-43965
+[00:44:04.128][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:44:07.017][D][voltage:282]: CH-A02 vbase=0.0071 vh=0.0070 vl=0.0050 v=0.0070
+[00:44:07.022][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[00:44:07.023][S][sensor]: '2019 Reference' >> nan %
+[00:44:33.443][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3897 vl=0.0000 v=1.3897
+[00:44:33.453][D][moisture:245]: CH-A00 r=-86253
+[00:44:33.453][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:44:34.125][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4792 vl=0.0000 v=0.4792
+[00:44:34.131][D][moisture:202]: CH-A00 r=-41132
+[00:44:34.131][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:44:37.016][D][voltage:282]: CH-A02 vbase=0.0030 vh=0.0001 vl=0.0120 v=0.0001
+[00:44:37.022][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[00:44:37.022][S][sensor]: '2019 Reference' >> nan %
+[00:45:03.443][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3577 vl=0.0000 v=1.3577
+[00:45:03.447][D][moisture:245]: CH-A00 r=-85694
+[00:45:03.447][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:45:04.121][D][voltage:196]: CH-A00 vbase=0.0500 vh=0.5292 vl=0.0030 v=0.5292
+[00:45:04.126][D][moisture:202]: CH-A00 r=-47647
+[00:45:04.126][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:45:07.015][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:45:07.021][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:45:07.021][S][sensor]: '2019 Reference' >> nan %
+[00:45:33.443][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3795 vl=0.0000 v=1.3795
+[00:45:33.447][D][moisture:245]: CH-A00 r=-86078
+[00:45:33.447][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:45:34.121][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5065 vl=0.0000 v=0.5065
+[00:45:34.127][D][moisture:202]: CH-A00 r=-44841
+[00:45:34.128][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:45:37.014][D][voltage:282]: CH-A02 vbase=0.0248 vh=0.0288 vl=0.0199 v=0.0288
+[00:45:37.021][W][moisture:284]: CH-A02 open/short circuit - v=0.0288
+[00:45:37.021][S][sensor]: '2019 Reference' >> nan %
+[00:46:03.442][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3587 vl=0.0000 v=1.3587
+[00:46:03.452][D][moisture:245]: CH-A00 r=-85713
+[00:46:03.453][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:46:04.123][D][voltage:196]: CH-A00 vbase=0.0060 vh=0.5461 vl=0.0000 v=0.5461
+[00:46:04.126][D][moisture:202]: CH-A00 r=-49574
+[00:46:04.126][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:46:07.013][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:46:07.035][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:46:07.036][S][sensor]: '2019 Reference' >> nan %
+[00:46:33.442][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3254 vl=0.0000 v=1.3254
+[00:46:33.446][D][moisture:245]: CH-A00 r=-85102
+[00:46:33.447][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:46:34.123][D][voltage:196]: CH-A00 vbase=0.0001 vh=0.5076 vl=0.0000 v=0.5076
+[00:46:34.129][D][moisture:202]: CH-A00 r=-44982
+[00:46:34.129][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:46:37.013][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0060 vl=0.0139 v=0.0060
+[00:46:37.020][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[00:46:37.020][S][sensor]: '2019 Reference' >> nan %
+[00:47:03.441][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3562 vl=0.0000 v=1.3562
+[00:47:03.445][D][moisture:245]: CH-A00 r=-85667
+[00:47:03.446][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:47:04.120][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4621 vl=0.0000 v=0.4621
+[00:47:04.127][D][moisture:202]: CH-A00 r=-38590
+[00:47:04.127][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:47:07.015][D][voltage:282]: CH-A02 vbase=0.0110 vh=0.0070 vl=0.0179 v=0.0070
+[00:47:07.019][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[00:47:07.019][S][sensor]: '2019 Reference' >> nan %
+[00:47:33.440][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3580 vl=0.0000 v=1.3580
+[00:47:33.445][D][moisture:245]: CH-A00 r=-85700
+[00:47:33.445][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:47:34.120][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4802 vl=0.0000 v=0.4802
+[00:47:34.126][D][moisture:202]: CH-A00 r=-41279
+[00:47:34.127][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:47:37.015][D][voltage:282]: CH-A02 vbase=0.0100 vh=0.0149 vl=0.0072 v=0.0149
+[00:47:37.019][W][moisture:284]: CH-A02 open/short circuit - v=0.0149
+[00:47:37.019][S][sensor]: '2019 Reference' >> nan %
+[00:48:03.443][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3608 vl=0.0000 v=1.3608
+[00:48:03.445][D][moisture:245]: CH-A00 r=-85750
+[00:48:03.445][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:48:04.125][D][voltage:196]: CH-A00 vbase=0.0110 vh=0.5297 vl=0.0000 v=0.5297
+[00:48:04.125][D][moisture:202]: CH-A00 r=-47700
+[00:48:04.125][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:48:07.011][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:48:07.019][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:48:07.019][S][sensor]: '2019 Reference' >> nan %
+[00:48:33.442][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3563 vl=0.0000 v=1.3563
+[00:48:33.449][D][moisture:245]: CH-A00 r=-85668
+[00:48:33.449][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:48:34.119][D][voltage:196]: CH-A00 vbase=0.0219 vh=0.5112 vl=0.0000 v=0.5112
+[00:48:34.128][D][moisture:202]: CH-A00 r=-45450
+[00:48:34.129][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:48:37.011][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0080 v=0.0000
+[00:48:37.017][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:48:37.018][S][sensor]: '2019 Reference' >> nan %
+[00:49:03.443][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3402 vl=0.0000 v=1.3402
+[00:49:03.446][D][moisture:245]: CH-A00 r=-85376
+[00:49:03.449][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:49:04.118][D][voltage:196]: CH-A00 vbase=0.0072 vh=0.5146 vl=0.0000 v=0.5146
+[00:49:04.124][D][moisture:202]: CH-A00 r=-45869
+[00:49:04.124][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:49:07.012][D][voltage:282]: CH-A02 vbase=0.0120 vh=0.0151 vl=0.0041 v=0.0151
+[00:49:07.018][W][moisture:284]: CH-A02 open/short circuit - v=0.0151
+[00:49:07.018][S][sensor]: '2019 Reference' >> nan %
+[00:49:33.439][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3495 vl=0.0000 v=1.3495
+[00:49:33.449][D][moisture:245]: CH-A00 r=-85547
+[00:49:33.450][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:49:34.117][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4962 vl=0.0002 v=0.4962
+[00:49:34.122][D][moisture:202]: CH-A00 r=-43496
+[00:49:34.123][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:49:37.019][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0100 vl=0.0140 v=0.0100
+[00:49:37.022][W][moisture:284]: CH-A02 open/short circuit - v=0.0100
+[00:49:37.022][S][sensor]: '2019 Reference' >> nan %
+[00:50:03.444][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3755 vl=0.0000 v=1.3755
+[00:50:03.446][D][moisture:245]: CH-A00 r=-86008
+[00:50:03.446][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:50:04.118][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4844 vl=0.0000 v=0.4844
+[00:50:04.124][D][moisture:202]: CH-A00 r=-41875
+[00:50:04.124][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:50:07.010][D][voltage:282]: CH-A02 vbase=0.0040 vh=0.0379 vl=0.0063 v=0.0379
+[00:50:07.021][W][moisture:284]: CH-A02 open/short circuit - v=0.0379
+[00:50:07.021][S][sensor]: '2019 Reference' >> nan %
+[00:50:33.442][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3774 vl=0.0000 v=1.3774
+[00:50:33.443][D][moisture:245]: CH-A00 r=-86042
+[00:50:33.445][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:50:34.119][D][voltage:196]: CH-A00 vbase=0.0060 vh=0.5027 vl=0.0000 v=0.5027
+[00:50:34.132][D][moisture:202]: CH-A00 r=-44350
+[00:50:34.132][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:50:37.010][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0100 v=0.0000
+[00:50:37.023][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:50:37.023][S][sensor]: '2019 Reference' >> nan %
+[00:51:03.465][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3330 vl=0.0000 v=1.3330
+[00:51:03.467][D][moisture:245]: CH-A00 r=-85243
+[00:51:03.467][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:51:04.116][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4797 vl=0.0000 v=0.4797
+[00:51:04.123][D][moisture:202]: CH-A00 r=-41200
+[00:51:04.123][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:51:07.011][D][voltage:282]: CH-A02 vbase=0.0090 vh=0.0002 vl=0.0000 v=0.0002
+[00:51:07.016][W][moisture:284]: CH-A02 open/short circuit - v=0.0002
+[00:51:07.017][S][sensor]: '2019 Reference' >> nan %
+[00:51:33.437][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3470 vl=0.0000 v=1.3470
+[00:51:33.446][D][moisture:245]: CH-A00 r=-85502
+[00:51:33.446][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:51:34.116][D][voltage:196]: CH-A00 vbase=0.0030 vh=0.4963 vl=0.0000 v=0.4963
+[00:51:34.122][D][moisture:202]: CH-A00 r=-43506
+[00:51:34.122][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:51:37.023][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0091 vl=0.0199 v=0.0091
+[00:51:37.025][W][moisture:284]: CH-A02 open/short circuit - v=0.0091
+[00:51:37.025][S][sensor]: '2019 Reference' >> nan %
+[00:52:03.436][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3664 vl=0.0000 v=1.3664
+[00:52:03.441][D][moisture:245]: CH-A00 r=-85849
+[00:52:03.441][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:52:04.115][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4964 vl=0.0000 v=0.4964
+[00:52:04.121][D][moisture:202]: CH-A00 r=-43525
+[00:52:04.122][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:52:07.008][D][voltage:282]: CH-A02 vbase=0.0120 vh=0.0070 vl=0.0070 v=0.0070
+[00:52:07.019][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[00:52:07.020][S][sensor]: '2019 Reference' >> nan %
+[00:52:33.439][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3552 vl=0.0000 v=1.3552
+[00:52:33.440][D][moisture:245]: CH-A00 r=-85650
+[00:52:33.440][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:52:34.123][D][voltage:196]: CH-A00 vbase=0.0374 vh=0.5204 vl=0.0000 v=0.5204
+[00:52:34.123][D][moisture:202]: CH-A00 r=-46583
+[00:52:34.124][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:52:37.007][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0080 vl=0.0070 v=0.0080
+[00:52:37.016][W][moisture:284]: CH-A02 open/short circuit - v=0.0080
+[00:52:37.017][S][sensor]: '2019 Reference' >> nan %
+[00:53:03.436][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3322 vl=0.0000 v=1.3322
+[00:53:03.442][D][moisture:245]: CH-A00 r=-85229
+[00:53:03.443][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:53:04.114][D][voltage:196]: CH-A00 vbase=0.0031 vh=0.5029 vl=0.0000 v=0.5029
+[00:53:04.120][D][moisture:202]: CH-A00 r=-44378
+[00:53:04.120][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:53:07.008][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0179 vl=0.0090 v=0.0179
+[00:53:07.015][W][moisture:284]: CH-A02 open/short circuit - v=0.0179
+[00:53:07.015][S][sensor]: '2019 Reference' >> nan %
+[00:53:33.435][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3793 vl=0.0000 v=1.3793
+[00:53:33.444][D][moisture:245]: CH-A00 r=-86075
+[00:53:33.445][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:53:34.115][D][voltage:196]: CH-A00 vbase=0.0010 vh=0.4911 vl=0.0130 v=0.4911
+[00:53:34.121][D][moisture:202]: CH-A00 r=-42810
+[00:53:34.121][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:53:37.007][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:53:37.014][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:53:37.014][S][sensor]: '2019 Reference' >> nan %
+[00:54:03.434][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3530 vl=0.0000 v=1.3530
+[00:54:03.439][D][moisture:245]: CH-A00 r=-85609
+[00:54:03.439][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:54:04.114][D][voltage:196]: CH-A00 vbase=0.0171 vh=0.5037 vl=0.0000 v=0.5037
+[00:54:04.120][D][moisture:202]: CH-A00 r=-44481
+[00:54:04.120][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:54:07.009][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0001 vl=0.0100 v=0.0001
+[00:54:07.013][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[00:54:07.013][S][sensor]: '2019 Reference' >> nan %
+[00:54:33.434][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3412 vl=0.0000 v=1.3412
+[00:54:33.439][D][moisture:245]: CH-A00 r=-85395
+[00:54:33.439][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:54:34.115][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4516 vl=0.0000 v=0.4516
+[00:54:34.121][D][moisture:202]: CH-A00 r=-36921
+[00:54:34.121][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:54:37.006][D][voltage:282]: CH-A02 vbase=0.0139 vh=0.0000 vl=0.0090 v=0.0000
+[00:54:37.016][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:54:37.017][S][sensor]: '2019 Reference' >> nan %
+[00:55:03.433][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3605 vl=0.0000 v=1.3605
+[00:55:03.440][D][moisture:245]: CH-A00 r=-85744
+[00:55:03.440][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:55:04.113][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4807 vl=0.0000 v=0.4807
+[00:55:04.119][D][moisture:202]: CH-A00 r=-41345
+[00:55:04.119][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:55:07.005][D][voltage:282]: CH-A02 vbase=0.0130 vh=0.0000 vl=0.0169 v=0.0000
+[00:55:07.012][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:55:07.013][S][sensor]: '2019 Reference' >> nan %
+[00:55:33.433][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3533 vl=0.0000 v=1.3533
+[00:55:33.438][D][moisture:245]: CH-A00 r=-85615
+[00:55:33.438][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:55:34.113][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4530 vl=0.0000 v=0.4530
+[00:55:34.118][D][moisture:202]: CH-A00 r=-37159
+[00:55:34.118][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:55:37.005][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0001 vl=0.0050 v=0.0001
+[00:55:37.012][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[00:55:37.013][S][sensor]: '2019 Reference' >> nan %
+[00:56:03.433][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3475 vl=0.0000 v=1.3475
+[00:56:03.437][D][moisture:245]: CH-A00 r=-85510
+[00:56:03.438][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:56:04.113][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4822 vl=0.0000 v=0.4822
+[00:56:04.118][D][moisture:202]: CH-A00 r=-41558
+[00:56:04.119][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:56:07.004][D][voltage:282]: CH-A02 vbase=0.0100 vh=0.0041 vl=0.0050 v=0.0041
+[00:56:07.012][W][moisture:284]: CH-A02 open/short circuit - v=0.0041
+[00:56:07.012][S][sensor]: '2019 Reference' >> nan %
+[00:56:33.432][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3171 vl=0.0000 v=1.3171
+[00:56:33.438][D][moisture:245]: CH-A00 r=-84945
+[00:56:33.438][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:56:34.137][D][voltage:196]: CH-A00 vbase=0.0120 vh=0.5035 vl=0.0000 v=0.5035
+[00:56:34.137][D][moisture:202]: CH-A00 r=-44462
+[00:56:34.137][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:56:37.004][D][voltage:282]: CH-A02 vbase=0.0219 vh=0.0070 vl=0.0110 v=0.0070
+[00:56:37.011][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[00:56:37.011][S][sensor]: '2019 Reference' >> nan %
+[00:57:03.432][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3508 vl=0.0000 v=1.3508
+[00:57:03.437][D][moisture:245]: CH-A00 r=-85570
+[00:57:03.438][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:57:04.111][D][voltage:196]: CH-A00 vbase=0.0030 vh=0.4936 vl=0.0000 v=0.4936
+[00:57:04.118][D][moisture:202]: CH-A00 r=-43149
+[00:57:04.119][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:57:07.004][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0001 v=0.0000
+[00:57:07.012][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:57:07.013][S][sensor]: '2019 Reference' >> nan %
+[00:57:33.433][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3508 vl=0.0000 v=1.3508
+[00:57:33.436][D][moisture:245]: CH-A00 r=-85570
+[00:57:33.436][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:57:34.111][D][voltage:196]: CH-A00 vbase=0.0060 vh=0.4834 vl=0.0000 v=0.4834
+[00:57:34.121][D][moisture:202]: CH-A00 r=-41733
+[00:57:34.122][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:57:37.004][D][voltage:282]: CH-A02 vbase=0.0150 vh=0.0040 vl=0.0000 v=0.0040
+[00:57:37.010][W][moisture:284]: CH-A02 open/short circuit - v=0.0040
+[00:57:37.011][S][sensor]: '2019 Reference' >> nan %
+[00:58:03.434][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3744 vl=0.0000 v=1.3744
+[00:58:03.436][D][moisture:245]: CH-A00 r=-85989
+[00:58:03.436][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:58:04.111][D][voltage:196]: CH-A00 vbase=0.0002 vh=0.4991 vl=0.0000 v=0.4991
+[00:58:04.116][D][moisture:202]: CH-A00 r=-43885
+[00:58:04.116][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:58:07.002][D][voltage:282]: CH-A02 vbase=0.0110 vh=0.0160 vl=0.0050 v=0.0160
+[00:58:07.009][W][moisture:284]: CH-A02 open/short circuit - v=0.0160
+[00:58:07.010][S][sensor]: '2019 Reference' >> nan %
+[00:58:33.431][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3704 vl=0.0000 v=1.3704
+[00:58:33.435][D][moisture:245]: CH-A00 r=-85920
+[00:58:33.438][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:58:34.110][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4940 vl=0.0000 v=0.4940
+[00:58:34.116][D][moisture:202]: CH-A00 r=-43194
+[00:58:34.116][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:58:37.002][D][voltage:282]: CH-A02 vbase=0.0004 vh=0.0140 vl=0.0060 v=0.0140
+[00:58:37.010][W][moisture:284]: CH-A02 open/short circuit - v=0.0140
+[00:58:37.010][S][sensor]: '2019 Reference' >> nan %
+[00:59:03.432][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3725 vl=0.0000 v=1.3725
+[00:59:03.435][D][moisture:245]: CH-A00 r=-85956
+[00:59:03.436][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:59:04.114][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4938 vl=0.0000 v=0.4938
+[00:59:04.121][D][moisture:202]: CH-A00 r=-43177
+[00:59:04.121][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:59:07.002][D][voltage:282]: CH-A02 vbase=0.0063 vh=0.0000 vl=0.0130 v=0.0000
+[00:59:07.009][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:59:07.009][S][sensor]: '2019 Reference' >> nan %
+[00:59:33.432][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3591 vl=0.0000 v=1.3591
+[00:59:33.434][D][moisture:245]: CH-A00 r=-85720
+[00:59:33.435][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[00:59:34.139][D][voltage:196]: CH-A00 vbase=0.0431 vh=0.5386 vl=0.0000 v=0.5386
+[00:59:34.139][D][moisture:202]: CH-A00 r=-48728
+[00:59:34.139][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[00:59:37.013][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[00:59:37.014][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[00:59:37.016][S][sensor]: '2019 Reference' >> nan %
+[01:00:03.429][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3798 vl=0.0000 v=1.3798
+[01:00:03.436][D][moisture:245]: CH-A00 r=-86083
+[01:00:03.437][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:00:04.110][D][voltage:196]: CH-A00 vbase=0.0207 vh=0.5211 vl=0.0000 v=0.5211
+[01:00:04.114][D][moisture:202]: CH-A00 r=-46678
+[01:00:04.114][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:00:07.004][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:00:07.008][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:00:07.009][S][sensor]: '2019 Reference' >> nan %
+[01:00:33.445][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3460 vl=0.0000 v=1.3460
+[01:00:33.449][D][moisture:245]: CH-A00 r=-85482
+[01:00:33.452][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:00:34.109][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4539 vl=0.0000 v=0.4539
+[01:00:34.113][D][moisture:202]: CH-A00 r=-37302
+[01:00:34.113][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:00:37.000][D][voltage:282]: CH-A02 vbase=0.0349 vh=0.0318 vl=0.0091 v=0.0318
+[01:00:37.019][W][moisture:284]: CH-A02 open/short circuit - v=0.0318
+[01:00:37.020][S][sensor]: '2019 Reference' >> nan %
+[01:01:03.432][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3510 vl=0.0000 v=1.3510
+[01:01:03.433][D][moisture:245]: CH-A00 r=-85573
+[01:01:03.435][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:01:04.121][D][voltage:196]: CH-A00 vbase=0.0179 vh=0.5057 vl=0.0000 v=0.5057
+[01:01:04.121][D][moisture:202]: CH-A00 r=-44738
+[01:01:04.122][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:01:07.001][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:01:07.006][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:01:07.007][S][sensor]: '2019 Reference' >> nan %
+[01:01:33.432][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3562 vl=0.0000 v=1.3562
+[01:01:33.436][D][moisture:245]: CH-A00 r=-85667
+[01:01:33.437][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:01:34.118][D][voltage:196]: CH-A00 vbase=0.0266 vh=0.5345 vl=0.0000 v=0.5345
+[01:01:34.118][D][moisture:202]: CH-A00 r=-48258
+[01:01:34.120][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:01:36.999][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0000 vl=0.0000 v=0.0000
+[01:01:37.007][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:01:37.008][S][sensor]: '2019 Reference' >> nan %
+[01:02:03.427][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3630 vl=0.0000 v=1.3630
+[01:02:03.434][D][moisture:245]: CH-A00 r=-85788
+[01:02:03.434][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:02:04.107][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4866 vl=0.0000 v=0.4866
+[01:02:04.115][D][moisture:202]: CH-A00 r=-42187
+[01:02:04.115][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:02:07.003][D][voltage:282]: CH-A02 vbase=0.0129 vh=0.0030 vl=0.0002 v=0.0030
+[01:02:07.006][W][moisture:284]: CH-A02 open/short circuit - v=0.0030
+[01:02:07.006][S][sensor]: '2019 Reference' >> nan %
+[01:02:33.427][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3562 vl=0.0000 v=1.3562
+[01:02:33.432][D][moisture:245]: CH-A00 r=-85667
+[01:02:33.432][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:02:34.107][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4884 vl=0.0040 v=0.4884
+[01:02:34.112][D][moisture:202]: CH-A00 r=-42433
+[01:02:34.112][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:02:36.999][D][voltage:282]: CH-A02 vbase=0.0131 vh=0.0062 vl=0.0139 v=0.0062
+[01:02:37.014][W][moisture:284]: CH-A02 open/short circuit - v=0.0062
+[01:02:37.014][S][sensor]: '2019 Reference' >> nan %
+[01:03:03.426][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3581 vl=0.0000 v=1.3581
+[01:03:03.430][D][moisture:245]: CH-A00 r=-85702
+[01:03:03.431][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:03:04.106][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4940 vl=0.0000 v=0.4940
+[01:03:04.113][D][moisture:202]: CH-A00 r=-43195
+[01:03:04.114][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:03:06.998][D][voltage:282]: CH-A02 vbase=0.0040 vh=0.0031 vl=0.0000 v=0.0031
+[01:03:07.011][W][moisture:284]: CH-A02 open/short circuit - v=0.0031
+[01:03:07.011][S][sensor]: '2019 Reference' >> nan %
+[01:03:33.429][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3593 vl=0.0000 v=1.3593
+[01:03:33.430][D][moisture:245]: CH-A00 r=-85722
+[01:03:33.431][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:03:34.106][D][voltage:196]: CH-A00 vbase=0.0285 vh=0.5050 vl=0.0000 v=0.5050
+[01:03:34.112][D][moisture:202]: CH-A00 r=-44660
+[01:03:34.113][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:03:36.997][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:03:37.005][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:03:37.005][S][sensor]: '2019 Reference' >> nan %
+[01:04:03.426][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3534 vl=0.0000 v=1.3534
+[01:04:03.433][D][moisture:245]: CH-A00 r=-85616
+[01:04:03.433][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:04:04.106][D][voltage:196]: CH-A00 vbase=0.0051 vh=0.4989 vl=0.0000 v=0.4989
+[01:04:04.110][D][moisture:202]: CH-A00 r=-43856
+[01:04:04.110][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:04:06.997][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:04:07.004][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:04:07.005][S][sensor]: '2019 Reference' >> nan %
+[01:04:33.426][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3600 vl=0.0000 v=1.3600
+[01:04:33.442][D][moisture:245]: CH-A00 r=-85735
+[01:04:33.442][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:04:34.105][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4855 vl=0.0000 v=0.4855
+[01:04:34.110][D][moisture:202]: CH-A00 r=-42026
+[01:04:34.110][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:04:37.013][D][voltage:282]: CH-A02 vbase=0.0040 vh=0.0120 vl=0.0001 v=0.0120
+[01:04:37.020][W][moisture:284]: CH-A02 open/short circuit - v=0.0120
+[01:04:37.021][S][sensor]: '2019 Reference' >> nan %
+[01:05:03.427][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3292 vl=0.0000 v=1.3292
+[01:05:03.429][D][moisture:245]: CH-A00 r=-85173
+[01:05:03.430][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:05:04.104][D][voltage:196]: CH-A00 vbase=0.0090 vh=0.5031 vl=0.0000 v=0.5031
+[01:05:04.109][D][moisture:202]: CH-A00 r=-44404
+[01:05:04.109][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:05:06.996][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0060 vl=0.0002 v=0.0060
+[01:05:07.004][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[01:05:07.004][S][sensor]: '2019 Reference' >> nan %
+[01:05:33.432][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3479 vl=0.0000 v=1.3479
+[01:05:33.433][D][moisture:245]: CH-A00 r=-85518
+[01:05:33.435][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:05:34.104][D][voltage:196]: CH-A00 vbase=0.0326 vh=0.4944 vl=0.0000 v=0.4944
+[01:05:34.109][D][moisture:202]: CH-A00 r=-43253
+[01:05:34.109][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:05:36.996][D][voltage:282]: CH-A02 vbase=0.0090 vh=0.0002 vl=0.0120 v=0.0002
+[01:05:37.006][W][moisture:284]: CH-A02 open/short circuit - v=0.0002
+[01:05:37.006][S][sensor]: '2019 Reference' >> nan %
+[01:06:03.425][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3527 vl=0.0000 v=1.3527
+[01:06:03.436][D][moisture:245]: CH-A00 r=-85605
+[01:06:03.436][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:06:04.104][D][voltage:196]: CH-A00 vbase=0.0150 vh=0.5392 vl=0.0000 v=0.5392
+[01:06:04.108][D][moisture:202]: CH-A00 r=-48800
+[01:06:04.109][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:06:06.995][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0000 vl=0.0000 v=0.0000
+[01:06:07.003][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:06:07.003][S][sensor]: '2019 Reference' >> nan %
+[01:06:33.423][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3476 vl=0.0000 v=1.3476
+[01:06:33.429][D][moisture:245]: CH-A00 r=-85513
+[01:06:33.429][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:06:34.103][D][voltage:196]: CH-A00 vbase=0.0190 vh=0.5029 vl=0.0000 v=0.5029
+[01:06:34.108][D][moisture:202]: CH-A00 r=-44381
+[01:06:34.109][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:06:36.995][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0001 vl=0.0060 v=0.0001
+[01:06:37.002][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[01:06:37.002][S][sensor]: '2019 Reference' >> nan %
+[01:07:03.423][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3448 vl=0.0000 v=1.3448
+[01:07:03.427][D][moisture:245]: CH-A00 r=-85461
+[01:07:03.427][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:07:04.109][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4626 vl=0.0000 v=0.4626
+[01:07:04.109][D][moisture:202]: CH-A00 r=-38658
+[01:07:04.109][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:07:06.996][D][voltage:282]: CH-A02 vbase=0.0338 vh=0.0001 vl=0.0060 v=0.0001
+[01:07:07.001][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[01:07:07.001][S][sensor]: '2019 Reference' >> nan %
+[01:07:33.424][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3650 vl=0.0000 v=1.3650
+[01:07:33.427][D][moisture:245]: CH-A00 r=-85824
+[01:07:33.428][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:07:34.104][D][voltage:196]: CH-A00 vbase=0.0308 vh=0.5318 vl=0.0000 v=0.5318
+[01:07:34.108][D][moisture:202]: CH-A00 r=-47948
+[01:07:34.109][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:07:36.994][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:07:37.001][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:07:37.001][S][sensor]: '2019 Reference' >> nan %
+[01:08:03.423][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3546 vl=0.0000 v=1.3546
+[01:08:03.426][D][moisture:245]: CH-A00 r=-85639
+[01:08:03.428][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:08:04.102][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4873 vl=0.0000 v=0.4873
+[01:08:04.106][D][moisture:202]: CH-A00 r=-42280
+[01:08:04.106][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:08:06.993][D][voltage:282]: CH-A02 vbase=0.0111 vh=0.0000 vl=0.0000 v=0.0000
+[01:08:07.011][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:08:07.013][S][sensor]: '2019 Reference' >> nan %
+[01:08:33.422][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3403 vl=0.0000 v=1.3403
+[01:08:33.427][D][moisture:245]: CH-A00 r=-85378
+[01:08:33.427][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:08:34.101][D][voltage:196]: CH-A00 vbase=0.0139 vh=0.5052 vl=0.0000 v=0.5052
+[01:08:34.106][D][moisture:202]: CH-A00 r=-44678
+[01:08:34.106][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:08:36.993][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0060 v=0.0000
+[01:08:37.001][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:08:37.002][S][sensor]: '2019 Reference' >> nan %
+[01:09:03.422][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3558 vl=0.0000 v=1.3558
+[01:09:03.427][D][moisture:245]: CH-A00 r=-85660
+[01:09:03.427][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:09:04.102][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4930 vl=0.0000 v=0.4930
+[01:09:04.108][D][moisture:202]: CH-A00 r=-43057
+[01:09:04.108][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:09:06.994][D][voltage:282]: CH-A02 vbase=0.0110 vh=0.0100 vl=0.0109 v=0.0100
+[01:09:07.000][W][moisture:284]: CH-A02 open/short circuit - v=0.0100
+[01:09:07.000][S][sensor]: '2019 Reference' >> nan %
+[01:09:33.421][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3448 vl=0.0000 v=1.3448
+[01:09:33.425][D][moisture:245]: CH-A00 r=-85461
+[01:09:33.425][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:09:34.103][D][voltage:196]: CH-A00 vbase=0.0120 vh=0.5033 vl=0.0000 v=0.5033
+[01:09:34.108][D][moisture:202]: CH-A00 r=-44430
+[01:09:34.109][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:09:36.992][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0001 vl=0.0140 v=0.0001
+[01:09:36.999][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[01:09:36.999][S][sensor]: '2019 Reference' >> nan %
+[01:10:03.420][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3619 vl=0.0000 v=1.3619
+[01:10:03.425][D][moisture:245]: CH-A00 r=-85769
+[01:10:03.425][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:10:04.100][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4962 vl=0.0000 v=0.4962
+[01:10:04.108][D][moisture:202]: CH-A00 r=-43495
+[01:10:04.108][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:10:06.992][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0001 vl=0.0000 v=0.0001
+[01:10:06.998][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[01:10:06.999][S][sensor]: '2019 Reference' >> nan %
+[01:10:33.420][D][voltage:239]: CH-A01 vbase=0.0140 vh=1.3594 vl=0.0000 v=1.3594
+[01:10:33.425][D][moisture:245]: CH-A00 r=-85724
+[01:10:33.426][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:10:34.099][D][voltage:196]: CH-A00 vbase=0.0060 vh=0.4971 vl=0.0000 v=0.4971
+[01:10:34.104][D][moisture:202]: CH-A00 r=-43614
+[01:10:34.104][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:10:36.992][D][voltage:282]: CH-A02 vbase=0.0150 vh=0.0080 vl=0.0050 v=0.0080
+[01:10:37.002][W][moisture:284]: CH-A02 open/short circuit - v=0.0080
+[01:10:37.002][S][sensor]: '2019 Reference' >> nan %
+[01:11:03.420][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3504 vl=0.0000 v=1.3504
+[01:11:03.424][D][moisture:245]: CH-A00 r=-85562
+[01:11:03.425][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:11:04.099][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4976 vl=0.0000 v=0.4976
+[01:11:04.103][D][moisture:202]: CH-A00 r=-43680
+[01:11:04.103][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:11:06.991][D][voltage:282]: CH-A02 vbase=0.0190 vh=0.0047 vl=0.0120 v=0.0047
+[01:11:06.997][W][moisture:284]: CH-A02 open/short circuit - v=0.0047
+[01:11:06.997][S][sensor]: '2019 Reference' >> nan %
+[01:11:33.419][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3402 vl=0.0000 v=1.3402
+[01:11:33.423][D][moisture:245]: CH-A00 r=-85376
+[01:11:33.423][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:11:34.109][D][voltage:196]: CH-A00 vbase=0.0100 vh=0.4982 vl=0.0000 v=0.4982
+[01:11:34.110][D][moisture:202]: CH-A00 r=-43757
+[01:11:34.110][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:11:36.992][D][voltage:282]: CH-A02 vbase=0.0004 vh=0.0001 vl=0.0070 v=0.0001
+[01:11:36.996][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[01:11:36.997][S][sensor]: '2019 Reference' >> nan %
+[01:12:03.418][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3690 vl=0.0000 v=1.3690
+[01:12:03.422][D][moisture:245]: CH-A00 r=-85894
+[01:12:03.423][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:12:04.101][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4952 vl=0.0008 v=0.4952
+[01:12:04.106][D][moisture:202]: CH-A00 r=-43355
+[01:12:04.107][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:12:06.992][D][voltage:282]: CH-A02 vbase=0.0001 vh=0.0000 vl=0.0000 v=0.0000
+[01:12:06.995][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:12:06.995][S][sensor]: '2019 Reference' >> nan %
+[01:12:33.417][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3672 vl=0.0000 v=1.3672
+[01:12:33.422][D][moisture:245]: CH-A00 r=-85864
+[01:12:33.423][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:12:34.098][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4771 vl=0.0000 v=0.4771
+[01:12:34.110][D][moisture:202]: CH-A00 r=-40837
+[01:12:34.110][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:12:36.992][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0090 vl=0.0030 v=0.0090
+[01:12:36.997][W][moisture:284]: CH-A02 open/short circuit - v=0.0090
+[01:12:36.997][S][sensor]: '2019 Reference' >> nan %
+[01:13:03.418][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3453 vl=0.0000 v=1.3453
+[01:13:03.421][D][moisture:245]: CH-A00 r=-85470
+[01:13:03.422][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:13:04.100][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4506 vl=0.0000 v=0.4506
+[01:13:04.139][D][moisture:202]: CH-A00 r=-36770
+[01:13:04.140][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:13:06.989][D][voltage:282]: CH-A02 vbase=0.0109 vh=0.0000 vl=0.0050 v=0.0000
+[01:13:06.996][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:13:06.997][S][sensor]: '2019 Reference' >> nan %
+[01:13:33.423][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3492 vl=0.0000 v=1.3492
+[01:13:33.424][D][moisture:245]: CH-A00 r=-85541
+[01:13:33.424][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:13:34.103][D][voltage:196]: CH-A00 vbase=0.0179 vh=0.4992 vl=0.0000 v=0.4992
+[01:13:34.104][D][moisture:202]: CH-A00 r=-43895
+[01:13:34.104][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:13:36.988][D][voltage:282]: CH-A02 vbase=0.0209 vh=0.0061 vl=0.0250 v=0.0061
+[01:13:36.994][W][moisture:284]: CH-A02 open/short circuit - v=0.0061
+[01:13:36.995][S][sensor]: '2019 Reference' >> nan %
+[01:14:03.419][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3635 vl=0.0000 v=1.3635
+[01:14:03.425][D][moisture:245]: CH-A00 r=-85797
+[01:14:03.425][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:14:04.096][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4997 vl=0.0000 v=0.4997
+[01:14:04.107][D][moisture:202]: CH-A00 r=-43965
+[01:14:04.107][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:14:06.991][D][voltage:282]: CH-A02 vbase=0.0002 vh=0.0060 vl=0.0000 v=0.0060
+[01:14:06.996][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[01:14:06.997][S][sensor]: '2019 Reference' >> nan %
+[01:14:33.415][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3442 vl=0.0000 v=1.3442
+[01:14:33.427][D][moisture:245]: CH-A00 r=-85450
+[01:14:33.428][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:14:34.095][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4425 vl=0.0000 v=0.4425
+[01:14:34.100][D][moisture:202]: CH-A00 r=-35422
+[01:14:34.101][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:14:36.989][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0071 vl=0.0159 v=0.0071
+[01:14:36.996][W][moisture:284]: CH-A02 open/short circuit - v=0.0071
+[01:14:36.996][S][sensor]: '2019 Reference' >> nan %
+[01:15:03.415][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3593 vl=0.0000 v=1.3593
+[01:15:03.423][D][moisture:245]: CH-A00 r=-85722
+[01:15:03.424][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:15:04.104][D][voltage:196]: CH-A00 vbase=0.0030 vh=0.4974 vl=0.0000 v=0.4974
+[01:15:04.104][D][moisture:202]: CH-A00 r=-43658
+[01:15:04.104][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:15:06.989][D][voltage:282]: CH-A02 vbase=0.0130 vh=0.0100 vl=0.0060 v=0.0100
+[01:15:06.993][W][moisture:284]: CH-A02 open/short circuit - v=0.0100
+[01:15:06.994][S][sensor]: '2019 Reference' >> nan %
+[01:15:33.416][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3745 vl=0.0000 v=1.3745
+[01:15:33.420][D][moisture:245]: CH-A00 r=-85992
+[01:15:33.421][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:15:34.095][D][voltage:196]: CH-A00 vbase=0.0081 vh=0.4934 vl=0.0000 v=0.4934
+[01:15:34.100][D][moisture:202]: CH-A00 r=-43120
+[01:15:34.101][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:15:36.987][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0070 vl=0.0188 v=0.0070
+[01:15:36.997][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[01:15:36.997][S][sensor]: '2019 Reference' >> nan %
+[01:16:03.417][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3687 vl=0.0000 v=1.3687
+[01:16:03.421][D][moisture:245]: CH-A00 r=-85889
+[01:16:03.421][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:16:04.094][D][voltage:196]: CH-A00 vbase=0.0100 vh=0.4977 vl=0.0000 v=0.4977
+[01:16:04.099][D][moisture:202]: CH-A00 r=-43689
+[01:16:04.099][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:16:07.011][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0064 vl=0.0229 v=0.0064
+[01:16:07.018][W][moisture:284]: CH-A02 open/short circuit - v=0.0064
+[01:16:07.019][S][sensor]: '2019 Reference' >> nan %
+[01:16:33.416][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3341 vl=0.0000 v=1.3341
+[01:16:33.420][D][moisture:245]: CH-A00 r=-85264
+[01:16:33.421][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:16:34.097][D][voltage:196]: CH-A00 vbase=0.0060 vh=0.5046 vl=0.0000 v=0.5046
+[01:16:34.099][D][moisture:202]: CH-A00 r=-44599
+[01:16:34.100][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:16:36.988][D][voltage:282]: CH-A02 vbase=0.0170 vh=0.0000 vl=0.0031 v=0.0000
+[01:16:36.993][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:16:36.994][S][sensor]: '2019 Reference' >> nan %
+[01:17:03.413][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3231 vl=0.0000 v=1.3231
+[01:17:03.420][D][moisture:245]: CH-A00 r=-85058
+[01:17:03.420][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:17:04.093][D][voltage:196]: CH-A00 vbase=0.0110 vh=0.5014 vl=0.0000 v=0.5014
+[01:17:04.098][D][moisture:202]: CH-A00 r=-44190
+[01:17:04.098][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:17:06.988][D][voltage:282]: CH-A02 vbase=0.0131 vh=0.0110 vl=0.0071 v=0.0110
+[01:17:06.996][W][moisture:284]: CH-A02 open/short circuit - v=0.0110
+[01:17:06.997][S][sensor]: '2019 Reference' >> nan %
+[01:17:33.416][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3556 vl=0.0000 v=1.3556
+[01:17:33.420][D][moisture:245]: CH-A00 r=-85657
+[01:17:33.420][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:17:34.093][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4460 vl=0.0000 v=0.4460
+[01:17:34.097][D][moisture:202]: CH-A00 r=-36015
+[01:17:34.098][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:17:36.986][D][voltage:282]: CH-A02 vbase=0.0248 vh=0.0101 vl=0.0000 v=0.0101
+[01:17:36.992][W][moisture:284]: CH-A02 open/short circuit - v=0.0101
+[01:17:36.992][S][sensor]: '2019 Reference' >> nan %
+[01:18:03.415][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3469 vl=0.0000 v=1.3469
+[01:18:03.420][D][moisture:245]: CH-A00 r=-85499
+[01:18:03.420][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:18:04.092][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4972 vl=0.0000 v=0.4972
+[01:18:04.097][D][moisture:202]: CH-A00 r=-43626
+[01:18:04.097][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:18:06.987][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0130 vl=0.0005 v=0.0130
+[01:18:06.990][W][moisture:284]: CH-A02 open/short circuit - v=0.0130
+[01:18:06.991][S][sensor]: '2019 Reference' >> nan %
+[01:18:33.412][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3577 vl=0.0000 v=1.3577
+[01:18:33.418][D][moisture:245]: CH-A00 r=-85695
+[01:18:33.419][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:18:34.115][D][voltage:196]: CH-A00 vbase=0.0589 vh=0.5055 vl=0.0000 v=0.5055
+[01:18:34.130][D][moisture:202]: CH-A00 r=-44724
+[01:18:34.131][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:18:36.984][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0001 vl=0.0140 v=0.0001
+[01:18:36.992][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[01:18:36.993][S][sensor]: '2019 Reference' >> nan %
+[01:19:03.411][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3416 vl=0.0000 v=1.3416
+[01:19:03.416][D][moisture:245]: CH-A00 r=-85402
+[01:19:03.416][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:19:04.091][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4501 vl=0.0000 v=0.4501
+[01:19:04.096][D][moisture:202]: CH-A00 r=-36690
+[01:19:04.096][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:19:06.983][D][voltage:282]: CH-A02 vbase=0.0090 vh=0.0112 vl=0.0071 v=0.0112
+[01:19:06.994][W][moisture:284]: CH-A02 open/short circuit - v=0.0112
+[01:19:06.994][S][sensor]: '2019 Reference' >> nan %
+[01:19:33.416][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3744 vl=0.0000 v=1.3744
+[01:19:33.417][D][moisture:245]: CH-A00 r=-85989
+[01:19:33.417][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:19:34.091][D][voltage:196]: CH-A00 vbase=0.0080 vh=0.4928 vl=0.0000 v=0.4928
+[01:19:34.096][D][moisture:202]: CH-A00 r=-43036
+[01:19:34.097][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:19:36.985][D][voltage:282]: CH-A02 vbase=0.0110 vh=0.0050 vl=0.0000 v=0.0050
+[01:19:36.989][W][moisture:284]: CH-A02 open/short circuit - v=0.0050
+[01:19:36.989][S][sensor]: '2019 Reference' >> nan %
+[01:20:03.411][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3510 vl=0.0000 v=1.3510
+[01:20:03.416][D][moisture:245]: CH-A00 r=-85573
+[01:20:03.417][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:20:04.091][D][voltage:196]: CH-A00 vbase=0.0002 vh=0.5362 vl=0.0000 v=0.5362
+[01:20:04.096][D][moisture:202]: CH-A00 r=-48459
+[01:20:04.096][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:20:06.982][D][voltage:282]: CH-A02 vbase=0.0189 vh=0.0001 vl=0.0000 v=0.0001
+[01:20:06.990][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[01:20:06.991][S][sensor]: '2019 Reference' >> nan %
+[01:20:33.410][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3742 vl=0.0000 v=1.3742
+[01:20:33.415][D][moisture:245]: CH-A00 r=-85986
+[01:20:33.415][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:20:34.090][D][voltage:196]: CH-A00 vbase=0.0219 vh=0.4955 vl=0.0000 v=0.4955
+[01:20:34.094][D][moisture:202]: CH-A00 r=-43396
+[01:20:34.095][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:20:36.994][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0070 vl=0.0000 v=0.0070
+[01:20:36.995][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[01:20:36.995][S][sensor]: '2019 Reference' >> nan %
+[01:21:03.412][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3566 vl=0.0000 v=1.3566
+[01:21:03.414][D][moisture:245]: CH-A00 r=-85675
+[01:21:03.414][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:21:04.090][D][voltage:196]: CH-A00 vbase=0.0203 vh=0.5052 vl=0.0000 v=0.5052
+[01:21:04.094][D][moisture:202]: CH-A00 r=-44679
+[01:21:04.094][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:21:06.981][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0070 vl=0.0000 v=0.0070
+[01:21:06.989][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[01:21:06.989][S][sensor]: '2019 Reference' >> nan %
+[01:21:33.409][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3556 vl=0.0000 v=1.3556
+[01:21:33.416][D][moisture:245]: CH-A00 r=-85656
+[01:21:33.416][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:21:34.091][D][voltage:196]: CH-A00 vbase=0.0311 vh=0.5271 vl=0.0000 v=0.5271
+[01:21:34.094][D][moisture:202]: CH-A00 r=-47392
+[01:21:34.094][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:21:36.981][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:21:36.988][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:21:36.988][S][sensor]: '2019 Reference' >> nan %
+[01:22:03.410][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3537 vl=0.0000 v=1.3537
+[01:22:03.415][D][moisture:245]: CH-A00 r=-85622
+[01:22:03.416][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:22:04.094][D][voltage:196]: CH-A00 vbase=0.0364 vh=0.5218 vl=0.0000 v=0.5218
+[01:22:04.094][D][moisture:202]: CH-A00 r=-46763
+[01:22:04.095][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:22:06.980][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:22:06.986][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:22:06.986][S][sensor]: '2019 Reference' >> nan %
+[01:22:33.408][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3566 vl=0.0000 v=1.3566
+[01:22:33.413][D][moisture:245]: CH-A00 r=-85674
+[01:22:33.413][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:22:34.088][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4993 vl=0.0060 v=0.4993
+[01:22:34.095][D][moisture:202]: CH-A00 r=-43912
+[01:22:34.096][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:22:36.980][D][voltage:282]: CH-A02 vbase=0.0120 vh=0.0092 vl=0.0030 v=0.0092
+[01:22:36.990][W][moisture:284]: CH-A02 open/short circuit - v=0.0092
+[01:22:36.991][S][sensor]: '2019 Reference' >> nan %
+[01:23:03.408][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3831 vl=0.0000 v=1.3831
+[01:23:03.412][D][moisture:245]: CH-A00 r=-86141
+[01:23:03.413][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:23:04.088][D][voltage:196]: CH-A00 vbase=0.0060 vh=0.4993 vl=0.0000 v=0.4993
+[01:23:04.092][D][moisture:202]: CH-A00 r=-43910
+[01:23:04.092][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:23:06.981][D][voltage:282]: CH-A02 vbase=0.0061 vh=0.0003 vl=0.0110 v=0.0003
+[01:23:06.987][W][moisture:284]: CH-A02 open/short circuit - v=0.0003
+[01:23:06.987][S][sensor]: '2019 Reference' >> nan %
+[01:23:33.408][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3541 vl=0.0000 v=1.3541
+[01:23:33.412][D][moisture:245]: CH-A00 r=-85629
+[01:23:33.414][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:23:34.087][D][voltage:196]: CH-A00 vbase=0.0324 vh=0.5022 vl=0.0000 v=0.5022
+[01:23:34.092][D][moisture:202]: CH-A00 r=-44289
+[01:23:34.092][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:23:36.979][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:23:36.991][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:23:36.992][S][sensor]: '2019 Reference' >> nan %
+[01:24:03.419][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3556 vl=0.0000 v=1.3556
+[01:24:03.420][D][moisture:245]: CH-A00 r=-85656
+[01:24:03.420][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:24:04.087][D][voltage:196]: CH-A00 vbase=0.0102 vh=0.5320 vl=0.0000 v=0.5320
+[01:24:04.092][D][moisture:202]: CH-A00 r=-47968
+[01:24:04.092][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:24:06.986][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:24:06.988][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:24:06.990][S][sensor]: '2019 Reference' >> nan %
+[01:24:33.406][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3527 vl=0.0000 v=1.3527
+[01:24:33.413][D][moisture:245]: CH-A00 r=-85605
+[01:24:33.414][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:24:34.087][D][voltage:196]: CH-A00 vbase=0.0324 vh=0.5070 vl=0.0000 v=0.5070
+[01:24:34.092][D][moisture:202]: CH-A00 r=-44908
+[01:24:34.092][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:24:36.979][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0050 vl=0.0000 v=0.0050
+[01:24:36.989][W][moisture:284]: CH-A02 open/short circuit - v=0.0050
+[01:24:36.990][S][sensor]: '2019 Reference' >> nan %
+[01:25:03.406][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3480 vl=0.0000 v=1.3480
+[01:25:03.410][D][moisture:245]: CH-A00 r=-85519
+[01:25:03.411][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:25:04.086][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4838 vl=0.0000 v=0.4838
+[01:25:04.095][D][moisture:202]: CH-A00 r=-41796
+[01:25:04.095][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:25:06.980][D][voltage:282]: CH-A02 vbase=0.0040 vh=0.0100 vl=0.0209 v=0.0100
+[01:25:06.984][W][moisture:284]: CH-A02 open/short circuit - v=0.0100
+[01:25:06.985][S][sensor]: '2019 Reference' >> nan %
+[01:25:33.405][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3537 vl=0.0000 v=1.3537
+[01:25:33.410][D][moisture:245]: CH-A00 r=-85623
+[01:25:33.411][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:25:34.086][D][voltage:196]: CH-A00 vbase=0.0003 vh=0.4499 vl=0.0000 v=0.4499
+[01:25:34.114][D][moisture:202]: CH-A00 r=-36654
+[01:25:34.114][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:25:36.978][D][voltage:282]: CH-A02 vbase=0.0001 vh=0.0218 vl=0.0120 v=0.0218
+[01:25:36.988][W][moisture:284]: CH-A02 open/short circuit - v=0.0218
+[01:25:36.988][S][sensor]: '2019 Reference' >> nan %
+[01:26:03.405][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3730 vl=0.0000 v=1.3730
+[01:26:03.411][D][moisture:245]: CH-A00 r=-85966
+[01:26:03.412][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:26:04.087][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4930 vl=0.0000 v=0.4930
+[01:26:04.089][D][moisture:202]: CH-A00 r=-43067
+[01:26:04.090][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:26:06.979][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0003 v=0.0000
+[01:26:06.991][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:26:06.992][S][sensor]: '2019 Reference' >> nan %
+[01:26:33.407][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3284 vl=0.0000 v=1.3284
+[01:26:33.411][D][moisture:245]: CH-A00 r=-85158
+[01:26:33.411][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:26:34.084][D][voltage:196]: CH-A00 vbase=0.0060 vh=0.4976 vl=0.0000 v=0.4976
+[01:26:34.092][D][moisture:202]: CH-A00 r=-43677
+[01:26:34.092][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:26:36.976][D][voltage:282]: CH-A02 vbase=0.0149 vh=0.0120 vl=0.0000 v=0.0120
+[01:26:36.983][W][moisture:284]: CH-A02 open/short circuit - v=0.0120
+[01:26:36.984][S][sensor]: '2019 Reference' >> nan %
+[01:27:03.404][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3521 vl=0.0000 v=1.3521
+[01:27:03.411][D][moisture:245]: CH-A00 r=-85594
+[01:27:03.411][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:27:04.084][D][voltage:196]: CH-A00 vbase=0.0315 vh=0.5036 vl=0.0000 v=0.5036
+[01:27:04.089][D][moisture:202]: CH-A00 r=-44471
+[01:27:04.089][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:27:06.979][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:27:06.983][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:27:06.983][S][sensor]: '2019 Reference' >> nan %
+[01:27:33.404][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3668 vl=0.0000 v=1.3668
+[01:27:33.408][D][moisture:245]: CH-A00 r=-85857
+[01:27:33.408][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:27:34.084][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4923 vl=0.0000 v=0.4923
+[01:27:34.088][D][moisture:202]: CH-A00 r=-42973
+[01:27:34.088][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:27:36.976][D][voltage:282]: CH-A02 vbase=0.0061 vh=0.0100 vl=0.0061 v=0.0100
+[01:27:36.982][W][moisture:284]: CH-A02 open/short circuit - v=0.0100
+[01:27:36.982][S][sensor]: '2019 Reference' >> nan %
+[01:28:03.404][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3388 vl=0.0000 v=1.3388
+[01:28:03.408][D][moisture:245]: CH-A00 r=-85350
+[01:28:03.408][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:28:04.084][D][voltage:196]: CH-A00 vbase=0.0003 vh=0.4877 vl=0.0000 v=0.4877
+[01:28:04.088][D][moisture:202]: CH-A00 r=-42332
+[01:28:04.088][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:28:06.980][D][voltage:282]: CH-A02 vbase=0.0150 vh=0.0199 vl=0.0139 v=0.0199
+[01:28:06.981][W][moisture:284]: CH-A02 open/short circuit - v=0.0199
+[01:28:06.982][S][sensor]: '2019 Reference' >> nan %
+[01:28:33.403][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3274 vl=0.0000 v=1.3274
+[01:28:33.408][D][moisture:245]: CH-A00 r=-85140
+[01:28:33.408][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:28:34.084][D][voltage:196]: CH-A00 vbase=0.0002 vh=0.4999 vl=0.0000 v=0.4999
+[01:28:34.088][D][moisture:202]: CH-A00 r=-43988
+[01:28:34.088][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:28:36.975][D][voltage:282]: CH-A02 vbase=0.0179 vh=0.0180 vl=0.0042 v=0.0180
+[01:28:36.988][W][moisture:284]: CH-A02 open/short circuit - v=0.0180
+[01:28:36.988][S][sensor]: '2019 Reference' >> nan %
+[01:29:03.403][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3563 vl=0.0000 v=1.3563
+[01:29:03.448][D][moisture:245]: CH-A00 r=-85670
+[01:29:03.449][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:29:04.082][D][voltage:196]: CH-A00 vbase=0.0425 vh=0.5256 vl=0.0000 v=0.5256
+[01:29:04.091][D][moisture:202]: CH-A00 r=-47210
+[01:29:04.091][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:29:06.976][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:29:06.987][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:29:06.987][S][sensor]: '2019 Reference' >> nan %
+[01:29:33.407][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3639 vl=0.0000 v=1.3639
+[01:29:33.408][D][moisture:245]: CH-A00 r=-85804
+[01:29:33.408][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:29:34.082][D][voltage:196]: CH-A00 vbase=0.0325 vh=0.5262 vl=0.0000 v=0.5262
+[01:29:34.091][D][moisture:202]: CH-A00 r=-47285
+[01:29:34.091][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:29:36.982][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:29:36.993][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:29:36.993][S][sensor]: '2019 Reference' >> nan %
+[01:30:03.401][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3475 vl=0.0000 v=1.3475
+[01:30:03.413][D][moisture:245]: CH-A00 r=-85510
+[01:30:03.414][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:30:04.087][D][voltage:196]: CH-A00 vbase=0.0390 vh=0.5010 vl=0.0000 v=0.5010
+[01:30:04.090][D][moisture:202]: CH-A00 r=-44127
+[01:30:04.090][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:30:06.973][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:30:06.979][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:30:06.981][S][sensor]: '2019 Reference' >> nan %
+[01:30:33.403][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3576 vl=0.0000 v=1.3576
+[01:30:33.406][D][moisture:245]: CH-A00 r=-85692
+[01:30:33.406][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:30:34.081][D][voltage:196]: CH-A00 vbase=0.0060 vh=0.5255 vl=0.0030 v=0.5255
+[01:30:34.085][D][moisture:202]: CH-A00 r=-47198
+[01:30:34.086][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:30:36.973][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0000 vl=0.0000 v=0.0000
+[01:30:37.000][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:30:37.001][S][sensor]: '2019 Reference' >> nan %
+[01:31:03.402][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3574 vl=0.0000 v=1.3574
+[01:31:03.406][D][moisture:245]: CH-A00 r=-85688
+[01:31:03.407][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:31:04.080][D][voltage:196]: CH-A00 vbase=0.0034 vh=0.4970 vl=0.0000 v=0.4970
+[01:31:04.085][D][moisture:202]: CH-A00 r=-43601
+[01:31:04.085][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:31:06.976][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0030 vl=0.0000 v=0.0030
+[01:31:06.980][W][moisture:284]: CH-A02 open/short circuit - v=0.0030
+[01:31:06.980][S][sensor]: '2019 Reference' >> nan %
+[01:31:33.400][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3729 vl=0.0000 v=1.3729
+[01:31:33.404][D][moisture:245]: CH-A00 r=-85964
+[01:31:33.405][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:31:34.080][D][voltage:196]: CH-A00 vbase=0.0006 vh=0.4899 vl=0.0000 v=0.4899
+[01:31:34.084][D][moisture:202]: CH-A00 r=-42638
+[01:31:34.085][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:31:36.972][D][voltage:282]: CH-A02 vbase=0.0003 vh=0.0120 vl=0.0031 v=0.0120
+[01:31:36.978][W][moisture:284]: CH-A02 open/short circuit - v=0.0120
+[01:31:36.979][S][sensor]: '2019 Reference' >> nan %
+[01:32:03.410][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3693 vl=0.0000 v=1.3693
+[01:32:03.410][D][moisture:245]: CH-A00 r=-85901
+[01:32:03.411][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:32:04.079][D][voltage:196]: CH-A00 vbase=0.0002 vh=0.4972 vl=0.0051 v=0.4972
+[01:32:04.084][D][moisture:202]: CH-A00 r=-43629
+[01:32:04.084][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:32:06.976][D][voltage:282]: CH-A02 vbase=0.0170 vh=0.0000 vl=0.0000 v=0.0000
+[01:32:06.979][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:32:06.980][S][sensor]: '2019 Reference' >> nan %
+[01:32:33.402][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3624 vl=0.0000 v=1.3624
+[01:32:33.409][D][moisture:245]: CH-A00 r=-85778
+[01:32:33.412][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:32:34.088][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5074 vl=0.0000 v=0.5074
+[01:32:34.089][D][moisture:202]: CH-A00 r=-44957
+[01:32:34.089][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:32:36.973][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0000 vl=0.0060 v=0.0000
+[01:32:36.979][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:32:36.980][S][sensor]: '2019 Reference' >> nan %
+[01:33:03.401][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3648 vl=0.0000 v=1.3648
+[01:33:03.404][D][moisture:245]: CH-A00 r=-85821
+[01:33:03.404][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:33:04.078][D][voltage:196]: CH-A00 vbase=0.0545 vh=0.5180 vl=0.0002 v=0.5180
+[01:33:04.083][D][moisture:202]: CH-A00 r=-46295
+[01:33:04.083][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:33:06.976][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:33:06.978][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:33:06.980][S][sensor]: '2019 Reference' >> nan %
+[01:33:33.398][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3562 vl=0.0000 v=1.3562
+[01:33:33.405][D][moisture:245]: CH-A00 r=-85667
+[01:33:33.405][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:33:34.079][D][voltage:196]: CH-A00 vbase=0.0001 vh=0.5386 vl=0.0000 v=0.5386
+[01:33:34.083][D][moisture:202]: CH-A00 r=-48733
+[01:33:34.083][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:33:36.972][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0000 vl=0.0000 v=0.0000
+[01:33:36.976][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:33:36.976][S][sensor]: '2019 Reference' >> nan %
+[01:34:03.398][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3671 vl=0.0000 v=1.3671
+[01:34:03.408][D][moisture:245]: CH-A00 r=-85861
+[01:34:03.408][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:34:04.078][D][voltage:196]: CH-A00 vbase=0.0160 vh=0.4869 vl=0.0000 v=0.4869
+[01:34:04.082][D][moisture:202]: CH-A00 r=-42227
+[01:34:04.083][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:34:06.970][D][voltage:282]: CH-A02 vbase=0.0310 vh=0.0000 vl=0.0000 v=0.0000
+[01:34:06.976][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:34:06.977][S][sensor]: '2019 Reference' >> nan %
+[01:34:33.397][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3522 vl=0.0000 v=1.3522
+[01:34:33.402][D][moisture:245]: CH-A00 r=-85596
+[01:34:33.403][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:34:34.076][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5011 vl=0.0000 v=0.5011
+[01:34:34.082][D][moisture:202]: CH-A00 r=-44139
+[01:34:34.082][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:34:36.969][D][voltage:282]: CH-A02 vbase=0.0080 vh=0.0119 vl=0.0130 v=0.0119
+[01:34:36.976][W][moisture:284]: CH-A02 open/short circuit - v=0.0119
+[01:34:36.976][S][sensor]: '2019 Reference' >> nan %
+[01:35:03.397][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3670 vl=0.0000 v=1.3670
+[01:35:03.402][D][moisture:245]: CH-A00 r=-85859
+[01:35:03.402][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:35:04.077][D][voltage:196]: CH-A00 vbase=0.0002 vh=0.4966 vl=0.0000 v=0.4966
+[01:35:04.088][D][moisture:202]: CH-A00 r=-43555
+[01:35:04.088][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:35:06.969][D][voltage:282]: CH-A02 vbase=0.0139 vh=0.0001 vl=0.0030 v=0.0001
+[01:35:06.975][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[01:35:06.975][S][sensor]: '2019 Reference' >> nan %
+[01:35:33.397][D][voltage:239]: CH-A01 vbase=0.0040 vh=1.3618 vl=0.0000 v=1.3618
+[01:35:33.401][D][moisture:245]: CH-A00 r=-85768
+[01:35:33.402][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:35:34.077][D][voltage:196]: CH-A00 vbase=0.0001 vh=0.4938 vl=0.0110 v=0.4938
+[01:35:34.082][D][moisture:202]: CH-A00 r=-43167
+[01:35:34.082][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:35:36.969][D][voltage:282]: CH-A02 vbase=0.0001 vh=0.0000 vl=0.0000 v=0.0000
+[01:35:36.975][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:35:36.975][S][sensor]: '2019 Reference' >> nan %
+[01:36:03.396][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3790 vl=0.0000 v=1.3790
+[01:36:03.400][D][moisture:245]: CH-A00 r=-86069
+[01:36:03.401][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:36:04.076][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5015 vl=0.0000 v=0.5015
+[01:36:04.083][D][moisture:202]: CH-A00 r=-44195
+[01:36:04.083][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:36:06.967][D][voltage:282]: CH-A02 vbase=0.0348 vh=0.0250 vl=0.0092 v=0.0250
+[01:36:06.974][W][moisture:284]: CH-A02 open/short circuit - v=0.0250
+[01:36:06.975][S][sensor]: '2019 Reference' >> nan %
+[01:36:33.396][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3517 vl=0.0000 v=1.3517
+[01:36:33.400][D][moisture:245]: CH-A00 r=-85587
+[01:36:33.401][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:36:34.077][D][voltage:196]: CH-A00 vbase=0.0332 vh=0.5089 vl=0.0000 v=0.5089
+[01:36:34.086][D][moisture:202]: CH-A00 r=-45160
+[01:36:34.086][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:36:36.968][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:36:36.975][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:36:36.975][S][sensor]: '2019 Reference' >> nan %
+[01:37:03.395][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3668 vl=0.0000 v=1.3668
+[01:37:03.400][D][moisture:245]: CH-A00 r=-85857
+[01:37:03.400][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:37:04.082][D][voltage:196]: CH-A00 vbase=0.0160 vh=0.4938 vl=0.0000 v=0.4938
+[01:37:04.083][D][moisture:202]: CH-A00 r=-43169
+[01:37:04.083][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:37:06.970][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0090 vl=0.0030 v=0.0090
+[01:37:06.975][W][moisture:284]: CH-A02 open/short circuit - v=0.0090
+[01:37:06.975][S][sensor]: '2019 Reference' >> nan %
+[01:37:33.396][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3214 vl=0.0000 v=1.3214
+[01:37:33.400][D][moisture:245]: CH-A00 r=-85027
+[01:37:33.401][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:37:34.084][D][voltage:196]: CH-A00 vbase=0.0110 vh=0.4954 vl=0.0000 v=0.4954
+[01:37:34.086][D][moisture:202]: CH-A00 r=-43382
+[01:37:34.086][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:37:36.968][D][voltage:282]: CH-A02 vbase=0.0030 vh=0.0100 vl=0.0000 v=0.0100
+[01:37:36.972][W][moisture:284]: CH-A02 open/short circuit - v=0.0100
+[01:37:36.973][S][sensor]: '2019 Reference' >> nan %
+[01:38:03.412][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3460 vl=0.0000 v=1.3460
+[01:38:03.413][D][moisture:245]: CH-A00 r=-85483
+[01:38:03.413][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:38:04.074][D][voltage:196]: CH-A00 vbase=0.0326 vh=0.5181 vl=0.0000 v=0.5181
+[01:38:04.088][D][moisture:202]: CH-A00 r=-46306
+[01:38:04.088][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:38:06.973][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:38:06.977][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:38:06.978][S][sensor]: '2019 Reference' >> nan %
+[01:38:33.395][D][voltage:239]: CH-A01 vbase=0.0113 vh=1.3605 vl=0.0000 v=1.3605
+[01:38:33.400][D][moisture:245]: CH-A00 r=-85744
+[01:38:33.401][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:38:34.074][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4967 vl=0.0000 v=0.4967
+[01:38:34.097][D][moisture:202]: CH-A00 r=-43566
+[01:38:34.098][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:38:36.966][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0000 vl=0.0100 v=0.0000
+[01:38:36.972][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:38:36.973][S][sensor]: '2019 Reference' >> nan %
+[01:39:03.400][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3612 vl=0.0000 v=1.3612
+[01:39:03.401][D][moisture:245]: CH-A00 r=-85757
+[01:39:03.401][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:39:04.073][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4807 vl=0.0000 v=0.4807
+[01:39:04.079][D][moisture:202]: CH-A00 r=-41349
+[01:39:04.080][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:39:06.969][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0060 vl=0.0150 v=0.0060
+[01:39:06.971][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[01:39:06.972][S][sensor]: '2019 Reference' >> nan %
+[01:39:33.394][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3512 vl=0.0000 v=1.3512
+[01:39:33.402][D][moisture:245]: CH-A00 r=-85577
+[01:39:33.403][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:39:34.073][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4495 vl=0.0000 v=0.4495
+[01:39:34.077][D][moisture:202]: CH-A00 r=-36581
+[01:39:34.078][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:39:36.965][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0100 vl=0.0139 v=0.0100
+[01:39:36.984][W][moisture:284]: CH-A02 open/short circuit - v=0.0100
+[01:39:36.984][S][sensor]: '2019 Reference' >> nan %
+[01:40:03.393][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3294 vl=0.0000 v=1.3294
+[01:40:03.397][D][moisture:245]: CH-A00 r=-85177
+[01:40:03.397][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:40:04.078][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5020 vl=0.0000 v=0.5020
+[01:40:04.078][D][moisture:202]: CH-A00 r=-44260
+[01:40:04.080][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:40:06.971][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0070 vl=0.0060 v=0.0070
+[01:40:06.975][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[01:40:06.976][S][sensor]: '2019 Reference' >> nan %
+[01:40:33.394][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3524 vl=0.0000 v=1.3524
+[01:40:33.397][D][moisture:245]: CH-A00 r=-85598
+[01:40:33.397][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:40:34.072][D][voltage:196]: CH-A00 vbase=0.0140 vh=0.4992 vl=0.0000 v=0.4992
+[01:40:34.077][D][moisture:202]: CH-A00 r=-43897
+[01:40:34.077][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:40:36.974][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0120 vl=0.0110 v=0.0120
+[01:40:36.975][W][moisture:284]: CH-A02 open/short circuit - v=0.0120
+[01:40:36.976][S][sensor]: '2019 Reference' >> nan %
+[01:41:03.393][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3530 vl=0.0000 v=1.3530
+[01:41:03.396][D][moisture:245]: CH-A00 r=-85609
+[01:41:03.397][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:41:04.073][D][voltage:196]: CH-A00 vbase=0.0120 vh=0.5291 vl=0.0000 v=0.5291
+[01:41:04.079][D][moisture:202]: CH-A00 r=-47628
+[01:41:04.080][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:41:06.963][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0000 vl=0.0000 v=0.0000
+[01:41:06.977][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:41:06.977][S][sensor]: '2019 Reference' >> nan %
+[01:41:33.397][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3419 vl=0.0000 v=1.3419
+[01:41:33.398][D][moisture:245]: CH-A00 r=-85408
+[01:41:33.398][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:41:34.072][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4766 vl=0.0000 v=0.4766
+[01:41:34.076][D][moisture:202]: CH-A00 r=-40755
+[01:41:34.077][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:41:36.964][D][voltage:282]: CH-A02 vbase=0.0110 vh=0.0130 vl=0.0060 v=0.0130
+[01:41:36.970][W][moisture:284]: CH-A02 open/short circuit - v=0.0130
+[01:41:36.970][S][sensor]: '2019 Reference' >> nan %
+[01:42:03.400][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3450 vl=0.0000 v=1.3450
+[01:42:03.400][D][moisture:245]: CH-A00 r=-85464
+[01:42:03.401][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:42:04.072][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4507 vl=0.0000 v=0.4507
+[01:42:04.080][D][moisture:202]: CH-A00 r=-36779
+[01:42:04.080][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:42:06.962][D][voltage:282]: CH-A02 vbase=0.0080 vh=0.0179 vl=0.0003 v=0.0179
+[01:42:06.969][W][moisture:284]: CH-A02 open/short circuit - v=0.0179
+[01:42:06.969][S][sensor]: '2019 Reference' >> nan %
+[01:42:33.391][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3520 vl=0.0000 v=1.3520
+[01:42:33.407][D][moisture:245]: CH-A00 r=-85591
+[01:42:33.407][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:42:34.071][D][voltage:196]: CH-A00 vbase=0.0446 vh=0.5176 vl=0.0000 v=0.5176
+[01:42:34.083][D][moisture:202]: CH-A00 r=-46242
+[01:42:34.084][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:42:36.963][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:42:36.971][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:42:36.971][S][sensor]: '2019 Reference' >> nan %
+[01:43:03.391][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3562 vl=0.0000 v=1.3562
+[01:43:03.412][D][moisture:245]: CH-A00 r=-85667
+[01:43:03.412][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:43:04.072][D][voltage:196]: CH-A00 vbase=0.0349 vh=0.5228 vl=0.0005 v=0.5228
+[01:43:04.075][D][moisture:202]: CH-A00 r=-46881
+[01:43:04.075][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:43:06.962][D][voltage:282]: CH-A02 vbase=0.0209 vh=0.0000 vl=0.0000 v=0.0000
+[01:43:06.970][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:43:06.971][S][sensor]: '2019 Reference' >> nan %
+[01:43:33.392][D][voltage:239]: CH-A01 vbase=0.0008 vh=1.3247 vl=0.0000 v=1.3247
+[01:43:33.397][D][moisture:245]: CH-A00 r=-85088
+[01:43:33.402][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:43:34.070][D][voltage:196]: CH-A00 vbase=0.0145 vh=0.4932 vl=0.0000 v=0.4932
+[01:43:34.075][D][moisture:202]: CH-A00 r=-43088
+[01:43:34.075][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:43:36.961][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0091 vl=0.0129 v=0.0091
+[01:43:36.968][W][moisture:284]: CH-A02 open/short circuit - v=0.0091
+[01:43:36.968][S][sensor]: '2019 Reference' >> nan %
+[01:44:03.389][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3233 vl=0.0000 v=1.3233
+[01:44:03.394][D][moisture:245]: CH-A00 r=-85062
+[01:44:03.394][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:44:04.070][D][voltage:196]: CH-A00 vbase=0.0190 vh=0.4988 vl=0.0000 v=0.4988
+[01:44:04.075][D][moisture:202]: CH-A00 r=-43844
+[01:44:04.075][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:44:06.963][D][voltage:282]: CH-A02 vbase=0.0286 vh=0.0060 vl=0.0070 v=0.0060
+[01:44:06.967][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[01:44:06.968][S][sensor]: '2019 Reference' >> nan %
+[01:44:33.389][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3539 vl=0.0000 v=1.3539
+[01:44:33.393][D][moisture:245]: CH-A00 r=-85626
+[01:44:33.394][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:44:34.074][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4654 vl=0.0000 v=0.4654
+[01:44:34.091][D][moisture:202]: CH-A00 r=-39090
+[01:44:34.091][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:44:36.961][D][voltage:282]: CH-A02 vbase=0.0120 vh=0.0082 vl=0.0169 v=0.0082
+[01:44:36.967][W][moisture:284]: CH-A02 open/short circuit - v=0.0082
+[01:44:36.967][S][sensor]: '2019 Reference' >> nan %
+[01:45:03.388][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3715 vl=0.0000 v=1.3715
+[01:45:03.392][D][moisture:245]: CH-A00 r=-85938
+[01:45:03.393][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:45:04.070][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4933 vl=0.0000 v=0.4933
+[01:45:04.074][D][moisture:202]: CH-A00 r=-43109
+[01:45:04.074][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:45:06.972][D][voltage:282]: CH-A02 vbase=0.0150 vh=0.0071 vl=0.0001 v=0.0071
+[01:45:06.972][W][moisture:284]: CH-A02 open/short circuit - v=0.0071
+[01:45:06.974][S][sensor]: '2019 Reference' >> nan %
+[01:45:33.389][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3600 vl=0.0000 v=1.3600
+[01:45:33.392][D][moisture:245]: CH-A00 r=-85736
+[01:45:33.393][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:45:34.069][D][voltage:196]: CH-A00 vbase=0.0001 vh=0.4944 vl=0.0000 v=0.4944
+[01:45:34.086][D][moisture:202]: CH-A00 r=-43254
+[01:45:34.086][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:45:36.960][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0001 vl=0.0000 v=0.0001
+[01:45:36.967][W][moisture:284]: CH-A02 open/short circuit - v=0.0001
+[01:45:36.967][S][sensor]: '2019 Reference' >> nan %
+[01:46:03.387][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3430 vl=0.0000 v=1.3430
+[01:46:03.393][D][moisture:245]: CH-A00 r=-85428
+[01:46:03.394][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:46:04.068][D][voltage:196]: CH-A00 vbase=0.0001 vh=0.5006 vl=0.0000 v=0.5006
+[01:46:04.073][D][moisture:202]: CH-A00 r=-44073
+[01:46:04.073][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:46:06.959][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:46:06.966][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:46:06.967][S][sensor]: '2019 Reference' >> nan %
+[01:46:33.390][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3562 vl=0.0000 v=1.3562
+[01:46:33.392][D][moisture:245]: CH-A00 r=-85667
+[01:46:33.392][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:46:34.068][D][voltage:196]: CH-A00 vbase=0.0001 vh=0.4938 vl=0.0000 v=0.4938
+[01:46:34.073][D][moisture:202]: CH-A00 r=-43172
+[01:46:34.073][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:46:36.958][D][voltage:282]: CH-A02 vbase=0.0040 vh=0.0000 vl=0.0003 v=0.0000
+[01:46:36.965][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:46:36.965][S][sensor]: '2019 Reference' >> nan %
+[01:47:03.386][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3457 vl=0.0000 v=1.3457
+[01:47:03.392][D][moisture:245]: CH-A00 r=-85477
+[01:47:03.392][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:47:04.072][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4543 vl=0.0000 v=0.4543
+[01:47:04.073][D][moisture:202]: CH-A00 r=-37368
+[01:47:04.074][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:47:06.958][D][voltage:282]: CH-A02 vbase=0.0140 vh=0.0139 vl=0.0085 v=0.0139
+[01:47:06.964][W][moisture:284]: CH-A02 open/short circuit - v=0.0139
+[01:47:06.964][S][sensor]: '2019 Reference' >> nan %
+[01:47:33.386][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3413 vl=0.0000 v=1.3413
+[01:47:33.392][D][moisture:245]: CH-A00 r=-85398
+[01:47:33.392][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:47:34.067][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4508 vl=0.0000 v=0.4508
+[01:47:34.078][D][moisture:202]: CH-A00 r=-36800
+[01:47:34.079][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:47:36.958][D][voltage:282]: CH-A02 vbase=0.0410 vh=0.0238 vl=0.0110 v=0.0238
+[01:47:36.965][W][moisture:284]: CH-A02 open/short circuit - v=0.0238
+[01:47:36.966][S][sensor]: '2019 Reference' >> nan %
+[01:48:03.385][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3476 vl=0.0000 v=1.3476
+[01:48:03.392][D][moisture:245]: CH-A00 r=-85512
+[01:48:03.392][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:48:04.067][D][voltage:196]: CH-A00 vbase=0.0005 vh=0.4919 vl=0.0000 v=0.4919
+[01:48:04.076][D][moisture:202]: CH-A00 r=-42907
+[01:48:04.076][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:48:06.958][D][voltage:282]: CH-A02 vbase=0.0149 vh=0.0000 vl=0.0070 v=0.0000
+[01:48:06.964][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:48:06.964][S][sensor]: '2019 Reference' >> nan %
+[01:48:33.388][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3642 vl=0.0000 v=1.3642
+[01:48:33.393][D][moisture:245]: CH-A00 r=-85810
+[01:48:33.394][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:48:34.066][D][voltage:196]: CH-A00 vbase=0.0318 vh=0.5195 vl=0.0000 v=0.5195
+[01:48:34.070][D][moisture:202]: CH-A00 r=-46473
+[01:48:34.071][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:48:36.957][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:48:36.964][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:48:36.964][S][sensor]: '2019 Reference' >> nan %
+[01:49:03.384][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3521 vl=0.0000 v=1.3521
+[01:49:03.393][D][moisture:245]: CH-A00 r=-85593
+[01:49:03.393][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:49:04.075][D][voltage:196]: CH-A00 vbase=0.0319 vh=0.5137 vl=0.0000 v=0.5137
+[01:49:04.075][D][moisture:202]: CH-A00 r=-45757
+[01:49:04.075][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:49:06.956][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:49:06.963][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:49:06.963][S][sensor]: '2019 Reference' >> nan %
+[01:49:33.384][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3479 vl=0.0000 v=1.3479
+[01:49:33.389][D][moisture:245]: CH-A00 r=-85517
+[01:49:33.389][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:49:34.075][D][voltage:196]: CH-A00 vbase=0.0209 vh=0.4988 vl=0.0000 v=0.4988
+[01:49:34.076][D][moisture:202]: CH-A00 r=-43836
+[01:49:34.076][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:49:36.958][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0040 v=0.0000
+[01:49:36.963][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:49:36.964][S][sensor]: '2019 Reference' >> nan %
+[01:50:03.383][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3452 vl=0.0000 v=1.3452
+[01:50:03.388][D][moisture:245]: CH-A00 r=-85468
+[01:50:03.388][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:50:04.065][D][voltage:196]: CH-A00 vbase=0.0140 vh=0.4925 vl=0.0000 v=0.4925
+[01:50:04.079][D][moisture:202]: CH-A00 r=-42996
+[01:50:04.080][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:50:06.961][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0003 vl=0.0050 v=0.0003
+[01:50:06.962][W][moisture:284]: CH-A02 open/short circuit - v=0.0003
+[01:50:06.962][S][sensor]: '2019 Reference' >> nan %
+[01:50:33.383][D][voltage:239]: CH-A01 vbase=0.0005 vh=1.3636 vl=0.0000 v=1.3636
+[01:50:33.390][D][moisture:245]: CH-A00 r=-85800
+[01:50:33.390][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:50:34.064][D][voltage:196]: CH-A00 vbase=0.0080 vh=0.5042 vl=0.0000 v=0.5042
+[01:50:34.079][D][moisture:202]: CH-A00 r=-44551
+[01:50:34.080][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:50:36.955][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:50:36.966][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:50:36.966][S][sensor]: '2019 Reference' >> nan %
+[01:51:03.394][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3593 vl=0.0000 v=1.3593
+[01:51:03.394][D][moisture:245]: CH-A00 r=-85722
+[01:51:03.394][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:51:04.080][D][voltage:196]: CH-A00 vbase=0.0425 vh=0.5108 vl=0.0000 v=0.5108
+[01:51:04.084][D][moisture:202]: CH-A00 r=-45395
+[01:51:04.084][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:51:06.955][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:51:06.969][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:51:06.970][S][sensor]: '2019 Reference' >> nan %
+[01:51:33.384][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3525 vl=0.0000 v=1.3525
+[01:51:33.388][D][moisture:245]: CH-A00 r=-85601
+[01:51:33.388][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:51:34.067][D][voltage:196]: CH-A00 vbase=0.0090 vh=0.4943 vl=0.0000 v=0.4943
+[01:51:34.068][D][moisture:202]: CH-A00 r=-43243
+[01:51:34.069][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:51:36.956][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:51:36.962][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:51:36.963][S][sensor]: '2019 Reference' >> nan %
+[01:52:03.382][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3531 vl=0.0000 v=1.3531
+[01:52:03.389][D][moisture:245]: CH-A00 r=-85611
+[01:52:03.389][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:52:04.064][D][voltage:196]: CH-A00 vbase=0.0250 vh=0.4973 vl=0.0000 v=0.4973
+[01:52:04.072][D][moisture:202]: CH-A00 r=-43644
+[01:52:04.072][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:52:06.956][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:52:06.962][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:52:06.962][S][sensor]: '2019 Reference' >> nan %
+[01:52:33.383][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3517 vl=0.0000 v=1.3517
+[01:52:33.387][D][moisture:245]: CH-A00 r=-85587
+[01:52:33.390][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:52:34.062][D][voltage:196]: CH-A00 vbase=0.0511 vh=0.5270 vl=0.0000 v=0.5270
+[01:52:34.068][D][moisture:202]: CH-A00 r=-47381
+[01:52:34.068][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:52:36.961][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0000 vl=0.0000 v=0.0000
+[01:52:36.962][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:52:36.963][S][sensor]: '2019 Reference' >> nan %
+[01:53:03.384][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3408 vl=0.0000 v=1.3408
+[01:53:03.388][D][moisture:245]: CH-A00 r=-85387
+[01:53:03.389][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:53:04.067][D][voltage:196]: CH-A00 vbase=0.0060 vh=0.4940 vl=0.0000 v=0.4940
+[01:53:04.071][D][moisture:202]: CH-A00 r=-43204
+[01:53:04.072][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:53:06.955][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0060 vl=0.0000 v=0.0060
+[01:53:06.962][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[01:53:06.962][S][sensor]: '2019 Reference' >> nan %
+[01:53:33.382][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3550 vl=0.0000 v=1.3550
+[01:53:33.389][D][moisture:245]: CH-A00 r=-85647
+[01:53:33.391][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:53:34.063][D][voltage:196]: CH-A00 vbase=0.0070 vh=0.4939 vl=0.0000 v=0.4939
+[01:53:34.067][D][moisture:202]: CH-A00 r=-43187
+[01:53:34.067][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:53:36.953][D][voltage:282]: CH-A02 vbase=0.0140 vh=0.0130 vl=0.0003 v=0.0130
+[01:53:36.967][W][moisture:284]: CH-A02 open/short circuit - v=0.0130
+[01:53:36.967][S][sensor]: '2019 Reference' >> nan %
+[01:54:03.387][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3527 vl=0.0000 v=1.3527
+[01:54:03.387][D][moisture:245]: CH-A00 r=-85605
+[01:54:03.387][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:54:04.061][D][voltage:196]: CH-A00 vbase=0.0413 vh=0.5270 vl=0.0000 v=0.5270
+[01:54:04.066][D][moisture:202]: CH-A00 r=-47376
+[01:54:04.067][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:54:06.955][D][voltage:282]: CH-A02 vbase=0.0040 vh=0.0000 vl=0.0000 v=0.0000
+[01:54:06.966][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:54:06.966][S][sensor]: '2019 Reference' >> nan %
+[01:54:33.390][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3672 vl=0.0000 v=1.3672
+[01:54:33.391][D][moisture:245]: CH-A00 r=-85863
+[01:54:33.394][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:54:34.061][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5036 vl=0.0000 v=0.5036
+[01:54:34.065][D][moisture:202]: CH-A00 r=-44477
+[01:54:34.065][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:54:36.951][D][voltage:282]: CH-A02 vbase=0.0071 vh=0.0110 vl=0.0110 v=0.0110
+[01:54:36.958][W][moisture:284]: CH-A02 open/short circuit - v=0.0110
+[01:54:36.958][S][sensor]: '2019 Reference' >> nan %
+[01:55:03.379][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3406 vl=0.0000 v=1.3406
+[01:55:03.392][D][moisture:245]: CH-A00 r=-85384
+[01:55:03.393][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:55:04.067][D][voltage:196]: CH-A00 vbase=0.0140 vh=0.4637 vl=0.0000 v=0.4637
+[01:55:04.068][D][moisture:202]: CH-A00 r=-38828
+[01:55:04.068][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:55:06.951][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0070 v=0.0000
+[01:55:06.959][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:55:06.960][S][sensor]: '2019 Reference' >> nan %
+[01:55:33.379][D][voltage:239]: CH-A01 vbase=0.0050 vh=1.3675 vl=0.0000 v=1.3675
+[01:55:33.383][D][moisture:245]: CH-A00 r=-85868
+[01:55:33.384][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:55:34.059][D][voltage:196]: CH-A00 vbase=0.0070 vh=0.4945 vl=0.0040 v=0.4945
+[01:55:34.066][D][moisture:202]: CH-A00 r=-43263
+[01:55:34.066][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:55:36.951][D][voltage:282]: CH-A02 vbase=0.0061 vh=0.0050 vl=0.0000 v=0.0050
+[01:55:36.957][W][moisture:284]: CH-A02 open/short circuit - v=0.0050
+[01:55:36.957][S][sensor]: '2019 Reference' >> nan %
+[01:56:03.378][D][voltage:239]: CH-A01 vbase=0.0080 vh=1.3635 vl=0.0000 v=1.3635
+[01:56:03.383][D][moisture:245]: CH-A00 r=-85798
+[01:56:03.383][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:56:04.063][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4982 vl=0.0000 v=0.4982
+[01:56:04.064][D][moisture:202]: CH-A00 r=-43756
+[01:56:04.064][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:56:06.950][D][voltage:282]: CH-A02 vbase=0.0001 vh=0.0070 vl=0.0080 v=0.0070
+[01:56:06.957][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[01:56:06.957][S][sensor]: '2019 Reference' >> nan %
+[01:56:33.378][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3431 vl=0.0000 v=1.3431
+[01:56:33.386][D][moisture:245]: CH-A00 r=-85430
+[01:56:33.386][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:56:34.059][D][voltage:196]: CH-A00 vbase=0.0520 vh=0.5289 vl=0.0000 v=0.5289
+[01:56:34.063][D][moisture:202]: CH-A00 r=-47606
+[01:56:34.063][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:56:36.951][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:56:36.957][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:56:36.957][S][sensor]: '2019 Reference' >> nan %
+[01:57:03.377][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3574 vl=0.0000 v=1.3574
+[01:57:03.381][D][moisture:245]: CH-A00 r=-85688
+[01:57:03.382][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:57:04.059][D][voltage:196]: CH-A00 vbase=0.0219 vh=0.4930 vl=0.0000 v=0.4930
+[01:57:04.063][D][moisture:202]: CH-A00 r=-43061
+[01:57:04.063][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:57:06.949][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[01:57:06.956][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[01:57:06.957][S][sensor]: '2019 Reference' >> nan %
+[01:57:33.377][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3320 vl=0.0000 v=1.3320
+[01:57:33.382][D][moisture:245]: CH-A00 r=-85224
+[01:57:33.383][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:57:34.058][D][voltage:196]: CH-A00 vbase=0.0080 vh=0.4965 vl=0.0000 v=0.4965
+[01:57:34.063][D][moisture:202]: CH-A00 r=-43534
+[01:57:34.064][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:57:36.949][D][voltage:282]: CH-A02 vbase=0.0031 vh=0.0239 vl=0.0170 v=0.0239
+[01:57:36.955][W][moisture:284]: CH-A02 open/short circuit - v=0.0239
+[01:57:36.955][S][sensor]: '2019 Reference' >> nan %
+[01:58:03.376][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3610 vl=0.0000 v=1.3610
+[01:58:03.381][D][moisture:245]: CH-A00 r=-85753
+[01:58:03.381][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:58:04.058][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5008 vl=0.0000 v=0.5008
+[01:58:04.062][D][moisture:202]: CH-A00 r=-44110
+[01:58:04.063][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:58:06.948][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0180 vl=0.0060 v=0.0180
+[01:58:06.955][W][moisture:284]: CH-A02 open/short circuit - v=0.0180
+[01:58:06.955][S][sensor]: '2019 Reference' >> nan %
+[01:58:33.376][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3478 vl=0.0000 v=1.3478
+[01:58:33.384][D][moisture:245]: CH-A00 r=-85516
+[01:58:33.385][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:58:34.057][D][voltage:196]: CH-A00 vbase=0.0160 vh=0.4958 vl=0.0000 v=0.4958
+[01:58:34.062][D][moisture:202]: CH-A00 r=-43436
+[01:58:34.062][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:58:36.948][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0120 vl=0.0000 v=0.0120
+[01:58:36.954][W][moisture:284]: CH-A02 open/short circuit - v=0.0120
+[01:58:36.955][S][sensor]: '2019 Reference' >> nan %
+[01:59:03.377][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3629 vl=0.0000 v=1.3629
+[01:59:03.380][D][moisture:245]: CH-A00 r=-85786
+[01:59:03.381][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:59:04.057][D][voltage:196]: CH-A00 vbase=0.0034 vh=0.5019 vl=0.0000 v=0.5019
+[01:59:04.061][D][moisture:202]: CH-A00 r=-44256
+[01:59:04.062][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:59:06.947][D][voltage:282]: CH-A02 vbase=0.0001 vh=0.0046 vl=0.0050 v=0.0046
+[01:59:06.955][W][moisture:284]: CH-A02 open/short circuit - v=0.0046
+[01:59:06.955][S][sensor]: '2019 Reference' >> nan %
+[01:59:33.375][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3491 vl=0.0000 v=1.3491
+[01:59:33.379][D][moisture:245]: CH-A00 r=-85540
+[01:59:33.380][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[01:59:34.058][D][voltage:196]: CH-A00 vbase=0.0376 vh=0.4974 vl=0.0000 v=0.4974
+[01:59:34.062][D][moisture:202]: CH-A00 r=-43654
+[01:59:34.062][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[01:59:36.947][D][voltage:282]: CH-A02 vbase=0.0110 vh=0.0060 vl=0.0001 v=0.0060
+[01:59:36.955][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[01:59:36.955][S][sensor]: '2019 Reference' >> nan %
+[02:00:03.375][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3452 vl=0.0000 v=1.3452
+[02:00:03.380][D][moisture:245]: CH-A00 r=-85468
+[02:00:03.380][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:00:04.061][D][voltage:196]: CH-A00 vbase=0.0120 vh=0.4920 vl=0.0000 v=0.4920
+[02:00:04.064][D][moisture:202]: CH-A00 r=-42928
+[02:00:04.065][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:00:06.947][D][voltage:282]: CH-A02 vbase=0.0050 vh=0.0040 vl=0.0040 v=0.0040
+[02:00:06.953][W][moisture:284]: CH-A02 open/short circuit - v=0.0040
+[02:00:06.953][S][sensor]: '2019 Reference' >> nan %
+[02:00:33.387][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3558 vl=0.0000 v=1.3558
+[02:00:33.392][D][moisture:245]: CH-A00 r=-85661
+[02:00:33.392][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:00:34.057][D][voltage:196]: CH-A00 vbase=0.0090 vh=0.4905 vl=0.0000 v=0.4905
+[02:00:34.061][D][moisture:202]: CH-A00 r=-42725
+[02:00:34.062][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:00:36.946][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0120 v=0.0000
+[02:00:36.953][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[02:00:36.953][S][sensor]: '2019 Reference' >> nan %
+[02:01:03.374][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3479 vl=0.0000 v=1.3479
+[02:01:03.381][D][moisture:245]: CH-A00 r=-85518
+[02:01:03.381][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:01:04.055][D][voltage:196]: CH-A00 vbase=0.0215 vh=0.4985 vl=0.0000 v=0.4985
+[02:01:04.059][D][moisture:202]: CH-A00 r=-43796
+[02:01:04.060][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:01:06.947][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[02:01:06.952][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[02:01:06.953][S][sensor]: '2019 Reference' >> nan %
+[02:01:33.377][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3661 vl=0.0000 v=1.3661
+[02:01:33.380][D][moisture:245]: CH-A00 r=-85844
+[02:01:33.381][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:01:34.055][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4600 vl=0.0000 v=0.4600
+[02:01:34.059][D][moisture:202]: CH-A00 r=-38260
+[02:01:34.059][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:01:36.953][D][voltage:282]: CH-A02 vbase=0.0001 vh=0.0002 vl=0.0100 v=0.0002
+[02:01:36.954][W][moisture:284]: CH-A02 open/short circuit - v=0.0002
+[02:01:36.954][S][sensor]: '2019 Reference' >> nan %
+[02:02:03.377][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3524 vl=0.0000 v=1.3524
+[02:02:03.381][D][moisture:245]: CH-A00 r=-85598
+[02:02:03.382][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:02:04.054][D][voltage:196]: CH-A00 vbase=0.0246 vh=0.4970 vl=0.0000 v=0.4970
+[02:02:04.061][D][moisture:202]: CH-A00 r=-43605
+[02:02:04.061][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:02:06.946][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[02:02:06.951][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[02:02:06.951][S][sensor]: '2019 Reference' >> nan %
+[02:02:33.373][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3526 vl=0.0000 v=1.3526
+[02:02:33.377][D][moisture:245]: CH-A00 r=-85603
+[02:02:33.378][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:02:34.056][D][voltage:196]: CH-A00 vbase=0.0322 vh=0.5166 vl=0.0000 v=0.5166
+[02:02:34.062][D][moisture:202]: CH-A00 r=-46125
+[02:02:34.062][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:02:36.947][D][voltage:282]: CH-A02 vbase=0.0100 vh=0.0000 vl=0.0000 v=0.0000
+[02:02:36.951][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[02:02:36.952][S][sensor]: '2019 Reference' >> nan %
+[02:03:03.373][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3418 vl=0.0000 v=1.3418
+[02:03:03.378][D][moisture:245]: CH-A00 r=-85406
+[02:03:03.378][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:03:04.056][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4519 vl=0.0000 v=0.4519
+[02:03:04.060][D][moisture:202]: CH-A00 r=-36975
+[02:03:04.060][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:03:06.944][D][voltage:282]: CH-A02 vbase=0.0432 vh=0.0169 vl=0.0110 v=0.0169
+[02:03:06.951][W][moisture:284]: CH-A02 open/short circuit - v=0.0169
+[02:03:06.951][S][sensor]: '2019 Reference' >> nan %
+[02:03:33.375][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3489 vl=0.0000 v=1.3489
+[02:03:33.379][D][moisture:245]: CH-A00 r=-85535
+[02:03:33.381][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:03:34.053][D][voltage:196]: CH-A00 vbase=0.0043 vh=0.4899 vl=0.0000 v=0.4899
+[02:03:34.063][D][moisture:202]: CH-A00 r=-42636
+[02:03:34.063][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:03:36.944][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0000 vl=0.0000 v=0.0000
+[02:03:36.954][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[02:03:36.954][S][sensor]: '2019 Reference' >> nan %
+[02:04:03.374][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3646 vl=0.0000 v=1.3646
+[02:04:03.377][D][moisture:245]: CH-A00 r=-85817
+[02:04:03.378][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:04:04.055][D][voltage:196]: CH-A00 vbase=0.0130 vh=0.4862 vl=0.0000 v=0.4862
+[02:04:04.056][D][moisture:202]: CH-A00 r=-42129
+[02:04:04.057][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:04:06.942][D][voltage:282]: CH-A02 vbase=0.0030 vh=0.0041 vl=0.0386 v=0.0041
+[02:04:06.950][W][moisture:284]: CH-A02 open/short circuit - v=0.0041
+[02:04:06.950][S][sensor]: '2019 Reference' >> nan %
+[02:04:33.371][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3479 vl=0.0000 v=1.3479
+[02:04:33.380][D][moisture:245]: CH-A00 r=-85518
+[02:04:33.380][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:04:34.052][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4804 vl=0.0000 v=0.4804
+[02:04:34.058][D][moisture:202]: CH-A00 r=-41310
+[02:04:34.058][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:04:36.944][D][voltage:282]: CH-A02 vbase=0.0179 vh=0.0070 vl=0.0090 v=0.0070
+[02:04:36.950][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[02:04:36.950][S][sensor]: '2019 Reference' >> nan %
+[02:05:03.370][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3494 vl=0.0000 v=1.3494
+[02:05:03.375][D][moisture:245]: CH-A00 r=-85545
+[02:05:03.375][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:05:04.051][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.5045 vl=0.0000 v=0.5045
+[02:05:04.057][D][moisture:202]: CH-A00 r=-44590
+[02:05:04.058][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:05:06.942][D][voltage:282]: CH-A02 vbase=0.0090 vh=0.0289 vl=0.0169 v=0.0289
+[02:05:06.949][W][moisture:284]: CH-A02 open/short circuit - v=0.0289
+[02:05:06.950][S][sensor]: '2019 Reference' >> nan %
+[02:05:33.374][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3524 vl=0.0000 v=1.3524
+[02:05:33.399][D][moisture:245]: CH-A00 r=-85598
+[02:05:33.399][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:05:34.051][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4929 vl=0.0000 v=0.4929
+[02:05:34.055][D][moisture:202]: CH-A00 r=-43055
+[02:05:34.056][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:05:36.944][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0070 vl=0.0140 v=0.0070
+[02:05:36.948][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[02:05:36.948][S][sensor]: '2019 Reference' >> nan %
+[02:06:03.372][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3853 vl=0.0000 v=1.3853
+[02:06:03.375][D][moisture:245]: CH-A00 r=-86178
+[02:06:03.376][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:06:04.053][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4926 vl=0.0000 v=0.4926
+[02:06:04.055][D][moisture:202]: CH-A00 r=-43002
+[02:06:04.057][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:06:06.949][D][voltage:282]: CH-A02 vbase=0.0110 vh=0.0000 vl=0.0000 v=0.0000
+[02:06:06.949][W][moisture:284]: CH-A02 open/short circuit - v=0.0000
+[02:06:06.949][S][sensor]: '2019 Reference' >> nan %
+[02:06:33.371][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3514 vl=0.0000 v=1.3514
+[02:06:33.376][D][moisture:245]: CH-A00 r=-85580
+[02:06:33.377][S][sensor]: '2in Calibbration Deep' >> 28.0 %
+[02:06:34.050][D][voltage:196]: CH-A00 vbase=0.0100 vh=0.4957 vl=0.0000 v=0.4957
+[02:06:34.054][D][moisture:202]: CH-A00 r=-43433
+[02:06:34.054][S][sensor]: '2in Calibbration Shallow' >> 28.0 %
+[02:06:36.944][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0050 vl=0.0141 v=0.0050
+[02:06:36.954][W][moisture:284]: CH-A02 open/short circuit - v=0.0050
+[02:06:36.954][S][sensor]: '2019 Reference' >> nan %

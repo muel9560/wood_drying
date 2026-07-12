@@ -1,0 +1,628 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [
+    {
+      "title": "Wood Stacks \u2014 Overview",
+      "type": "dashboards",
+      "tags": [
+        "woodstack"
+      ],
+      "asDropdown": true,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true
+    }
+  ],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "type": "row",
+      "title": "Selected probes \u2014 moisture content",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "panels": []
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Board MC over time",
+      "description": "One line per selected probe. Reliable window ~7\u201325% MC; below ~7% the reading floors and very wet wood clamps at 28%.",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 16,
+        "x": 0,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "fillOpacity": 6,
+            "showPoints": "auto",
+            "pointSize": 5,
+            "spanNulls": true,
+            "axisPlacement": "auto",
+            "gradientMode": "none"
+          },
+          "unit": "percent",
+          "displayName": "${__field.labels.stack}/${__field.labels.level} \u00b7 ${__field.labels.thickness} b${__field.labels.board} \u00b7 ${__field.labels.spot}/${__field.labels.depth}",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "blue",
+                "value": 9
+              },
+              {
+                "color": "orange",
+                "value": 15
+              },
+              {
+                "color": "red",
+                "value": 25
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "last",
+            "min",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${datasource}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\"\n  and r.stack =~ /${stack:regex}/\n  and r.thickness =~ /${thickness:regex}/\n  and r.level =~ /${level:regex}/\n  and r.board =~ /${board:regex}/\n  and r.spot =~ /${spot:regex}/\n  and r.depth =~ /${depth:regex}/ and r._field == \"mc\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"_time\", \"_value\", \"stack\", \"level\", \"thickness\", \"board\", \"spot\", \"depth\"])\n  |> group(columns: [\"stack\", \"level\", \"thickness\", \"board\", \"spot\", \"depth\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "table",
+      "title": "Latest MC per probe",
+      "description": "One row per selected probe. The sparkline shows recent history with the most recent MC value inline; colored by wetness.",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 16,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            }
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MC % (trend + latest)"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "sparkline"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "blue",
+                      "value": 9
+                    },
+                    {
+                      "color": "orange",
+                      "value": 15
+                    },
+                    {
+                      "color": "red",
+                      "value": 25
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "thresholds"
+                }
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "sortBy": [
+          {
+            "displayName": "thickness",
+            "desc": false
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "timeSeriesTable",
+          "options": {
+            "A": {
+              "stat": "lastNotNull"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "renameByName": {
+              "Trend #A": "MC % (trend + latest)"
+            },
+            "indexByName": {
+              "stack": 0,
+              "level": 1,
+              "thickness": 2,
+              "board": 3,
+              "spot": 4,
+              "depth": 5,
+              "Trend #A": 6
+            }
+          }
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${datasource}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\"\n  and r.stack =~ /${stack:regex}/\n  and r.thickness =~ /${thickness:regex}/\n  and r.level =~ /${level:regex}/\n  and r.board =~ /${board:regex}/\n  and r.spot =~ /${spot:regex}/\n  and r.depth =~ /${depth:regex}/ and r._field == \"mc\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"_time\", \"_value\", \"stack\", \"level\", \"thickness\", \"board\", \"spot\", \"depth\"])\n  |> group(columns: [\"stack\", \"level\", \"thickness\", \"board\", \"spot\", \"depth\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "row",
+      "title": "Supporting detail",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "panels": []
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Raw pin-pair resistance (log)",
+      "description": "The measured resistance behind each MC value. Log scale. Above ~1 M\u03a9 the ESP32 ADC noise floor makes MC unreliable (reads too dry).",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "fillOpacity": 0,
+            "showPoints": "auto",
+            "pointSize": 5,
+            "spanNulls": true,
+            "axisPlacement": "auto",
+            "gradientMode": "none",
+            "scaleDistribution": {
+              "type": "log",
+              "log": 10
+            }
+          },
+          "unit": "ohm",
+          "displayName": "${__field.labels.stack}/${__field.labels.level} \u00b7 ${__field.labels.thickness} b${__field.labels.board} \u00b7 ${__field.labels.spot}/${__field.labels.depth}",
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "last",
+            "min",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${datasource}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\"\n  and r.stack =~ /${stack:regex}/\n  and r.thickness =~ /${thickness:regex}/\n  and r.level =~ /${level:regex}/\n  and r.board =~ /${board:regex}/\n  and r.spot =~ /${spot:regex}/\n  and r.depth =~ /${depth:regex}/ and r._field == \"resistance\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"_time\", \"_value\", \"stack\", \"level\", \"thickness\", \"board\", \"spot\", \"depth\"])\n  |> group(columns: [\"stack\", \"level\", \"thickness\", \"board\", \"spot\", \"depth\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Shell\u2013core spread (shallow \u2212 deep)",
+      "description": "Per board where both depths exist: shallow MC minus deep MC. Keep it under ~4\u20135 points to avoid case-hardening / surface checking. Needs both a shallow and a deep probe selected on the same board.",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "fillOpacity": 4,
+            "showPoints": "auto",
+            "pointSize": 5,
+            "spanNulls": true,
+            "axisPlacement": "auto",
+            "gradientMode": "none"
+          },
+          "unit": "percent",
+          "displayName": "${__field.labels.stack}/${__field.labels.level} \u00b7 ${__field.labels.thickness} b${__field.labels.board} \u00b7 ${__field.labels.spot}",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 4
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "last",
+            "min",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${datasource}"
+          },
+          "query": "from(bucket: \"${bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\"\n  and r.stack =~ /${stack:regex}/\n  and r.thickness =~ /${thickness:regex}/\n  and r.level =~ /${level:regex}/\n  and r.board =~ /${board:regex}/\n  and r.spot =~ /${spot:regex}/\n  and r.depth =~ /${depth:regex}/ and r._field == \"mc\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> pivot(rowKey: [\"_time\", \"stack\", \"level\", \"thickness\", \"board\", \"spot\"], columnKey: [\"depth\"], valueColumn: \"_value\")\n  |> filter(fn: (r) => exists r.shallow and exists r.deep)\n  |> map(fn: (r) => ({_time: r._time, stack: r.stack, level: r.level, thickness: r.thickness, board: r.board, spot: r.spot, _value: r.shallow - r.deep}))\n  |> group(columns: [\"stack\", \"level\", \"thickness\", \"board\", \"spot\"])",
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 39,
+  "tags": [
+    "woodstack",
+    "moisture"
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "datasource",
+        "label": "Data source",
+        "type": "datasource",
+        "query": "influxdb",
+        "current": {},
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "options": [],
+        "refresh": 1,
+        "regex": ""
+      },
+      {
+        "name": "bucket",
+        "label": "Bucket",
+        "type": "query",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${datasource}"
+        },
+        "query": {
+          "query": "buckets()\n  |> filter(fn: (r) => r.name !~ /^_/)\n  |> rename(columns: {name: \"_value\"})\n  |> keep(columns: [\"_value\"])"
+        },
+        "definition": "buckets()\n  |> filter(fn: (r) => r.name !~ /^_/)\n  |> rename(columns: {name: \"_value\"})\n  |> keep(columns: [\"_value\"])",
+        "current": {},
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "options": [],
+        "refresh": 1,
+        "regex": "",
+        "sort": 1
+      },
+      {
+        "name": "stack",
+        "label": "Stack",
+        "type": "query",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${datasource}"
+        },
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"stack\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\", start: -180d)"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"stack\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\", start: -180d)",
+        "current": {
+          "text": "All",
+          "value": "$__all",
+          "selected": true
+        },
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "options": [],
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "allValue": ".*"
+      },
+      {
+        "name": "thickness",
+        "label": "Thickness",
+        "type": "query",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${datasource}"
+        },
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"thickness\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r.stack =~ /${stack:regex}/, start: -180d)"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"thickness\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r.stack =~ /${stack:regex}/, start: -180d)",
+        "current": {
+          "text": "All",
+          "value": "$__all",
+          "selected": true
+        },
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "options": [],
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "allValue": ".*"
+      },
+      {
+        "name": "level",
+        "label": "Level",
+        "type": "query",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${datasource}"
+        },
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"level\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r.stack =~ /${stack:regex}/ and r.thickness =~ /${thickness:regex}/, start: -180d)"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"level\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r.stack =~ /${stack:regex}/ and r.thickness =~ /${thickness:regex}/, start: -180d)",
+        "current": {
+          "text": "All",
+          "value": "$__all",
+          "selected": true
+        },
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "options": [],
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "allValue": ".*"
+      },
+      {
+        "name": "board",
+        "label": "Board",
+        "type": "query",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${datasource}"
+        },
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"board\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r.stack =~ /${stack:regex}/ and r.thickness =~ /${thickness:regex}/ and r.level =~ /${level:regex}/, start: -180d)"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"board\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r.stack =~ /${stack:regex}/ and r.thickness =~ /${thickness:regex}/ and r.level =~ /${level:regex}/, start: -180d)",
+        "current": {
+          "text": "All",
+          "value": "$__all",
+          "selected": true
+        },
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "options": [],
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "allValue": ".*"
+      },
+      {
+        "name": "spot",
+        "label": "Spot",
+        "type": "query",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${datasource}"
+        },
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"spot\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r.stack =~ /${stack:regex}/ and r.thickness =~ /${thickness:regex}/ and r.level =~ /${level:regex}/ and r.board =~ /${board:regex}/, start: -180d)"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"spot\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r.stack =~ /${stack:regex}/ and r.thickness =~ /${thickness:regex}/ and r.level =~ /${level:regex}/ and r.board =~ /${board:regex}/, start: -180d)",
+        "current": {
+          "text": "All",
+          "value": "$__all",
+          "selected": true
+        },
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "options": [],
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "allValue": ".*"
+      },
+      {
+        "name": "depth",
+        "label": "Depth",
+        "type": "query",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${datasource}"
+        },
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"depth\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r.stack =~ /${stack:regex}/ and r.thickness =~ /${thickness:regex}/ and r.level =~ /${level:regex}/ and r.board =~ /${board:regex}/ and r.spot =~ /${spot:regex}/, start: -180d)"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"${bucket}\", tag: \"depth\", predicate: (r) => r._measurement == \"woodstack\" and r.kind == \"wood\" and r.stack =~ /${stack:regex}/ and r.thickness =~ /${thickness:regex}/ and r.level =~ /${level:regex}/ and r.board =~ /${board:regex}/ and r.spot =~ /${spot:regex}/, start: -180d)",
+        "current": {
+          "text": "All",
+          "value": "$__all",
+          "selected": true
+        },
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "options": [],
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "allValue": ".*"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Board Moisture \u2014 Per-Probe Focus",
+  "uid": "woodstack-board-mc",
+  "version": 1,
+  "weekStart": ""
+}

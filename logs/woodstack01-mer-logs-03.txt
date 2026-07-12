@@ -1,0 +1,235 @@
+INFO ESPHome 2026.6.4
+INFO Loaded validated config cache for woodstack01-mer.yaml, skipping validation.
+INFO Starting log output from 192.168.72.24 using esphome API
+INFO Successfully resolved woodstack01-mer @ 192.168.72.24 in 0.000s
+WARNING Can't connect to ESPHome API for woodstack01-mer @ 192.168.72.24: Error connecting to [AddrInfo(family=<AddressFamily.AF_INET: 2>, type=<SocketKind.SOCK_STREAM: 1>, proto=6, sockaddr=IPv4Sockaddr(address='192.168.72.24', port=6053))]: [Errno 113] Connect call failed ('192.168.72.24', 6053) (SocketAPIError)
+INFO Trying to connect to woodstack01-mer @ 192.168.72.24 in the background
+INFO Successfully connected to woodstack01-mer @ 192.168.72.24 in 0.041s
+INFO Successful handshake with woodstack01-mer @ 192.168.72.24 in 0.327s
+[02:23:27.816][I][app:151]: ESPHome version 2026.6.4 compiled on 2026-07-03 02:22:21 -0600
+[02:23:27.816][I][app:158]: ESP32 Chip: ESP32-S3 rev0.2, 2 core(s)
+[02:23:27.816][C][logger:223]: Logger:
+[02:23:27.816][C][logger:223]:   Max Level: DEBUG
+[02:23:27.816][C][logger:223]:   Initial Level: DEBUG
+[02:23:27.817][C][logger:230]:   Log Baud Rate: 115200
+[02:23:27.817][C][logger:230]:   Hardware UART: USB_SERIAL_JTAG
+[02:23:27.821][C][logger:239]:   Task Log Buffer Size: 768 bytes
+[02:23:27.838][C][gpio.output:009]: Binary Output:
+[02:23:27.848][C][gpio.output:152]:   Pin: GPIO4
+[02:23:27.848][C][gpio.output:009]: Binary Output:
+[02:23:27.848][C][gpio.output:152]:   Pin: GPIO5
+[02:23:27.870][C][gpio.output:009]: Binary Output:
+[02:23:27.872][C][gpio.output:152]:   Pin: GPIO6
+[02:23:27.937][C][gpio.output:009]: Binary Output:
+[02:23:27.937][C][gpio.output:152]:   Pin: GPIO7
+[02:23:27.937][C][gpio.output:009]: Binary Output:
+[02:23:27.937][C][gpio.output:152]:   Pin: GPIO8
+[02:23:27.937][C][gpio.output:009]: Binary Output:
+[02:23:27.938][C][gpio.output:152]:   Pin: GPIO9
+[02:23:27.938][C][template.sensor:017]: Template Sensor '2in Calibbration Shallow'
+[02:23:27.938][C][template.sensor:017]:   State Class: ''
+[02:23:27.938][C][template.sensor:017]:   Unit of Measurement: '%'
+[02:23:27.938][C][template.sensor:017]:   Accuracy Decimals: 1
+[02:23:27.938][C][template.sensor:223]:   Icon: 'mdi:water-percent'
+[02:23:27.941][C][template.sensor:434]:   Update Interval: 30.0s
+[02:23:27.949][C][template.sensor:017]: Template Sensor '2in Calibbration Deep'
+[02:23:27.949][C][template.sensor:017]:   State Class: ''
+[02:23:27.949][C][template.sensor:017]:   Unit of Measurement: '%'
+[02:23:27.949][C][template.sensor:017]:   Accuracy Decimals: 1
+[02:23:27.949][C][template.sensor:223]:   Icon: 'mdi:water-percent'
+[02:23:27.949][C][template.sensor:434]:   Update Interval: 30.0s
+[02:23:28.014][C][template.sensor:017]: Template Sensor '2019 Reference'
+[02:23:28.014][C][template.sensor:017]:   State Class: 'measurement'
+[02:23:28.014][C][template.sensor:017]:   Unit of Measurement: '%'
+[02:23:28.014][C][template.sensor:017]:   Accuracy Decimals: 1
+[02:23:28.014][C][template.sensor:223]:   Icon: 'mdi:water-percent'
+[02:23:28.014][C][template.sensor:434]:   Update Interval: 30.0s
+[02:23:28.015][C][adc.esp32:017]: ADC Sensor 'Raw ADC Node1'
+[02:23:28.015][C][adc.esp32:017]:   State Class: 'measurement'
+[02:23:28.015][C][adc.esp32:017]:   Unit of Measurement: 'V'
+[02:23:28.015][C][adc.esp32:017]:   Accuracy Decimals: 2
+[02:23:28.017][C][adc.esp32:232]:   Device Class: 'voltage'
+[02:23:28.017][C][adc.esp32:152]:   Pin: GPIO1
+[02:23:28.017][C][adc.esp32:124]:   Channel:       0
+[02:23:28.017][C][adc.esp32:124]:   Unit:          ADC1
+[02:23:28.017][C][adc.esp32:124]:   Attenuation:   Auto
+[02:23:28.017][C][adc.esp32:124]:   Samples:       1
+[02:23:28.017][C][adc.esp32:124]:   Sampling mode: average
+[02:23:28.017][C][adc.esp32:124]:   Setup Status:
+[02:23:28.017][C][adc.esp32:124]:     Handle Init:  OK
+[02:23:28.017][C][adc.esp32:124]:     Config:       OK
+[02:23:28.017][C][adc.esp32:124]:     Calibration:  OK
+[02:23:28.017][C][adc.esp32:124]:     Overall Init: OK
+[02:23:28.018][C][adc.esp32:432]:   Update Interval: 0.050s
+[02:23:28.050][C][wifi:1531]: WiFi:
+[02:23:28.050][C][wifi:1531]:   Local MAC: E0:72:A1:FC:83:7C
+[02:23:28.050][C][wifi:1531]:   Connected: YES
+[02:23:28.051][C][wifi:1237]:   IP Address: 192.168.72.24
+[02:23:28.051][C][wifi:1248]:   SSID: 'Mueller-IOT'
+[02:23:28.051][C][wifi:1248]:   BSSID: E8:1C:BA:5E:8D:A9
+[02:23:28.051][C][wifi:1248]:   Hostname: 'woodstack01-mer'
+[02:23:28.051][C][wifi:1248]:   Signal strength: -48 dB ▂▄▆█
+[02:23:28.051][C][wifi:1248]:   Channel: 6
+[02:23:28.051][C][wifi:1248]:   Subnet: 255.255.254.0
+[02:23:28.051][C][wifi:1248]:   Gateway: 192.168.72.1
+[02:23:28.051][C][wifi:1248]:   DNS1: 172.16.1.60
+[02:23:28.051][C][wifi:1248]:   DNS2: 172.16.1.61
+[02:23:28.053][C][esphome.ota:097]: Over-The-Air updates:
+[02:23:28.053][C][esphome.ota:097]:   Address: 192.168.72.24:3232
+[02:23:28.053][C][esphome.ota:097]:   Version: 2
+[02:23:28.067][C][safe_mode:058]: Safe Mode:
+[02:23:28.067][C][safe_mode:058]:   Successful after: 60s
+[02:23:28.067][C][safe_mode:058]:   Invoke after: 10 attempts
+[02:23:28.067][C][safe_mode:058]:   Duration: 300s
+[02:23:28.075][C][safe_mode:079]:   Bootloader rollback: supported
+[02:23:28.075][C][api:243]: Server:
+[02:23:28.075][C][api:243]:   Address: 192.168.72.24:6053
+[02:23:28.075][C][api:243]:   Listen backlog: 4
+[02:23:28.075][C][api:243]:   Max connections: 5
+[02:23:28.076][C][api:250]:   Noise encryption: YES
+[02:23:28.090][C][mdns:230]: mDNS:
+[02:23:28.090][C][mdns:230]:   Hostname: woodstack01-mer
+[02:23:28.136][C][homeassistant.sensor:017]: Homeassistant Sensor 'stack_temp_c'
+[02:23:28.136][C][homeassistant.sensor:017]:   State Class: ''
+[02:23:28.136][C][homeassistant.sensor:017]:   Unit of Measurement: ''
+[02:23:28.136][C][homeassistant.sensor:017]:   Accuracy Decimals: 1
+[02:23:28.136][C][homeassistant.sensor:029]:   Entity ID: 'sensor.sensor07_mer_temperature'
+[02:23:54.360][D][voltage:282]: CH-A02 vbase=0.0071 vh=0.0060 vl=0.0100 v=0.0060
+[02:23:54.369][W][moisture:284]: CH-A02 open/short circuit - v=0.0060
+[02:23:54.371][S][sensor]: '2019 Reference' >> nan %
+[02:23:55.162][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3046 vl=0.0000 v=1.3046
+[02:23:55.168][D][moisture:245]: CH-A00 r=142950
+[02:23:55.168][D][moisture:251]: CH-A01 temp=77.0
+[02:23:55.170][S][sensor]: '2in Calibbration Deep' >> 11.2 %
+[02:23:57.628][D][voltage:196]: CH-A00 vbase=0.0090 vh=0.4550 vl=0.0000 v=0.4550
+[02:23:57.632][D][moisture:202]: CH-A00 r=615284
+[02:23:57.633][D][moisture:208]: CH-A00 temp=77.0
+[02:23:57.637][S][sensor]: '2in Calibbration Shallow' >> 9.4 %
+[02:24:21.998][I][safe_mode:142]: Boot seems successful; resetting boot loop counter
+[02:24:24.359][D][voltage:282]: CH-A02 vbase=0.0072 vh=0.0198 vl=0.0218 v=0.0198
+[02:24:24.367][W][moisture:284]: CH-A02 open/short circuit - v=0.0198
+[02:24:24.367][D][api:228]: Accept 172.16.1.101
+[02:24:24.374][S][sensor]: '2019 Reference' >> nan %
+[02:24:24.420][D][api.connection:2461]: esphome-device-builder (172.16.1.101): connected
+[02:24:24.457][D][api.connection:2461]: esphome-device-builder (172.16.1.101): disconnected
+[02:24:24.474][W][api.connection:2467]: esphome-device-builder (172.16.1.101): Reading failed CONNECTION_CLOSED errno=128
+[02:24:25.162][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3307 vl=0.0000 v=1.3307
+[02:24:25.167][D][moisture:245]: CH-A00 r=137984
+[02:24:25.167][D][moisture:251]: CH-A01 temp=77.0
+[02:24:25.171][S][sensor]: '2in Calibbration Deep' >> 11.3 %
+[02:24:25.573][D][preferences:148]: Writing 1 items: 0 cached, 1 written, 0 failed
+[02:24:27.628][D][voltage:196]: CH-A00 vbase=0.0408 vh=0.5057 vl=0.0000 v=0.5057
+[02:24:27.632][D][moisture:202]: CH-A00 r=542511
+[02:24:27.632][D][moisture:208]: CH-A00 temp=77.0
+[02:24:27.636][S][sensor]: '2in Calibbration Shallow' >> 9.5 %
+[02:24:54.357][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0090 vl=0.0129 v=0.0090
+[02:24:54.364][W][moisture:284]: CH-A02 open/short circuit - v=0.0090
+[02:24:54.365][S][sensor]: '2019 Reference' >> nan %
+[02:24:55.161][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3506 vl=0.0000 v=1.3506
+[02:24:55.168][D][moisture:245]: CH-A00 r=134339
+[02:24:55.168][D][moisture:251]: CH-A01 temp=77.0
+[02:24:55.168][S][sensor]: '2in Calibbration Deep' >> 11.3 %
+[02:24:57.627][D][voltage:196]: CH-A00 vbase=0.0358 vh=0.4950 vl=0.0080 v=0.4950
+[02:24:57.635][D][moisture:202]: CH-A00 r=556617
+[02:24:57.635][D][moisture:208]: CH-A00 temp=77.0
+[02:24:57.635][S][sensor]: '2in Calibbration Shallow' >> 9.5 %
+[02:25:24.357][D][voltage:282]: CH-A02 vbase=0.0000 vh=0.0146 vl=0.0000 v=0.0146
+[02:25:24.366][W][moisture:284]: CH-A02 open/short circuit - v=0.0146
+[02:25:24.366][S][sensor]: '2019 Reference' >> nan %
+[02:25:25.161][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3138 vl=0.0000 v=1.3138
+[02:25:25.167][D][moisture:245]: CH-A00 r=141179
+[02:25:25.167][D][moisture:251]: CH-A01 temp=77.0
+[02:25:25.167][S][sensor]: '2in Calibbration Deep' >> 11.3 %
+[02:25:27.627][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4770 vl=0.0000 v=0.4770
+[02:25:27.635][D][moisture:202]: CH-A00 r=581865
+[02:25:27.636][D][moisture:208]: CH-A00 temp=77.0
+[02:25:27.636][S][sensor]: '2in Calibbration Shallow' >> 9.4 %
+[02:25:54.356][D][voltage:282]: CH-A02 vbase=0.0063 vh=0.0062 vl=0.0001 v=0.0062
+[02:25:54.363][W][moisture:284]: CH-A02 open/short circuit - v=0.0062
+[02:25:54.363][S][sensor]: '2019 Reference' >> nan %
+[02:25:55.160][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3011 vl=0.0000 v=1.3011
+[02:25:55.167][D][moisture:245]: CH-A00 r=143623
+[02:25:55.167][D][moisture:251]: CH-A01 temp=77.0
+[02:25:55.168][S][sensor]: '2in Calibbration Deep' >> 11.2 %
+[02:25:57.626][D][voltage:196]: CH-A00 vbase=0.0080 vh=0.4782 vl=0.0000 v=0.4782
+[02:25:57.632][D][moisture:202]: CH-A00 r=580098
+[02:25:57.633][D][moisture:208]: CH-A00 temp=77.0
+[02:25:57.633][S][sensor]: '2in Calibbration Shallow' >> 9.4 %
+[02:26:24.356][D][voltage:282]: CH-A02 vbase=0.0268 vh=0.0070 vl=0.0094 v=0.0070
+[02:26:24.362][W][moisture:284]: CH-A02 open/short circuit - v=0.0070
+[02:26:24.363][S][sensor]: '2019 Reference' >> nan %
+[02:26:25.161][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3163 vl=0.0000 v=1.3163
+[02:26:25.166][D][moisture:245]: CH-A00 r=140706
+[02:26:25.167][D][moisture:251]: CH-A01 temp=77.0
+[02:26:25.167][S][sensor]: '2in Calibbration Deep' >> 11.3 %
+[02:26:27.626][D][voltage:196]: CH-A00 vbase=0.0285 vh=0.4955 vl=0.0000 v=0.4955
+[02:26:27.632][D][moisture:202]: CH-A00 r=556025
+[02:26:27.632][D][moisture:208]: CH-A00 temp=77.0
+[02:26:27.632][S][sensor]: '2in Calibbration Shallow' >> 9.5 %
+[02:26:54.356][D][voltage:282]: CH-A02 vbase=0.0110 vh=0.0140 vl=0.0130 v=0.0140
+[02:26:54.362][W][moisture:284]: CH-A02 open/short circuit - v=0.0140
+[02:26:54.363][S][sensor]: '2019 Reference' >> nan %
+[02:26:55.160][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3378 vl=0.0000 v=1.3378
+[02:26:55.165][D][moisture:245]: CH-A00 r=136680
+[02:26:55.166][D][moisture:251]: CH-A01 temp=77.0
+[02:26:55.167][S][sensor]: '2in Calibbration Deep' >> 11.3 %
+[02:26:57.625][D][voltage:196]: CH-A00 vbase=0.0420 vh=0.5211 vl=0.0000 v=0.5211
+[02:26:57.631][D][moisture:202]: CH-A00 r=523223
+[02:26:57.631][D][moisture:208]: CH-A00 temp=77.0
+[02:26:57.631][S][sensor]: '2in Calibbration Shallow' >> 9.6 %
+[02:27:24.355][D][voltage:282]: CH-A02 vbase=0.0070 vh=0.0170 vl=0.0120 v=0.0170
+[02:27:24.361][W][moisture:284]: CH-A02 open/short circuit - v=0.0170
+[02:27:24.361][S][sensor]: '2019 Reference' >> nan %
+[02:27:25.160][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3327 vl=0.0000 v=1.3327
+[02:27:25.167][D][moisture:245]: CH-A00 r=137616
+[02:27:25.167][D][moisture:251]: CH-A01 temp=77.0
+[02:27:25.167][S][sensor]: '2in Calibbration Deep' >> 11.3 %
+[02:27:27.627][D][voltage:196]: CH-A00 vbase=0.0481 vh=0.5245 vl=0.0000 v=0.5245
+[02:27:27.634][D][moisture:202]: CH-A00 r=519115
+[02:27:27.634][D][moisture:208]: CH-A00 temp=77.0
+[02:27:27.634][S][sensor]: '2in Calibbration Shallow' >> 9.6 %
+[02:27:54.355][D][voltage:282]: CH-A02 vbase=0.0160 vh=0.0169 vl=0.0090 v=0.0169
+[02:27:54.362][W][moisture:284]: CH-A02 open/short circuit - v=0.0169
+[02:27:54.362][S][sensor]: '2019 Reference' >> nan %
+[02:27:55.159][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3318 vl=0.0000 v=1.3318
+[02:27:55.164][D][moisture:245]: CH-A00 r=137790
+[02:27:55.164][D][moisture:251]: CH-A01 temp=77.0
+[02:27:55.166][S][sensor]: '2in Calibbration Deep' >> 11.3 %
+[02:27:57.624][D][voltage:196]: CH-A00 vbase=0.0547 vh=0.5209 vl=0.0000 v=0.5209
+[02:27:57.633][D][moisture:202]: CH-A00 r=523554
+[02:27:57.634][D][moisture:208]: CH-A00 temp=77.0
+[02:27:57.634][S][sensor]: '2in Calibbration Shallow' >> 9.6 %
+[02:28:24.367][D][voltage:282]: CH-A02 vbase=0.0001 vh=0.0160 vl=0.0030 v=0.0160
+[02:28:24.369][W][moisture:284]: CH-A02 open/short circuit - v=0.0160
+[02:28:24.370][S][sensor]: '2019 Reference' >> nan %
+[02:28:25.159][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3161 vl=0.0000 v=1.3161
+[02:28:25.164][D][moisture:245]: CH-A00 r=140733
+[02:28:25.164][D][moisture:251]: CH-A01 temp=77.0
+[02:28:25.167][S][sensor]: '2in Calibbration Deep' >> 11.3 %
+[02:28:25.169][D][wifi:2447]: Roam check skipped, signal good (-47 dBm, attempt 1/3)
+[02:28:27.624][D][voltage:196]: CH-A00 vbase=0.0090 vh=0.5023 vl=0.0000 v=0.5023
+[02:28:27.628][D][moisture:202]: CH-A00 r=547017
+[02:28:27.628][D][moisture:208]: CH-A00 temp=77.0
+[02:28:27.631][S][sensor]: '2in Calibbration Shallow' >> 9.5 %
+[02:28:54.353][D][voltage:282]: CH-A02 vbase=0.0060 vh=0.0199 vl=0.0061 v=0.0199
+[02:28:54.359][W][moisture:284]: CH-A02 open/short circuit - v=0.0199
+[02:28:54.360][S][sensor]: '2019 Reference' >> nan %
+[02:28:55.159][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3352 vl=0.0000 v=1.3352
+[02:28:55.165][D][moisture:245]: CH-A00 r=137161
+[02:28:55.166][D][moisture:251]: CH-A01 temp=77.1
+[02:28:55.166][S][sensor]: '2in Calibbration Deep' >> 11.3 %
+[02:28:57.623][D][voltage:196]: CH-A00 vbase=0.0017 vh=0.4984 vl=0.0000 v=0.4984
+[02:28:57.632][D][moisture:202]: CH-A00 r=552146
+[02:28:57.632][D][moisture:208]: CH-A00 temp=77.1
+[02:28:57.632][S][sensor]: '2in Calibbration Shallow' >> 9.5 %
+[02:29:24.353][D][voltage:282]: CH-A02 vbase=0.0208 vh=0.0100 vl=0.0050 v=0.0100
+[02:29:24.361][W][moisture:284]: CH-A02 open/short circuit - v=0.0100
+[02:29:24.361][S][sensor]: '2019 Reference' >> nan %
+[02:29:25.157][D][voltage:239]: CH-A01 vbase=0.0000 vh=1.3198 vl=0.0000 v=1.3198
+[02:29:25.167][D][moisture:245]: CH-A00 r=140037
+[02:29:25.167][D][moisture:251]: CH-A01 temp=77.0
+[02:29:25.167][S][sensor]: '2in Calibbration Deep' >> 11.3 %
+[02:29:27.623][D][voltage:196]: CH-A00 vbase=0.0000 vh=0.4890 vl=0.0000 v=0.4890
+[02:29:27.630][D][moisture:202]: CH-A00 r=564822
+[02:29:27.630][D][moisture:208]: CH-A00 temp=77.0
+[02:29:27.631][S][sensor]: '2in Calibbration Shallow' >> 9.5 %

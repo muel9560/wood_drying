@@ -1,0 +1,370 @@
+################################################################################
+# woodstack01.yaml
+# ESP32-S3 — Node 1: 5/4 and 6/4 Stock
+# Black Walnut Air-Drying Stack Monitor
+#
+# Hardware:
+#   - ESP32-S3 DevKit
+#   - 2x CD74HC4067 16-channel analog multiplexer breakout
+#     MUX A: channels 0-15  (5_4 stock — upper shelves)
+#     MUX B: channels 16-31 (6_4 stock — lower shelves)
+#
+# Wiring:
+#   GPIO1  → ADC input (voltage divider midpoint)
+#   GPIO9  → Excitation output
+#   GPIO4  → MUX S0 (shared between both MUX boards)
+#   GPIO5  → MUX S1 (shared between both MUX boards)
+#   GPIO6  → MUX S2 (shared between both MUX boards)
+#   GPIO7  → MUX S3 (shared between both MUX boards)
+#   GPIO8  → MUX A INH (active LOW — drive LOW to enable MUX A)
+#   3.3V   → Both MUX VCC
+#   GND    → Both MUX VEE, GND, and all second probe pins
+#
+# Stack layout:
+#   Shelving: 3x Husky 77"W x 72"H x 24"D, spaced 18" apart
+#   Total board run: ~9 feet
+#   6/4 stock: bottom 2 shelves of each unit
+#   5/4 stock: top 2 shelves of each unit
+#
+# Probe placement:
+#   All probes at board center width
+#   Probe pair A: 1_3 board length from one end
+#   Probe pair B: 2_3 board length from one end
+#   Shallow probe: 1_4 depth from surface
+#   Deep probe:    1_2 depth from surface
+################################################################################
+
+esphome:
+  name: woodstack01-mer
+  friendly_name: "Stack Moisture Node 1"
+  on_boot:
+    priority: 600
+    then:
+      - output.turn_off: excite_pin
+      - output.turn_off: mux_en    # LOW = MUX enabled (inverted)
+      - logger.log: "Boot complete - excite LOW, MUX enabled"
+      - lambda: |-
+          // default to the 100k range at boot
+          pinMode(${pin_r2_hi}, INPUT);
+          pinMode(${pin_r2_lo}, OUTPUT); digitalWrite(${pin_r2_lo}, LOW);
+
+substitutions:
+  cal_a: "31.62"          # Black walnut log-linear curve coefficient A
+  cal_b: "2.985"          # Black walnut log-linear curve coefficient B
+  ref_resistor: "100000.0"
+  vcc: "3.3"
+  temp_baseline_c: "21.1"
+  scan_interval: "60s"
+  node_name: "node1"
+  bleed_delay: "50"
+  addr_delay: "10"
+  read_delay: "200"
+  r1_value: "10000.0"
+  r2_lo: "100000.0"       # default broadband range
+  r2_hi: "220000.0"       # dry-end range
+  autorange_v_thresh: "0.80"  # on the 100k range, below this is re-read on 220k
+                              # (0.80 V ~ R_wood 300k ~ 9% MC)
+  pin_r2_lo: "43"         # GPIO43 grounding the 100k pull-down
+  pin_r2_hi: "44"         # GPIO44 grounding the 220k pull-down
+  hi_extra_dwell: "200"   # extra ms settle on the 220k range (higher-R -> slower)
+  
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+logger:
+  level: DEBUG
+  hardware_uart: USB_SERIAL_JTAG
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+ota:
+  - platform: esphome
+    password: ""
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+  manual_ip:
+    static_ip: 192.168.72.24
+    gateway: 192.168.72.1
+    subnet: 255.255.254.0
+    dns1: 172.16.1.60
+    dns2: 172.16.1.61
+
+# Example configuration entry
+statsd:
+  host: 172.16.1.108
+  port: 8125
+  prefix: "woodstack.esp32.woodstack01-mer"
+  update_interval: 60s
+  sensors:
+#    - name: sensor.wifi.wifi-signal-db
+#      id: wifi_signal_db
+#    - name: sensor.wifi.wifi-signal-percent
+#      id: wifi_signal_percent
+#    - name: ch00.temp
+#      id: m_a00.t
+#    - name: ch00.resistance
+#      id: m_a00.r
+    - name: ch00.mc
+      id: m_a00
+    - name: ch00.resistance
+      id: m_a00_r
+    - name: ch00.temp
+      id: m_a00_t
+    - name: ch01.mc
+      id: m_a01
+    - name: ch01.resistance
+      id: m_a01_r
+    - name: ch01.temp
+      id: m_a01_t
+      
+# ── Outputs ───────────────────────────────────────────────────────────────────
+output:
+  - platform: gpio
+    id: mux_s0
+    pin: GPIO4
+
+  - platform: gpio
+    id: mux_s1
+    pin: GPIO5
+
+  - platform: gpio
+    id: mux_s2
+    pin: GPIO6
+
+  - platform: gpio
+    id: mux_s3
+    pin: GPIO7
+
+  # MUX A INH — inverted: turn_off drives LOW → MUX A enabled
+  - platform: gpio
+    id: mux_en
+    pin: GPIO8
+
+  - platform: gpio
+    id: excite_pin
+    pin: GPIO9
+
+# ── Shared lambda include ─────────────────────────────────────────────────────
+# The resistance→MC% conversion is identical across all channels.
+# Each channel lambda selects the correct MUX (A or B), sets S0-S3,
+# takes the AC-excitation reading pair, then converts.
+sensor:
+  # Example configuration entry with 2 sensors and filter
+#  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
+#    name: "WiFi Signal dB"
+#    id: wifi_signal_db
+#    update_interval: 15s
+#    entity_category: "diagnostic"
+
+#  - platform: copy # Reports the WiFi signal strength in %
+#    source_id: wifi_signal_db
+#    id: wifi_signal_percent
+#    name: "WiFi Signal Percent"
+#    filters:
+#      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+#    unit_of_measurement: "Signal %"
+#    entity_category: "diagnostic"
+#    device_class: ""
+
+  - platform: adc
+    pin: GPIO1
+    id: raw_adc
+    name: "Raw ADC Node1"
+    internal: true
+    attenuation: auto
+    update_interval: 50ms
+    samples: 1
+    sampling_mode: avg
+    filters:
+      -
+
+  - platform: homeassistant
+    id: stack_temp_c
+    entity_id: sensor.sensor07_mer_temperature
+    internal: true
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # MUX A — 5/4 STOCK (upper shelves, channels 0-15)
+  # Channel naming: [shelf unit 1-3][shelf level T=top/U=upper][1/3 or 2/3 pos][S=shallow/D=deep]
+  # ════════════════════════════════════════════════════════════════════════════
+
+  # ── Unit 1, Top Shelf, 5/4 ──────────────────────────────────────────────
+  - platform: template
+    name: "A00: 2in Cal Resistance"
+    id: m_a00_r
+    unit_of_measurement: "Ω"
+    accuracy_decimals: 0
+    icon: "mdi:omega"
+    update_interval: never
+
+  - platform: template
+    name: "A00: 2in Cal Temp"
+    id: m_a00_t
+    unit_of_measurement: "°F"   # sensor07_mer_temperature reports °F (see correction note)
+    accuracy_decimals: 1
+    icon: "mdi:thermometer"
+    update_interval: never
+
+  - platform: template
+    name: "A00: 2in Cal Deep"
+    id: m_a00
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      // --- range-select helpers (raw GPIO switched grounds) ---
+      auto range_lo = []() { pinMode(${pin_r2_hi}, INPUT);
+                             pinMode(${pin_r2_lo}, OUTPUT); digitalWrite(${pin_r2_lo}, LOW); };
+      auto range_hi = []() { pinMode(${pin_r2_lo}, INPUT);
+                             pinMode(${pin_r2_hi}, OUTPUT); digitalWrite(${pin_r2_hi}, LOW); };
+
+      id(mux_en).turn_on();    // disable MUX briefly (inverted: HIGH = disabled)
+      delay(${bleed_delay});
+      id(mux_en).turn_off();   // ensure MUX stays enabled
+      id(mux_s0).turn_off(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
+      delay(${addr_delay});
+
+      // --- correlated double sample on the default 100k range ---
+      // A reference (excite OFF) taken before AND after the signal (excite ON)
+      // brackets out the ADC offset, the electrode DC / polarization, and slow
+      // drift: v = signal - mean(reference). See "Correlated double sampling".
+      float vb0, vh, vb1;
+      range_lo();
+      id(excite_pin).turn_off(); delay(${read_delay}); vb0 = id(raw_adc).sample();
+      id(excite_pin).turn_on();  delay(${read_delay}); vh  = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(${read_delay}); vb1 = id(raw_adc).sample();
+      float v  = vh - 0.5f * (vb0 + vb1);
+      ESP_LOGD("voltage", "CH-A00 Range Low vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vb0, vh, vb1, v);
+      float r2 = ${r2_lo};
+
+      // --- dry? re-read (also CDS) on the 220k range (lifts V off the floor) ---
+      if (!isnan(v) && v < ${autorange_v_thresh}) {
+        range_hi();
+        id(excite_pin).turn_off(); delay(${read_delay} + ${hi_extra_dwell}); vb0 = id(raw_adc).sample();
+        id(excite_pin).turn_on();  delay(${read_delay} + ${hi_extra_dwell}); vh  = id(raw_adc).sample();
+        id(excite_pin).turn_off(); delay(${read_delay} + ${hi_extra_dwell}); vb1 = id(raw_adc).sample();
+        v  = vh - 0.5f * (vb0 + vb1);
+        ESP_LOGD("voltage", "CH-A00 Range High vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vb0, vh, vb1, v);
+        r2 = ${r2_hi};
+        ESP_LOGD("moisture", "CH-A00 autorange -> 220k v=%.4f", v);
+      }
+      range_lo();  // leave in the default state
+
+      ESP_LOGD("voltage", "CH-A00 v=%.4f r2=%.0f", v, r2);
+      if (v >= 3.26f || v <= 0.03f) {
+        ESP_LOGW("moisture", "CH-A00 open/short v=%.4f", v);
+        id(m_a00_r).publish_state(NAN);
+        id(m_a00_t).publish_state(NAN);
+        return NAN;
+      }
+
+      // correct solve, using whichever R2 was active:
+      float r = (r2 * ${vcc} / v) - ${r1_value} - r2;
+      ESP_LOGD("moisture", "CH-A00 r=%.0f", r);
+      id(m_a00_r).publish_state(r);             // raw pre-clamp resistance — for calibration
+      if (r <= 0.0f) return 28.0f;              // effectively short -> saturate high
+      float mc = ${cal_a} - ${cal_b} * log10f(r);
+      float t = id(stack_temp_c).state;         // sensor07_mer reports °F
+      id(m_a00_t).publish_state(t);
+      if (!isnan(t)) { float t_c = (t - 32.0f) * 5.0f / 9.0f;
+                       mc -= ((t_c - ${temp_baseline_c}f) / 5.6f) * 0.5f; }
+      else ESP_LOGW("moisture", "CH-A00 temp unavailable, skipping correction");
+      if (mc > 28.0f) mc = 28.0f;               // fiber-saturation ceiling (clamp last)
+      if (mc < 6.0f)  mc = 6.0f;                // dry floor (clamp last)
+      return mc;
+
+
+  - platform: template
+    name: "A01: 2in Cal Resistance"
+    id: m_a01_r
+    unit_of_measurement: "Ω"
+    accuracy_decimals: 0
+    icon: "mdi:omega"
+    update_interval: never
+
+  - platform: template
+    name: "A01: 2in Cal Temp"
+    id: m_a01_t
+    unit_of_measurement: "°F"   # sensor07_mer_temperature reports °F (see correction note)
+    accuracy_decimals: 1
+    icon: "mdi:thermometer"
+    update_interval: never
+
+  - platform: template
+    name: "A01: 2in Cal Deep"
+    id: m_a01
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:water-percent"
+    update_interval: ${scan_interval}
+    lambda: |-
+      // --- range-select helpers (raw GPIO switched grounds) ---
+      auto range_lo = []() { pinMode(${pin_r2_hi}, INPUT);
+                             pinMode(${pin_r2_lo}, OUTPUT); digitalWrite(${pin_r2_lo}, LOW); };
+      auto range_hi = []() { pinMode(${pin_r2_lo}, INPUT);
+                             pinMode(${pin_r2_hi}, OUTPUT); digitalWrite(${pin_r2_hi}, LOW); };
+
+      id(mux_en).turn_on();    // disable MUX briefly (inverted: HIGH = disabled)
+      delay(${bleed_delay});
+      id(mux_en).turn_off();   // ensure MUX stays enabled
+      id(mux_s0).turn_on(); id(mux_s1).turn_off(); id(mux_s2).turn_off(); id(mux_s3).turn_off();
+      delay(${addr_delay});
+
+      // --- correlated double sample on the default 100k range ---
+      // A reference (excite OFF) taken before AND after the signal (excite ON)
+      // brackets out the ADC offset, the electrode DC / polarization, and slow
+      // drift: v = signal - mean(reference). See "Correlated double sampling".
+      float vb0, vh, vb1;
+      range_lo();
+      id(excite_pin).turn_off(); delay(${read_delay}); vb0 = id(raw_adc).sample();
+      id(excite_pin).turn_on();  delay(${read_delay}); vh  = id(raw_adc).sample();
+      id(excite_pin).turn_off(); delay(${read_delay}); vb1 = id(raw_adc).sample();
+      float v  = vh - 0.5f * (vb0 + vb1);
+      ESP_LOGD("voltage", "CH-A01 Range Low vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vb0, vh, vb1, v);
+      float r2 = ${r2_lo};
+
+      // --- dry? re-read (also CDS) on the 220k range (lifts V off the floor) ---
+      if (!isnan(v) && v < ${autorange_v_thresh}) {
+        range_hi();
+        id(excite_pin).turn_off(); delay(${read_delay} + ${hi_extra_dwell}); vb0 = id(raw_adc).sample();
+        id(excite_pin).turn_on();  delay(${read_delay} + ${hi_extra_dwell}); vh  = id(raw_adc).sample();
+        id(excite_pin).turn_off(); delay(${read_delay} + ${hi_extra_dwell}); vb1 = id(raw_adc).sample();
+        v  = vh - 0.5f * (vb0 + vb1);
+        ESP_LOGD("voltage", "CH-A01 Range High vbase=%.4f vh=%.4f vl=%.4f v=%.4f", vb0, vh, vb1, v);
+        r2 = ${r2_hi};
+        ESP_LOGD("moisture", "CH-A01 autorange -> 220k v=%.4f", v);
+      }
+      range_lo();  // leave in the default state
+
+      ESP_LOGD("voltage", "CH-A01 v=%.4f r2=%.0f", v, r2);
+      if (v >= 3.26f || v <= 0.03f) {
+        ESP_LOGW("moisture", "CH-A01 open/short v=%.4f", v);
+        id(m_a01_r).publish_state(NAN);
+        id(m_a01_t).publish_state(NAN);
+        return NAN;
+      }
+
+      // correct solve, using whichever R2 was active:
+      float r = (r2 * ${vcc} / v) - ${r1_value} - r2;
+      ESP_LOGD("moisture", "CH-A01 r=%.0f", r);
+      id(m_a01_r).publish_state(r);             // raw pre-clamp resistance — for calibration
+      if (r <= 0.0f) return 28.0f;              // effectively short -> saturate high
+      float mc = ${cal_a} - ${cal_b} * log10f(r);
+      float t = id(stack_temp_c).state;         // sensor07_mer reports °F
+      id(m_a01_t).publish_state(t);
+      if (!isnan(t)) { float t_c = (t - 32.0f) * 5.0f / 9.0f;
+                       mc -= ((t_c - ${temp_baseline_c}f) / 5.6f) * 0.5f; }
+      else ESP_LOGW("moisture", "CH-A01 temp unavailable, skipping correction");
+      if (mc > 28.0f) mc = 28.0f;               // fiber-saturation ceiling (clamp last)
+      if (mc < 6.0f)  mc = 6.0f;                // dry floor (clamp last)
+      return mc;
+
+      
+

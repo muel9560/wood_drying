@@ -1,0 +1,28 @@
+* Wood Moisture AFE -- R2 value trade-off (component selection study)
+*
+* Keeps R1=10k. Sweeps the sense-side pull-down R2 across three candidates
+* while stepping R_wood over the dry-drying range (13% -> 6% MC). Shows how a
+* larger R2 lifts the bone-dry readings off the ESP32-S3 ADC's low-voltage
+* floor and spreads the 6-13% band over more volts -- the basis for the
+* optional dual-range / auto-ranging scheme in README.md.
+*
+* NOTE: this is an ANALYSIS netlist. The shipping design stays at R1=10k,
+* R2=100k (see wood_afe.net). Nothing here changes the default values.
+*
+* Rp is the swept pull-down (the "R2" position). Named Rp to avoid clashing
+* with the R2 device name.
+
+.param R1=10k Ron=70
+.step param Rp list 100k 220k 390k
+.step param Rw list 100k 300k 500k 750k 1500k   ; 13% 9% 8% 7% 6% MC
+
+VEXC exc  0    DC 3.3
+R1   exc  na   {R1}
+RonA na   pa   {Ron}
+Rw   pa   pb   {Rw}
+RonB pb   sigb {Ron}
+R2   sigb 0    {Rp}
+
+.tran 1u 2m
+.meas TRAN Vadc FIND V(sigb) AT 1m
+.end

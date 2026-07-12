@@ -1,0 +1,133 @@
+INFO ESPHome 2026.6.4
+INFO Loaded validated config cache for woodstack01-mer.yaml, skipping validation.
+INFO Starting log output from 192.168.72.24 using esphome API
+INFO Successfully resolved woodstack01-mer @ 192.168.72.24 in 0.000s
+INFO Successfully connected to woodstack01-mer @ 192.168.72.24 in 0.036s
+INFO Successful handshake with woodstack01-mer @ 192.168.72.24 in 0.088s
+[00:14:13.969][I][app:151]: ESPHome version 2026.6.4 compiled on 2026-07-05 10:47:50 -0600
+[00:14:13.969][I][app:158]: ESP32 Chip: ESP32-S3 rev0.2, 2 core(s)
+[00:14:13.969][C][logger:223]: Logger:
+[00:14:13.969][C][logger:223]:   Max Level: DEBUG
+[00:14:13.969][C][logger:223]:   Initial Level: DEBUG
+[00:14:13.970][C][logger:230]:   Log Baud Rate: 115200
+[00:14:13.970][C][logger:230]:   Hardware UART: USB_SERIAL_JTAG
+[00:14:13.973][C][logger:239]:   Task Log Buffer Size: 768 bytes
+[00:14:13.991][C][gpio.output:009]: Binary Output:
+[00:14:14.018][C][gpio.output:152]:   Pin: GPIO4
+[00:14:14.019][C][gpio.output:009]: Binary Output:
+[00:14:14.019][C][gpio.output:152]:   Pin: GPIO5
+[00:14:14.037][C][gpio.output:009]: Binary Output:
+[00:14:14.046][C][gpio.output:152]:   Pin: GPIO6
+[00:14:14.046][C][gpio.output:009]: Binary Output:
+[00:14:14.046][C][gpio.output:152]:   Pin: GPIO7
+[00:14:14.058][C][gpio.output:009]: Binary Output:
+[00:14:14.074][C][gpio.output:152]:   Pin: GPIO8
+[00:14:14.074][C][gpio.output:009]: Binary Output:
+[00:14:14.075][C][gpio.output:152]:   Pin: GPIO9
+[00:14:14.092][C][template.sensor:017]: Template Sensor 'A00: 2in Cal Deep'
+[00:14:14.092][C][template.sensor:017]:   State Class: ''
+[00:14:14.092][C][template.sensor:017]:   Unit of Measurement: '%'
+[00:14:14.092][C][template.sensor:017]:   Accuracy Decimals: 1
+[00:14:14.103][C][template.sensor:223]:   Icon: 'mdi:water-percent'
+[00:14:14.103][C][template.sensor:434]:   Update Interval: 60.0s
+[00:14:14.104][C][template.sensor:017]: Template Sensor 'A01: 2in Cal Deep'
+[00:14:14.104][C][template.sensor:017]:   State Class: ''
+[00:14:14.104][C][template.sensor:017]:   Unit of Measurement: '%'
+[00:14:14.104][C][template.sensor:017]:   Accuracy Decimals: 1
+[00:14:14.110][C][template.sensor:223]:   Icon: 'mdi:water-percent'
+[00:14:14.110][C][template.sensor:434]:   Update Interval: 60.0s
+[00:14:14.130][C][adc.esp32:017]: ADC Sensor 'Raw ADC Node1'
+[00:14:14.130][C][adc.esp32:017]:   State Class: 'measurement'
+[00:14:14.130][C][adc.esp32:017]:   Unit of Measurement: 'V'
+[00:14:14.130][C][adc.esp32:017]:   Accuracy Decimals: 2
+[00:14:14.131][C][adc.esp32:232]:   Device Class: 'voltage'
+[00:14:14.135][C][adc.esp32:152]:   Pin: GPIO1
+[00:14:14.135][C][adc.esp32:124]:   Channel:       0
+[00:14:14.135][C][adc.esp32:124]:   Unit:          ADC1
+[00:14:14.135][C][adc.esp32:124]:   Attenuation:   Auto
+[00:14:14.135][C][adc.esp32:124]:   Samples:       1
+[00:14:14.135][C][adc.esp32:124]:   Sampling mode: average
+[00:14:14.135][C][adc.esp32:124]:   Setup Status:
+[00:14:14.135][C][adc.esp32:124]:     Handle Init:  OK
+[00:14:14.135][C][adc.esp32:124]:     Config:       OK
+[00:14:14.135][C][adc.esp32:124]:     Calibration:  OK
+[00:14:14.135][C][adc.esp32:124]:     Overall Init: OK
+[00:14:14.157][C][adc.esp32:432]:   Update Interval: 0.050s
+[00:14:14.157][C][wifi:1531]: WiFi:
+[00:14:14.157][C][wifi:1531]:   Local MAC: E0:72:A1:FC:83:7C
+[00:14:14.157][C][wifi:1531]:   Connected: YES
+[00:14:14.161][C][wifi:1237]:   IP Address: 192.168.72.24
+[00:14:14.162][C][wifi:1248]:   SSID: 'Mueller-IOT'
+[00:14:14.162][C][wifi:1248]:   BSSID: E8:1C:BA:5E:8D:A9
+[00:14:14.162][C][wifi:1248]:   Hostname: 'woodstack01-mer'
+[00:14:14.162][C][wifi:1248]:   Signal strength: -51 dB ▂▄▆█
+[00:14:14.162][C][wifi:1248]:   Channel: 6
+[00:14:14.162][C][wifi:1248]:   Subnet: 255.255.254.0
+[00:14:14.162][C][wifi:1248]:   Gateway: 192.168.72.1
+[00:14:14.162][C][wifi:1248]:   DNS1: 172.16.1.60
+[00:14:14.162][C][wifi:1248]:   DNS2: 172.16.1.61
+[00:14:14.195][C][esphome.ota:097]: Over-The-Air updates:
+[00:14:14.195][C][esphome.ota:097]:   Address: 192.168.72.24:3232
+[00:14:14.195][C][esphome.ota:097]:   Version: 2
+[00:14:14.195][C][safe_mode:058]: Safe Mode:
+[00:14:14.195][C][safe_mode:058]:   Successful after: 60s
+[00:14:14.195][C][safe_mode:058]:   Invoke after: 10 attempts
+[00:14:14.195][C][safe_mode:058]:   Duration: 300s
+[00:14:14.205][C][safe_mode:079]:   Bootloader rollback: supported
+[00:14:14.215][C][api:243]: Server:
+[00:14:14.215][C][api:243]:   Address: 192.168.72.24:6053
+[00:14:14.215][C][api:243]:   Listen backlog: 4
+[00:14:14.215][C][api:243]:   Max connections: 5
+[00:14:14.216][C][api:250]:   Noise encryption: YES
+[00:14:14.216][C][statsD:041]: statsD:
+[00:14:14.216][C][statsD:041]:   host: 172.16.1.108
+[00:14:14.216][C][statsD:041]:   port: 8125
+[00:14:14.223][C][statsD:047]:   prefix: woodstack.esp32.woodstack01-mer
+[00:14:14.223][C][statsD:050]:   metrics:
+[00:14:14.223][C][statsD:052]:     - name: ch00.mc
+[00:14:14.223][C][statsD:052]:       type: 0
+[00:14:14.224][C][statsD:052]:     - name: ch01.mc
+[00:14:14.224][C][statsD:052]:       type: 0
+[00:14:14.239][C][mdns:230]: mDNS:
+[00:14:14.239][C][mdns:230]:   Hostname: woodstack01-mer
+[00:14:14.284][C][homeassistant.sensor:017]: Homeassistant Sensor 'stack_temp_c'
+[00:14:14.284][C][homeassistant.sensor:017]:   State Class: ''
+[00:14:14.284][C][homeassistant.sensor:017]:   Unit of Measurement: ''
+[00:14:14.284][C][homeassistant.sensor:017]:   Accuracy Decimals: 1
+[00:14:14.284][C][homeassistant.sensor:029]:   Entity ID: 'sensor.sensor07_mer_temperature'
+[00:14:56.293][D][voltage:247]: CH-A01 vbase=0.0000 vh=1.1316 vl=0.0000 v=1.1316
+[00:14:56.300][D][moisture:253]: CH-A01 r=181633
+[00:14:56.300][D][moisture:259]: CH-A01 temp=77.3
+[00:14:56.300][S][sensor]: 'A01: 2in Cal Deep' >> 10.9 %
+[00:15:56.290][D][voltage:247]: CH-A01 vbase=0.0036 vh=1.1499 vl=0.0000 v=1.1481
+[00:15:56.301][D][moisture:253]: CH-A01 r=177434
+[00:15:56.301][D][moisture:259]: CH-A01 temp=77.3
+[00:15:56.301][S][sensor]: 'A01: 2in Cal Deep' >> 10.9 %
+[00:16:56.289][D][voltage:247]: CH-A01 vbase=0.0001 vh=1.1534 vl=0.0000 v=1.1534
+[00:16:56.318][D][moisture:253]: CH-A01 r=176117
+[00:16:56.319][D][moisture:259]: CH-A01 temp=77.3
+[00:16:56.319][S][sensor]: 'A01: 2in Cal Deep' >> 10.9 %
+[00:17:56.288][D][voltage:247]: CH-A01 vbase=0.0000 vh=1.2004 vl=0.0000 v=1.2004
+[00:17:56.295][D][moisture:253]: CH-A01 r=164904
+[00:17:56.296][D][moisture:259]: CH-A01 temp=77.3
+[00:17:56.296][S][sensor]: 'A01: 2in Cal Deep' >> 11.0 %
+[00:18:56.288][D][voltage:247]: CH-A01 vbase=0.0140 vh=1.2254 vl=0.0000 v=1.2184
+[00:18:56.294][D][moisture:253]: CH-A01 r=160844
+[00:18:56.294][D][moisture:259]: CH-A01 temp=77.2
+[00:18:56.294][S][sensor]: 'A01: 2in Cal Deep' >> 11.1 %
+[00:19:56.286][D][voltage:247]: CH-A01 vbase=0.0000 vh=1.2539 vl=0.0000 v=1.2539
+[00:19:56.299][D][moisture:253]: CH-A01 r=153168
+[00:19:56.299][D][moisture:259]: CH-A01 temp=77.2
+[00:19:56.302][S][sensor]: 'A01: 2in Cal Deep' >> 11.1 %
+[00:20:56.288][D][voltage:247]: CH-A01 vbase=0.0000 vh=1.2755 vl=0.0000 v=1.2755
+[00:20:56.306][D][moisture:253]: CH-A01 r=148732
+[00:20:56.306][D][moisture:259]: CH-A01 temp=77.2
+[00:20:56.306][S][sensor]: 'A01: 2in Cal Deep' >> 11.2 %
+[00:21:56.285][D][voltage:247]: CH-A01 vbase=0.0000 vh=1.3013 vl=0.0000 v=1.3013
+[00:21:56.293][D][moisture:253]: CH-A01 r=143595
+[00:21:56.293][D][moisture:259]: CH-A01 temp=77.2
+[00:21:56.294][S][sensor]: 'A01: 2in Cal Deep' >> 11.2 %
+[00:22:56.283][D][voltage:247]: CH-A01 vbase=0.0086 vh=1.3025 vl=0.0000 v=1.2982
+[00:22:56.291][D][moisture:253]: CH-A01 r=144189
+[00:22:56.291][D][moisture:259]: CH-A01 temp=77.2
+[00:22:56.292][S][sensor]: 'A01: 2in Cal Deep' >> 11.2 %
