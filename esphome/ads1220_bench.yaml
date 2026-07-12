@@ -33,13 +33,21 @@ logger:
 api:
   encryption:
     key: !secret api_encryption_key
+
 ota:
   - platform: esphome
-    password: ""
+    password: !secret ota_password
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+
+  manual_ip:
+    static_ip: 192.168.72.9
+    gateway: 192.168.72.1
+    subnet: 255.255.254.0
+    dns1: 172.16.1.60
+    dns2: 172.16.1.61
 
 external_components:
   - source:

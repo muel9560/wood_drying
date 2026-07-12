@@ -1,0 +1,11 @@
+# ESPHome build cache and downloaded external components
+.esphome/
+esphome/.esphome/
+
+# Credentials. Each esphome/ working dir needs its own copy; never commit one.
+secrets.yaml
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
