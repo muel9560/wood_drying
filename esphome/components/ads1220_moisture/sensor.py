@@ -3,10 +3,11 @@ import esphome.config_validation as cv
 from esphome.components import sensor
 from esphome.const import (
     CONF_ID,
-    CONF_RESISTANCE,
     CONF_TEMPERATURE,
     DEVICE_CLASS_MOISTURE,
+    ICON_OMEGA,
     STATE_CLASS_MEASUREMENT,
+    UNIT_OHM,
     UNIT_PERCENT,
 )
 from . import ADS1220Moisture, ads1220_moisture_ns
@@ -17,6 +18,7 @@ CONF_ADS1220_MOISTURE_ID = "ads1220_moisture_id"
 CONF_CHANNEL = "channel"
 CONF_CAL_A = "cal_a"
 CONF_CAL_B = "cal_b"
+CONF_RESISTANCE = "resistance"
 CONF_TEMPERATURE_BASELINE = "temperature_baseline"
 
 MoistureChannel = ads1220_moisture_ns.class_(
@@ -41,10 +43,10 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_TEMPERATURE_BASELINE, default=21.1): cv.float_,
             # Raw pre-clamp resistance (Ω) — keep it so MC is re-derivable downstream.
             cv.Optional(CONF_RESISTANCE): sensor.sensor_schema(
-                unit_of_measurement="Ω",
+                unit_of_measurement=UNIT_OHM,
                 accuracy_decimals=0,
                 state_class=STATE_CLASS_MEASUREMENT,
-                icon="mdi:omega",
+                icon=ICON_OMEGA,
             ),
             # Ambient temperature source (°C) for the correction, e.g. a homeassistant sensor.
             cv.Optional(CONF_TEMPERATURE): cv.use_id(sensor.Sensor),
