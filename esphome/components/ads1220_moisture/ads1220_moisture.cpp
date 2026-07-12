@@ -2,9 +2,12 @@
 #include "esphome/core/log.h"
 #include <cmath>
 
-// DRAFT — the register values and conversion timing below follow the ADS1220
-// datasheet but have NOT been validated against real hardware yet. Bench-check
-// the readings against a known resistor before trusting them.
+// Register values follow the ADS1220 datasheet (SBAS501). setup() reads them back and
+// refuses to run if they do not stick -- a mis-wired SPI bus shows up as a loud log
+// line instead of plausible-looking garbage.
+//
+// STILL NOT VALIDATED AGAINST A REAL CHIP. Bench-check against 0.1% resistors before
+// trusting a reading. See BENCH.md.
 
 namespace esphome {
 namespace ads1220_moisture {
@@ -19,6 +22,12 @@ static const uint8_t CMD_WREG = 0x40;  // | (reg << 2) | (n - 1)
 static const uint8_t CMD_RREG = 0x20;  // | (reg << 2) | (n - 1)
 
 static const int32_t FS = 0x800000;    // 2^23 (full-scale magnitude)
+static const float RAIL = 0.98f;       // treat >=98% of full scale as railed
+
+// 20 SPS + the 50/60 Hz FIR takes ~50 ms. Allow generous slack, then give up rather
+// than read a stale conversion.
+static const uint32_t CONV_TIMEOUT_MS = 250;
+static const uint32_t CONV_NO_DRDY_MS = 80;   // fixed wait when no DRDY pin is wired
 
 void ADS1220Moisture::setup() {
   this->spi_setup();
@@ -28,24 +37,54 @@ void ADS1220Moisture::setup() {
     p->setup();
   if (this->mux_enable_ != nullptr)
     this->mux_enable_->setup();
+  this->park_mux_();
 
   this->reset_chip_();
   delay(5);
-  // Static config that never changes between reads: REG1/REG2/REG3.
-  // REG1 = 0x00 : 20 SPS, normal mode, single-shot, temp/burnout off.
-  this->write_reg_(0x01, 0x00);
-  // REG2 : VREF=01 (external REFP0/REFN0), 50/60 Hz FIR, IDAC current.
-  this->write_reg_(0x02, 0x70 | (this->idac_code_ & 0x07));
-  // REG3 : IDAC1 -> AIN0, IDAC2 off, DRDY on DOUT/DRDY.
-  this->write_reg_(0x03, 0x20);
-  this->configure_(0);  // gain = 1 to start
+
+  // REG1 = 0x00 : 20 SPS, normal mode, single-shot, temp sensor and burnout off.
+  const uint8_t reg1 = 0x00;
+  // REG2 : VREF=01b (external REFP0/REFN0), 50/60 rejection, PSW=0, IDAC current.
+  const uint8_t reg2 = 0x40 | ((this->line_freq_code_ & 0x03) << 4) | (this->idac_code_ & 0x07);
+  // REG3 : I1MUX=001b (IDAC1 -> AIN0), I2MUX=000b (IDAC2 off), DRDYM=0 (data-ready on
+  // the dedicated DRDY pin only).
+  const uint8_t reg3 = 0x20;
+
+  this->write_reg_(0x01, reg1);
+  this->write_reg_(0x02, reg2);
+  // The datasheet requires the IDAC *current* to be programmed before its routing, and
+  // gives the IDACs up to 200us to start up. Give them that before setting I1MUX.
+  delay(1);
+  this->write_reg_(0x03, reg3);
+  this->configure_(0);  // gain = 1
+
+  // Read the registers back. If SPI is mis-wired (or MISO is floating) this catches it
+  // immediately, instead of producing readings that look plausible but are noise.
+  const uint8_t want[4] = {0x00, reg1, reg2, reg3};
+  this->healthy_ = true;
+  for (uint8_t r = 0; r < 4; r++) {
+    uint8_t got = this->read_reg_(r);
+    if (got != want[r]) {
+      ESP_LOGE(TAG, "REG%u readback 0x%02X, expected 0x%02X", r, got, want[r]);
+      this->healthy_ = false;
+    }
+  }
+  if (!this->healthy_) {
+    ESP_LOGE(TAG, "ADS1220 did not accept its configuration - check SPI wiring, CS, and "
+                  "that the CLK pin is tied to DGND.");
+    this->mark_failed();
+    return;
+  }
+  ESP_LOGI(TAG, "ADS1220 configured (REG1=0x%02X REG2=0x%02X REG3=0x%02X)", reg1, reg2, reg3);
 }
 
 void ADS1220Moisture::dump_config() {
   ESP_LOGCONFIG(TAG, "ADS1220 Moisture AFE:");
   ESP_LOGCONFIG(TAG, "  R_ref: %.0f ohm", this->r_ref_);
   ESP_LOGCONFIG(TAG, "  IDAC code: %u", this->idac_code_);
+  ESP_LOGCONFIG(TAG, "  Line-freq rejection code: %u", this->line_freq_code_);
   ESP_LOGCONFIG(TAG, "  External mux pins: %u", (unsigned) this->mux_pins_.size());
+  ESP_LOGCONFIG(TAG, "  Mux settle: %u ms", (unsigned) this->mux_settle_ms_);
   LOG_PIN("  DRDY pin: ", this->drdy_pin_);
 }
 
@@ -72,7 +111,7 @@ uint8_t ADS1220Moisture::read_reg_(uint8_t reg) {
   return v;
 }
 
-// REG0: MUX=0000 (AINP=AIN0, AINN=AIN1), GAIN=gain_code, PGA enabled.
+// REG0: MUX=0000b (AINP=AIN0, AINN=AIN1), GAIN=gain_code, PGA_BYPASS=0 (PGA enabled).
 void ADS1220Moisture::configure_(uint8_t gain_code) {
   this->write_reg_(0x00, (0x00 << 4) | ((gain_code & 0x07) << 1) | 0x00);
 }
@@ -90,28 +129,26 @@ int32_t ADS1220Moisture::read_conversion_() {
   return raw;
 }
 
-// Runs one conversion at gain_code, returns ratio = R_wood / R_ref.
-// Returns false if the reading rails (open probe or R_wood > R_ref).
-bool ADS1220Moisture::convert_(uint8_t gain_code, float *ratio_out) {
+void ADS1220Moisture::start_conversion_(uint8_t gain_code) {
   this->configure_(gain_code);
   this->send_command_(CMD_START);
+  this->conv_start_ = millis();
+}
 
-  // Wait for DRDY (falls low when data is ready). ~50 ms at 20 SPS + FIR.
-  uint32_t start = millis();
+// Non-blocking. Reading the result also releases DRDY back high, which is what arms
+// the next conversion -- so every path that sees DONE must consume the code.
+ADS1220Moisture::Conv ADS1220Moisture::poll_conversion_(int32_t *code) {
   if (this->drdy_pin_ != nullptr) {
-    while (this->drdy_pin_->digital_read() && (millis() - start) < 250)
-      yield();
-  } else {
-    delay(80);
+    if (this->drdy_pin_->digital_read()) {  // DRDY is active LOW
+      if (millis() - this->conv_start_ > CONV_TIMEOUT_MS)
+        return Conv::TIMEOUT;
+      return Conv::PENDING;
+    }
+  } else if (millis() - this->conv_start_ < CONV_NO_DRDY_MS) {
+    return Conv::PENDING;
   }
-
-  int32_t code = this->read_conversion_();
-  float norm = (float) code / (float) FS;  // fraction of full scale, signed
-  if (std::fabs(norm) >= 0.98f)
-    return false;  // railed
-  const uint8_t gain = 1u << gain_code;
-  *ratio_out = norm / (float) gain;
-  return true;
+  *code = this->read_conversion_();
+  return Conv::DONE;
 }
 
 void ADS1220Moisture::select_mux_(uint8_t ch) {
@@ -123,39 +160,126 @@ void ADS1220Moisture::select_mux_(uint8_t ch) {
     this->mux_enable_->digital_write(false);  // active-low: LOW = enabled
 }
 
-float ADS1220Moisture::measure_resistance(uint8_t ch) {
-  this->select_mux_(ch);
-  delay(this->mux_settle_ms_);
-
-  // First pass at gain 1 to estimate the ratio.
-  float ratio1;
-  if (!this->convert_(0, &ratio1)) {
-    ESP_LOGD(TAG, "CH%u railed at gain 1 (open or R_wood >= R_ref)", ch);
-    return NAN;
-  }
-  float aratio = std::fabs(ratio1);
-
-  // Pick the largest gain that keeps the reading near ~0.75 of full scale.
-  uint8_t gain_code = 0;
-  uint16_t gain = 1;
-  float target = (aratio > 1e-7f) ? (0.75f / aratio) : 128.0f;
-  while (gain_code < 7 && (float) (gain * 2) <= target) {
-    gain *= 2;
-    gain_code++;
-  }
-
-  float ratio = ratio1;
-  if (gain_code > 0)
-    this->convert_(gain_code, &ratio);  // if it rails, keep the gain-1 value
-
-  float r = this->r_ref_ * std::fabs(ratio);
-  ESP_LOGD(TAG, "CH%u gain=%u ratio=%.6f R=%.0f", ch, gain, ratio, r);
-  return r;
+// Between readings, disconnect every channel. Otherwise the last-selected probe carries
+// the 10 uA IDAC continuously (the IDACs stay alive between single-shot conversions),
+// which DC-polarises the electrodes for the whole update_interval.
+void ADS1220Moisture::park_mux_() {
+  if (this->mux_enable_ != nullptr)
+    this->mux_enable_->digital_write(true);  // HIGH = all channels off
 }
 
-void MoistureChannel::update() {
-  float r = this->parent_->measure_resistance(this->channel_);
+void ADS1220Moisture::request_measurement(MoistureChannel *ch) {
+  if (this->is_failed())
+    return;
+  if (this->active_ == ch)
+    return;
+  for (auto *q : this->queue_) {
+    if (q == ch) {
+      ESP_LOGW(TAG, "CH%u still queued from the last cycle; measurements are falling "
+                    "behind the update_interval", ch->channel());
+      return;
+    }
+  }
+  this->queue_.push_back(ch);
+}
 
+void ADS1220Moisture::finish_(float r) {
+  this->park_mux_();
+  if (this->active_ != nullptr) {
+    this->active_->publish_result(r);
+    this->active_ = nullptr;
+  }
+  this->state_ = State::IDLE;
+}
+
+void ADS1220Moisture::loop() {
+  switch (this->state_) {
+    case State::IDLE: {
+      if (this->queue_.empty())
+        return;
+      this->active_ = this->queue_.front();
+      this->queue_.erase(this->queue_.begin());
+      this->select_mux_(this->active_->channel());
+      this->t0_ = millis();
+      this->state_ = State::SETTLE;
+      return;
+    }
+
+    case State::SETTLE: {
+      if (millis() - this->t0_ < this->mux_settle_ms_)
+        return;
+      this->start_conversion_(0);  // gain 1: estimate the ratio
+      this->state_ = State::CONVERT1;
+      return;
+    }
+
+    case State::CONVERT1: {
+      int32_t code;
+      Conv c = this->poll_conversion_(&code);
+      if (c == Conv::PENDING)
+        return;
+      if (c == Conv::TIMEOUT) {
+        ESP_LOGW(TAG, "CH%u: DRDY never asserted", this->active_->channel());
+        this->finish_(NAN);
+        return;
+      }
+
+      float norm = (float) code / (float) FS;  // at gain 1, norm == R_wood / R_ref
+      if (std::fabs(norm) >= RAIL) {
+        ESP_LOGD(TAG, "CH%u railed at gain 1 (open probe, or R_wood >= R_ref)",
+                 this->active_->channel());
+        this->finish_(NAN);
+        return;
+      }
+      this->ratio1_ = norm;
+
+      // Largest gain that still keeps the reading near ~0.75 of full scale.
+      float aratio = std::fabs(this->ratio1_);
+      this->gain_code_ = 0;
+      uint16_t gain = 1;
+      float target = (aratio > 1e-7f) ? (0.75f / aratio) : 128.0f;
+      while (this->gain_code_ < 7 && (float) (gain * 2) <= target) {
+        gain *= 2;
+        this->gain_code_++;
+      }
+
+      if (this->gain_code_ == 0) {
+        this->finish_(this->r_ref_ * aratio);
+        return;
+      }
+      this->start_conversion_(this->gain_code_);
+      this->state_ = State::CONVERT2;
+      return;
+    }
+
+    case State::CONVERT2: {
+      int32_t code;
+      Conv c = this->poll_conversion_(&code);
+      if (c == Conv::PENDING)
+        return;
+
+      float ratio = this->ratio1_;  // fall back to the gain-1 reading
+      if (c == Conv::DONE) {
+        float norm = (float) code / (float) FS;
+        if (std::fabs(norm) < RAIL)
+          ratio = norm / (float) (1u << this->gain_code_);
+      } else {
+        ESP_LOGW(TAG, "CH%u: DRDY never asserted at gain %u; using the gain-1 reading",
+                 this->active_->channel(), 1u << this->gain_code_);
+      }
+
+      float r = this->r_ref_ * std::fabs(ratio);
+      ESP_LOGD(TAG, "CH%u gain=%u ratio=%.6f R=%.0f", this->active_->channel(),
+               1u << this->gain_code_, ratio, r);
+      this->finish_(r);
+      return;
+    }
+  }
+}
+
+void MoistureChannel::update() { this->parent_->request_measurement(this); }
+
+void MoistureChannel::publish_result(float r) {
   if (this->resistance_sensor_ != nullptr)
     this->resistance_sensor_->publish_state(r);  // NAN on open, published as-is
 
@@ -172,7 +296,7 @@ void MoistureChannel::update() {
   }
 
   if (mc > 28.0f)
-    mc = 28.0f;  // fiber-saturation ceiling (clamp last)
+    mc = 28.0f;  // fibre-saturation ceiling (clamp last)
   if (mc < 6.0f)
     mc = 6.0f;  // dry floor
   this->publish_state(mc);

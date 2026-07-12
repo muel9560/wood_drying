@@ -1,0 +1,374 @@
+################################################################################
+# wood_moisture_node1_ads1220.yaml
+# Node 1 — 5/4, 6/4, 7/4 stock.  ADS1220 + one CD74HC4067, 16 channels.
+#
+# Supersedes wood_moisture_node1.yaml (ESP32-S3 internal ADC + dual mux). The
+# probes, the calibration curve and the StatsD schema are unchanged; only the
+# sense path moved.
+#
+# !! Bench-validate the ADC first: see components/ads1220_moisture/BENCH.md !!
+#
+# Hardware: XIAO ESP32-S3 + ADS1220 breakout + 1x CD74HC4067 (at 5V) + 74AHCT541
+# Board:    see the wood-sensor-ads repo, docs/analog-front-end-design.md
+#
+# THE ONE WIRING CHANGE THAT WILL BITE YOU:
+#   the probe return bus is NOT ground any more. All probe- pins land on RET_BUS,
+#   which sits at ~2.0 V (I x R_ref), with R_ref between RET_BUS and AGND.
+#
+# XIAO pin map
+#   GPIO7  SCLK      GPIO8  MISO(DOUT)     GPIO9  MOSI(DIN)
+#   GPIO1  CS        GPIO2  DRDY
+#   GPIO3-6  MUX S0-S3   (through the 74AHCT541 level shifter)
+#   GPIO43   MUX EN      (through the 74AHCT541; active LOW)
+################################################################################
+
+esphome:
+  name: woodstack01-mer
+  friendly_name: "Stack Moisture Node 1 - 5-4, 6-4, 7-4"
+
+substitutions:
+  node_name: "node1"
+  stack: "shelf1"
+  # Black walnut, refit against the oven-dry run (see wood_moisture_calibration_strategy.md).
+  # NOT the USDA 31.62/2.985 curve, which over-reads this walnut by several points.
+  cal_a: "45.8"
+  cal_b: "7.53"
+  temp_baseline_c: "21.1"
+  # The 0.1% reference resistor. Measure the real one and put its value here -- it is
+  # the only calibration anchor, and every reading scales directly with it.
+  r_ref: "200000.0"
+  scan_interval: "300s"
+
+esp32:
+  board: seeed_xiao_esp32s3
+  framework:
+    type: esp-idf
+
+logger:
+  level: INFO         # DEBUG adds a per-reading "CHx gain=.. ratio=.. R=.." line
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+ota:
+  - platform: esphome
+    password: ""
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/muel9560/wood_drying
+      ref: feature_ads1220_frontend
+    components: [ads1220_moisture]
+
+spi:
+  clk_pin: GPIO7
+  miso_pin: GPIO8
+  mosi_pin: GPIO9
+
+ads1220_moisture:
+  id: afe
+  cs_pin: GPIO1
+  drdy_pin: GPIO2
+  r_ref: ${r_ref}
+  idac: 10uA
+  line_frequency: 60Hz
+  mux_pins: [GPIO3, GPIO4, GPIO5, GPIO6]   # S0-S3, via the 74AHCT541
+  mux_enable_pin: GPIO43                   # EN, via the 74AHCT541 (active LOW)
+
+sensor:
+  # Ambient temperature for the correction. Point this at whichever climate node
+  # actually sits in this stack.
+  - platform: homeassistant
+    id: stack_temp_c
+    entity_id: sensor.sensor07_mer_temperature
+    internal: true
+
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "5-4 b01 mid shallow"
+    id: m00
+    channel: 0
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "5-4 b01 mid shallow R"
+      id: r00
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "5-4 b01 mid deep"
+    id: m01
+    channel: 1
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "5-4 b01 mid deep R"
+      id: r01
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "5-4 b02 mid shallow"
+    id: m02
+    channel: 2
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "5-4 b02 mid shallow R"
+      id: r02
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "5-4 b02 mid deep"
+    id: m03
+    channel: 3
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "5-4 b02 mid deep R"
+      id: r03
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "6-4 b01 mid shallow"
+    id: m04
+    channel: 4
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "6-4 b01 mid shallow R"
+      id: r04
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "6-4 b01 mid deep"
+    id: m05
+    channel: 5
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "6-4 b01 mid deep R"
+      id: r05
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "6-4 b02 mid shallow"
+    id: m06
+    channel: 6
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "6-4 b02 mid shallow R"
+      id: r06
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "6-4 b02 mid deep"
+    id: m07
+    channel: 7
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "6-4 b02 mid deep R"
+      id: r07
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "7-4 b01 mid shallow"
+    id: m08
+    channel: 8
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "7-4 b01 mid shallow R"
+      id: r08
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "7-4 b01 mid deep"
+    id: m09
+    channel: 9
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "7-4 b01 mid deep R"
+      id: r09
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "7-4 b02 mid shallow"
+    id: m10
+    channel: 10
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "7-4 b02 mid shallow R"
+      id: r10
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "7-4 b02 mid deep"
+    id: m11
+    channel: 11
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "7-4 b02 mid deep R"
+      id: r11
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "cal b01 mid shallow"
+    id: m12
+    channel: 12
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "cal b01 mid shallow R"
+      id: r12
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "cal b02 mid shallow"
+    id: m13
+    channel: 13
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "cal b02 mid shallow R"
+      id: r13
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "cal b03 mid shallow"
+    id: m14
+    channel: 14
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "cal b03 mid shallow R"
+      id: r14
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "cal b04 mid shallow"
+    id: m15
+    channel: 15
+    cal_a: ${cal_a}
+    cal_b: ${cal_b}
+    temperature_baseline: ${temp_baseline_c}
+    temperature: stack_temp_c
+    update_interval: ${scan_interval}
+    resistance:
+      name: "cal b04 mid shallow R"
+      id: r15
+
+# StatsD -> Telegraf -> InfluxDB. Metric name after the prefix is
+#   wood.<stack>.<level>.<thickness>.<board>.<spot>.<depth>.<field>
+# Both mc and resistance are shipped so MC can be re-derived downstream with an
+# updated curve without reflashing (see data/README.md).
+statsd:
+  host: 172.16.1.108
+  port: 8125
+  prefix: "woodstack.esp32.woodstack01-mer"
+  update_interval: 60s
+  sensors:
+    - name: wood.${stack}.s1.5-4.01.mid.shallow.mc
+      id: m00
+    - name: wood.${stack}.s1.5-4.01.mid.shallow.resistance
+      id: r00
+    - name: wood.${stack}.s1.5-4.01.mid.deep.mc
+      id: m01
+    - name: wood.${stack}.s1.5-4.01.mid.deep.resistance
+      id: r01
+    - name: wood.${stack}.s1.5-4.02.mid.shallow.mc
+      id: m02
+    - name: wood.${stack}.s1.5-4.02.mid.shallow.resistance
+      id: r02
+    - name: wood.${stack}.s1.5-4.02.mid.deep.mc
+      id: m03
+    - name: wood.${stack}.s1.5-4.02.mid.deep.resistance
+      id: r03
+    - name: wood.${stack}.s3.6-4.01.mid.shallow.mc
+      id: m04
+    - name: wood.${stack}.s3.6-4.01.mid.shallow.resistance
+      id: r04
+    - name: wood.${stack}.s3.6-4.01.mid.deep.mc
+      id: m05
+    - name: wood.${stack}.s3.6-4.01.mid.deep.resistance
+      id: r05
+    - name: wood.${stack}.s3.6-4.02.mid.shallow.mc
+      id: m06
+    - name: wood.${stack}.s3.6-4.02.mid.shallow.resistance
+      id: r06
+    - name: wood.${stack}.s3.6-4.02.mid.deep.mc
+      id: m07
+    - name: wood.${stack}.s3.6-4.02.mid.deep.resistance
+      id: r07
+    - name: wood.${stack}.s4.7-4.01.mid.shallow.mc
+      id: m08
+    - name: wood.${stack}.s4.7-4.01.mid.shallow.resistance
+      id: r08
+    - name: wood.${stack}.s4.7-4.01.mid.deep.mc
+      id: m09
+    - name: wood.${stack}.s4.7-4.01.mid.deep.resistance
+      id: r09
+    - name: wood.${stack}.s4.7-4.02.mid.shallow.mc
+      id: m10
+    - name: wood.${stack}.s4.7-4.02.mid.shallow.resistance
+      id: r10
+    - name: wood.${stack}.s4.7-4.02.mid.deep.mc
+      id: m11
+    - name: wood.${stack}.s4.7-4.02.mid.deep.resistance
+      id: r11
+    - name: wood.${stack}.s1.cal.01.mid.shallow.mc
+      id: m12
+    - name: wood.${stack}.s1.cal.01.mid.shallow.resistance
+      id: r12
+    - name: wood.${stack}.s1.cal.02.mid.shallow.mc
+      id: m13
+    - name: wood.${stack}.s1.cal.02.mid.shallow.resistance
+      id: r13
+    - name: wood.${stack}.s1.cal.03.mid.shallow.mc
+      id: m14
+    - name: wood.${stack}.s1.cal.03.mid.shallow.resistance
+      id: r14
+    - name: wood.${stack}.s1.cal.04.mid.shallow.mc
+      id: m15
+    - name: wood.${stack}.s1.cal.04.mid.shallow.resistance
+      id: r15
