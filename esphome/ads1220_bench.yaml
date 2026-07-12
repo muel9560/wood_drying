@@ -1,0 +1,73 @@
+################################################################################
+# ads1220_bench.yaml — bench validation for the ADS1220 front end
+#
+# Purpose: prove the ADS1220 reads a KNOWN resistor correctly, before any of this
+# is trusted on wood or committed to a PCB. No mux, no probes, one channel.
+#
+# See components/ads1220_moisture/BENCH.md for the wiring and the expected numbers.
+#
+# Minimum breadboard:
+#   XIAO 5V   → ADS1220 AVDD          XIAO 3V3 → ADS1220 DVDD
+#   XIAO GND  → AGND *and* DGND       (the module does NOT bond them internally)
+#   ADS1220 CLK → DGND                (selects the internal oscillator; NOT optional)
+#   R_ref 200k 0.1% : RET_BUS → AGND
+#   AIN1 and REFP0  : both to RET_BUS      REFN0 : to AGND
+#   R_dut (the resistor under test) : AIN0 → RET_BUS
+################################################################################
+
+esphome:
+  name: ads1220-bench
+  friendly_name: "ADS1220 bench"
+
+substitutions:
+  r_ref: "200000.0"       # measure the actual resistor and put its real value here
+
+esp32:
+  board: seeed_xiao_esp32s3
+  framework:
+    type: esp-idf
+
+logger:
+  level: DEBUG            # the per-reading "CHx gain=.. ratio=.. R=.." lines live here
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+ota:
+  - platform: esphome
+    password: ""
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/muel9560/wood_drying
+      ref: feature_ads1220_frontend
+    components: [ads1220_moisture]
+
+# XIAO ESP32-S3: D8=GPIO7 SCK, D9=GPIO8 MISO, D10=GPIO9 MOSI
+spi:
+  clk_pin: GPIO7
+  miso_pin: GPIO8
+  mosi_pin: GPIO9
+
+ads1220_moisture:
+  id: afe
+  cs_pin: GPIO1           # D0
+  drdy_pin: GPIO2         # D1
+  r_ref: ${r_ref}
+  idac: 10uA
+  line_frequency: 60Hz
+  # no mux_pins / mux_enable_pin: AIN0 goes straight to the resistor under test
+
+sensor:
+  - platform: ads1220_moisture
+    ads1220_moisture_id: afe
+    name: "Bench MC"
+    channel: 0
+    update_interval: 10s
+    resistance:
+      name: "Bench R"     # <-- this is the number that matters. Compare it to the DUT.
