@@ -243,8 +243,13 @@ void ADS1220Moisture::loop() {
         this->gain_code_++;
       }
 
+      // Already near full scale, so there is nothing to gain by re-reading: the gain-1
+      // conversion IS the answer. Log it the same way CONVERT2 does -- an unlogged
+      // success path is indistinguishable from a hang when you are watching the log.
       if (this->gain_code_ == 0) {
-        this->finish_(this->r_ref_ * aratio);
+        float r = this->r_ref_ * aratio;
+        ESP_LOGD(TAG, "CH%u gain=1 ratio=%.6f R=%.0f", this->active_->channel(), this->ratio1_, r);
+        this->finish_(r);
         return;
       }
       this->start_conversion_(this->gain_code_);
