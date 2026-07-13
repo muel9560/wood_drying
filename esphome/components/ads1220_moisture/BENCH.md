@@ -21,7 +21,7 @@ ADS1220 CLK ─── DGND               <-- selects the internal oscillator. NO
 XIAO GPIO7 ─ SCLK    GPIO8 ─ MISO(DOUT)    GPIO9 ─ MOSI(DIN)
 XIAO GPIO1 ─ CS      GPIO2 ─ DRDY
 
-           AIN0 ──[ R_dut ]── RET_BUS ──[ R_ref 200k 0.1% ]── AGND
+           AIN0 ──[ R_dut ]── RET_BUS ──[ R_ref 220k ]── AGND
                                  │
                     AIN1 ────────┤
                     REFP0 ───────┘        REFN0 ─── AGND
@@ -30,6 +30,13 @@ XIAO GPIO1 ─ CS      GPIO2 ─ DRDY
 Measure your actual R_ref with a good meter and put that number in the YAML's
 `r_ref` substitution. It is the only calibration anchor — every reading scales
 directly with it.
+
+The design target is 200 kΩ; the numbers below assume the 220 kΩ actually on the bench.
+R_ref sets the dry-end ceiling (full scale at gain 1 is exactly `R_dut = R_ref`), so
+220 kΩ reads slightly *drier* wood than the design, not less accurately. If your R_ref
+is not a 0.1% part, its tolerance lands on every reading — but only as a shift in R, and
+MC is logarithmic in R, so a 5% R_ref error moves MC by ~0.16%. Measure it; don't trust
+the colour bands.
 
 ## Step 1 — does it talk?
 
@@ -49,26 +56,51 @@ wiring fault looks like a wiring fault, not like plausible noise.
 
 ## Step 2 — does it measure?
 
-Swap R_dut and compare **Bench R** to the resistor's real value. With R_ref = 200 kΩ:
+Swap R_dut and compare **Bench R** to the resistor's real value. With R_ref = 220 kΩ:
 
 | R_dut | expected R | expected gain (DEBUG log) | expected MC |
 |---|---|---|---|
-| 10 kΩ | 10 kΩ | 8 | 15.7% |
-| 20 kΩ | 20 kΩ | 4 | 13.4% |
-| 100 kΩ | 100 kΩ | 1 | 8.2% |
-| 150 kΩ | 150 kΩ | 1 | 6.8% |
+| 10 kΩ | 10 kΩ | **16** | 15.7% |
+| 22 kΩ | 22 kΩ | 4 | 13.1% |
+| 100 kΩ | 100 kΩ | 1 | 8.15% |
+| ~200 kΩ (optional, see below) | ~200 kΩ | 1 | 6.0% (floor) |
 | 1 MΩ | **NAN** | rails at gain 1 | NAN |
 | open | **NAN** | rails at gain 1 | NAN |
 
-The 1 MΩ and open cases are *supposed* to fail: full scale at gain 1 is exactly
-`R_dut = R_ref`, so anything above 200 kΩ is out of range by design. That is the dry-end
-ceiling (~5.9% MC), and it is why R_ref is 200 kΩ and AVDD is 5 V — see
-`docs/analog-front-end-design.md` in the wood-sensor-ads repo.
+The gain column is *not* a constant of the circuit — it is a function of `R_dut / R_ref`,
+so it moves when R_ref does. At the design's 200 kΩ, 10 kΩ lands on gain 8; at 220 kΩ the
+ratio is smaller, one more doubling fits under the 0.75-of-full-scale target, and the
+autoranger picks **16**. That is correct behaviour, not a bug. (Likewise 22 kΩ / 220 kΩ
+is exactly 0.1, which is why it takes gain 4 — the same gain the old 20 kΩ / 200 kΩ row
+took, for the same reason.)
 
-With 0.1% parts the reading should land within a few tenths of a percent. If it is out
-by a **factor of two**, `r_ref` is wrong. If it is out by a factor of 2/4/8/16, the
-autorange gain is being applied twice or not at all — check the `gain=` in the DEBUG
-line against the table.
+The optional row replaces the old 150 kΩ one: anything from roughly 120 kΩ to 215 kΩ
+exercises the top of the range at gain 1. Build it from what you have — two 100 kΩ in
+series, or 100 kΩ + 22 kΩ. Which you pick changes the expected MC, so check against the
+right one:
+
+| series R_dut | expected R | expected MC |
+|---|---|---|
+| 100k + 22k = 122 kΩ | 122 kΩ | 7.5% |
+| 100k + 100k = 200 kΩ | 200 kΩ | **6.0%** — computed 5.9%, clamped by the dry floor |
+
+The 200 kΩ case is the more interesting of the two precisely *because* it clamps: it shows
+that near the ceiling **Bench R** still reports the true resistance while **Bench MC**
+flattens onto its 6% floor. R is the number that validates the front end. MC, once it
+clamps, cannot.
+
+The 1 MΩ and open cases are *supposed* to fail: full scale at gain 1 is exactly
+`R_dut = R_ref`, so anything above 220 kΩ is out of range by design. That is the dry-end
+ceiling (~5.6% MC at 220 kΩ, ~5.9% at the design's 200 kΩ — both under the 6% floor), and
+it is why R_ref is large and AVDD is 5 V — see `docs/analog-front-end-design.md` in the
+wood-sensor-ads repo.
+
+Compare against each resistor's **measured** value, not its printed one. With 1% or 5%
+parts the nominal is the wrong yardstick — a 5% 22 kΩ can legitimately be 21 kΩ, and the
+ADC is not wrong for saying so. Judge the ratio, not the label. If the reading is out by a
+**factor of two**, `r_ref` is wrong. If it is out by a factor of 2/4/8/16, the autorange
+gain is being applied twice or not at all — check the `gain=` in the DEBUG line against
+the table above.
 
 ## Step 3 — the things most likely to be wrong
 

@@ -10,7 +10,7 @@
 #   XIAO 5V   → ADS1220 AVDD          XIAO 3V3 → ADS1220 DVDD
 #   XIAO GND  → AGND *and* DGND       (the module does NOT bond them internally)
 #   ADS1220 CLK → DGND                (selects the internal oscillator; NOT optional)
-#   R_ref 200k 0.1% : RET_BUS → AGND
+#   R_ref 220k : RET_BUS → AGND        (design target is 200k; 220k is what is on the bench)
 #   AIN1 and REFP0  : both to RET_BUS      REFN0 : to AGND
 #   R_dut (the resistor under test) : AIN0 → RET_BUS
 ################################################################################
@@ -20,7 +20,7 @@ esphome:
   friendly_name: "ADS1220 bench"
 
 substitutions:
-  r_ref: "200000.0"       # measure the actual resistor and put its real value here
+  r_ref: "220000.0"       # measure the actual resistor and put its real value here
 
 esp32:
   board: seeed_xiao_esp32s3
